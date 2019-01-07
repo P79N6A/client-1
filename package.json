@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "antd": "^3.11.6",
+    "antd": "^3.12.1",
     "aphrodite": "^2.2.3",
     "immer": "^1.9.3",
     "lodash": "^4.17.11",
