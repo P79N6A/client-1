@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { css, StyleSheet } from "aphrodite";
 import { Button, Tabs, Card, Table } from "antd";
-import Stock from "../../components/material/Stock";
+import Stock from "./Stock";
 
 
 /**
@@ -125,6 +125,9 @@ export default memo((props) => {
         </ButtonGroup>
 
         <Table className={css(styles.table)} columns={columns}/>
+      </TabPane>
+      <TabPane tab="配送管理" key="4">
+        配送管理
       </TabPane>
     </Tabs>
   );
