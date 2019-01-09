@@ -1,6 +1,6 @@
 import React, { lazy, memo, Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { css, StyleSheet } from "aphrodite";
+import { css, StyleSheet } from "aphrodite/no-important";
 import { Spin } from "antd";
 
 // loading 样式
@@ -25,7 +25,7 @@ const Loading = () => {
 
 export default memo(() => {
   // 管理页面
-  const Admin = lazy(() => import("../app/Admin"));
+  const Admin = lazy(() => import("../layout/admin/AdminLayout"));
   return (
     <BrowserRouter>
       <Switch>
