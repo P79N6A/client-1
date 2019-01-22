@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Menu, Icon, Avatar, Dropdown, Row, Col } from "antd";
-import styled from "styled-components";
+import { HeaderLayoutStyle } from "./styled";
 
 interface IProps {
   collapsed: boolean;
@@ -9,28 +9,6 @@ interface IProps {
 
   toggle(): void;
 }
-
-const HeaderStyle = styled.div`
-  & > ul {
-    line-height: 64px;
-    float: right;
-  }
-  & > span {
-    font-size: 18px;
-    line-height: 66px;
-    cursor: pointer;
-    transition: color 0.3s;
-    float: left;
-    &:hover {
-      color: #1890ff;
-    }
-  }
-  & > div {
-    height: 60px;
-    float: right;
-    align-items: center;
-  }
-`;
 
 export default memo((props: IProps) => {
   const { toggle, collapsed, mbToggle } = props;
@@ -68,7 +46,7 @@ export default memo((props: IProps) => {
   );
 
   return (
-    <HeaderStyle>
+    <HeaderLayoutStyle>
       <span>
         <Row>
           <Col xs={0} sm={0} md={0} lg={24} xl={24} xxl={24}>
@@ -100,6 +78,6 @@ export default memo((props: IProps) => {
           信息
         </Menu.Item>
       </Menu>
-    </HeaderStyle>
+    </HeaderLayoutStyle>
   );
 });

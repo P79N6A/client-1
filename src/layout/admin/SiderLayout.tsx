@@ -1,36 +1,40 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Menu, Icon } from "antd";
-import { css, StyleSheet } from "aphrodite/no-important";
+import { connect } from "react-redux";
+import { Logo } from "./styled";
+import { IRxReducer } from "../../store/typeing";
+import { rxAction } from "../../store/action";
 
-const SubMenu = Menu.SubMenu;
+const mapStateToProps = state => {
+  return {
+    admin: state.admin
+  };
+};
 
-export default () => {
-  // 存储侧边栏的选择值
-  const [selectTag, setSelectTag] = useState("stock");
+interface IProps extends IRxReducer {
+  rxAction(type, payload): void;
+}
 
+export default connect(
+  mapStateToProps,
+  { rxAction }
+)((props: IProps) => {
   // 侧边栏选中的回调
   const select = ({ key }): void => {
-    setSelectTag(key);
+    props.rxAction("ADMIN_SIDER_SELECT", key);
   };
 
-  // 样式
-  const styles = StyleSheet.create({
-    logo: {
-      height: 32,
-      background: "rgba(255,255,255,.2)",
-      margin: 16
-    }
-  });
+  const SubMenu = Menu.SubMenu;
 
   return (
     <Fragment>
-      <div className={css(styles.logo)} />
+      <Logo />
       <Menu
         theme="dark"
         mode="inline"
         onSelect={select}
         defaultOpenKeys={["shop"]}
-        defaultSelectedKeys={[selectTag]}
+        defaultSelectedKeys={[props.admin.siderSelect]}
       >
         <Menu.Item key="home">
           <Icon type="home" />
@@ -69,4 +73,4 @@ export default () => {
       </Menu>
     </Fragment>
   );
-};
+});

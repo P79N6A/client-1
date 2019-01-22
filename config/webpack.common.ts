@@ -86,7 +86,8 @@ const common: webpack.Configuration = {
    * public/static
    */
   output: {
-    path: path.resolve(__dirname, "../public/static")
+    path: path.resolve(__dirname, "../public/static"),
+    publicPath: "https://prodect.oss-cn-beijing.aliyuncs.com/"
   },
 
   /**
@@ -108,7 +109,7 @@ const common: webpack.Configuration = {
       debug: false,
       filename: "[name].js",
       entry: {
-        vendor: ["react", "react-dom", "immer", "aphrodite"]
+        vendor: ["react-router-dom","react", "react-dom", "immer", "aphrodite","react-redux","styled-components","redux"]
       }
     })
   ]

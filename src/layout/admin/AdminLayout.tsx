@@ -1,108 +1,107 @@
-import React, { memo, useState } from "react";
-import { Icon, Layout, Breadcrumb, Col, Row } from "antd";
-import styled from "styled-components";
+import React, { memo, useState, Fragment } from "react";
+import { Icon, Layout, Breadcrumb } from "antd";
+import { connect } from "react-redux";
 import HeaderLayout from "./HeaderLayout";
 import SiderLayout from "./SiderLayout";
-import Stock from "../../app/admin/stock/Stock";
-import Supplier from "../../app/admin/supplier/Supplier";
-import Purchase from "../../app/admin/purchase/Purchase";
-import Distribution from "../../app/admin/distribution/Distribution";
+import Stock from "../../page/admin/stock/Stock";
+import Supplier from "../../page/admin/supplier/Supplier";
+import Purchase from "../../page/admin/purchase/Purchase";
+import Distribution from "../../page/admin/distribution/Distribution";
 import MobileSiderLayout from "./MobileSiderLayout";
+import {
+  AdminStyle,
+  HeaderStyle,
+  BreadcrumbStyle,
+  ContentStyle,
+  FooterStyle,
+  MainStyle
+} from "./styled";
+import { IRxReducer } from "../../store/typeing";
 
-const { Header, Sider } = Layout;
-// 样式
-const LayoutStyle = styled(Layout)`
-  height: 100vh;
-`;
-const HeaderStyle = styled(Header)`
-  background: #fff !important;
-  width: 100% !important;
-  padding: 0 24px !important;
-`;
-const BreadcrumbStyle = styled(Breadcrumb)`
-  margin: 16px 24px !important;
-`;
-const MainStyle = styled.div`
-  height: calc(100vh - 68px) !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-`;
-const ContentStyle = styled.div`
-  background: #fff;
-  padding: 24px;
-  margin: 0 24px;
-  height: auto;
-  min-height: calc(100vh - 187px);
-`;
-const FooterStyle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f0f2f5;
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 14px;
-  padding: 24px;
-`;
+const mapStateToProps = state => {
+  return {
+    admin: state.admin
+  };
+};
 
-export default memo(() => {
-  // 控制侧边栏的伸缩
-  const [collapsed, setCollapsed] = useState(false);
-  const [pcCollapsed, setPcCollapsed] = useState(false);
-  // 切换状态控制
-  const toggle = (): void => {
-    setCollapsed(!collapsed);
-  };
-  // 手机端状态切换
-  const mbToggle = (): void => {
-    setPcCollapsed(!pcCollapsed);
-  };
-  // 侧边栏断点处理
-  const onBreakpoint = (broken): void => {
-    if (broken) {
-      setCollapsed(true);
-      setPcCollapsed(false);
-    } else {
-      setCollapsed(false);
-      setPcCollapsed(false);
-    }
-  };
+/**
+ * @description admin 界面框架，及基础ui功能
+ * 整体实现功能
+ * 1. 布局框架 ✅
+ * 2. 电脑端，手机端适配 ✅
+ * 3. redux 数据接入 ✅
+ * 4. 内容栏组件引入 🚧
+ * 5. ui功能实现  ✅
+ * 6. 代码审核优化及重构 🚧
+ */
+export default connect(mapStateToProps)(
+  memo((props: IRxReducer) => {
+    // 控制侧边栏的伸缩
+    const [collapsed, setCollapsed] = useState(false);
+    const [pcCollapsed, setPcCollapsed] = useState(false);
+    // 切换状态控制
+    const toggle = (): void => {
+      setCollapsed(!collapsed);
+    };
+    // 手机端状态切换
+    const mbToggle = (): void => {
+      setPcCollapsed(!pcCollapsed);
+    };
+    // 侧边栏断点处理
+    const onBreakpoint = (broken): void => {
+      if (broken) {
+        setCollapsed(true);
+        setPcCollapsed(false);
+      } else {
+        setCollapsed(false);
+        setPcCollapsed(false);
+      }
+    };
+    const { Sider } = Layout;
+    // 内容相应的组件
+    const content = {
+      stock: <Stock />,
+      supplier: <Supplier />,
+      purchase: <Purchase />,
+      distribution: <Distribution />
+    };
+    //  sider 配置
+    const siderConfig: {} = {
+      collapsed: collapsed,
+      onBreakpoint: onBreakpoint,
+      breakpoint: "lg",
+      collapsedWidth: "0",
+      trigger: null,
+      collapsible: true
+    };
 
-  return (
-    <LayoutStyle>
-      <Sider
-        collapsed={collapsed}
-        onBreakpoint={onBreakpoint}
-        breakpoint="lg"
-        collapsedWidth="0"
-        trigger={null}
-        collapsible={true}
-      >
-        <SiderLayout/>
-      </Sider>
-      <MobileSiderLayout mbToggle={mbToggle} collapsed={pcCollapsed}/>
-      <Layout>
-        <HeaderStyle>
-          <HeaderLayout
-            toggle={toggle}
-            mbToggle={mbToggle}
-            collapsed={collapsed}
-          />
-        </HeaderStyle>
-        <BreadcrumbStyle>
-          <Breadcrumb.Item>
-            <Icon type="home"/>
-          </Breadcrumb.Item>
-        </BreadcrumbStyle>
-        <MainStyle>
-          <ContentStyle>
-            {/*<Stock/>*/}
-            {/*<Supplier/>*/}
-            {/*<Purchase />*/}
-            {/*<Distribution />*/}
-          </ContentStyle>
-          <FooterStyle>Copyright 2018 蚂蚁金服体验技术部出品</FooterStyle>
-        </MainStyle>
-      </Layout>
-    </LayoutStyle>
-  );
-});
+    return (
+      <Fragment>
+        <AdminStyle>
+          <Sider {...siderConfig}>
+            <SiderLayout />
+          </Sider>
+          <Layout>
+            <HeaderStyle>
+              <HeaderLayout
+                toggle={toggle}
+                mbToggle={mbToggle}
+                collapsed={collapsed}
+              />
+            </HeaderStyle>
+            <MainStyle>
+              <BreadcrumbStyle>
+                <Breadcrumb.Item>
+                  <Icon type="home" />
+                </Breadcrumb.Item>
+              </BreadcrumbStyle>
+              <ContentStyle>{content[props.admin.siderSelect]}</ContentStyle>
+              <FooterStyle>Copyright 2018 蚂蚁金服体验技术部出品</FooterStyle>
+            </MainStyle>
+          </Layout>
+        </AdminStyle>
+        <MobileSiderLayout mbToggle={mbToggle} collapsed={pcCollapsed} />
+      </Fragment>
+    );
+  })
+);
