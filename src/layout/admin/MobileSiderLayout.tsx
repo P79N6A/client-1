@@ -17,7 +17,8 @@ export default (props: { collapsed: boolean; mbToggle(): void }) => {
       title={"logo"}
       bodyStyle={{
         padding: 0,
-        background: "#001529"
+        background: "#001529",
+        zIndex:100
       }}
       placement="left"
       closable={false}
