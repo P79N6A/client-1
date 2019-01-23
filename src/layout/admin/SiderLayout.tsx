@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Menu, Icon } from "antd";
 import { connect } from "react-redux";
 import { Logo } from "./styled";
-import { IRxReducer } from "../../store/typeing";
+import { IRxReducer } from "../../typing/store";
 import { rxAction } from "../../store/action";
 
 const mapStateToProps = state => {

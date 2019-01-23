@@ -87,7 +87,7 @@ const common: webpack.Configuration = {
    */
   output: {
     path: path.resolve(__dirname, "../public/static"),
-    publicPath: "https://prodect.oss-cn-beijing.aliyuncs.com/"
+    // publicPath: "https://prodect.oss-cn-beijing.aliyuncs.com/"
   },
 
   /**

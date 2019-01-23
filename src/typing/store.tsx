@@ -1,6 +1,8 @@
-interface IRxAction {
+
+
+interface IRxAction<T> {
   type: string;
-  payload: string | number;
+  payload: T;
 }
 
 interface IRxReducer {
