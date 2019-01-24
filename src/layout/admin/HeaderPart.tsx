@@ -1,17 +1,18 @@
 import React, { memo } from "react";
-import { Menu, Icon, Avatar, Dropdown, Row, Col } from "antd";
-import { HeaderLayoutStyle } from "./styled";
+import styled from "styled-components";
+import { Menu, Icon, Avatar, Dropdown } from "antd";
+
 
 interface IProps {
   collapsed: boolean;
 
-  mbToggle(): void;
+
 
   toggle(): void;
 }
 
 export default memo((props: IProps) => {
-  const { toggle, collapsed, mbToggle } = props;
+  const { toggle, collapsed} = props;
   // 头像隐藏菜单
   const menu = (
     <Menu>
@@ -47,22 +48,10 @@ export default memo((props: IProps) => {
 
   return (
     <HeaderLayoutStyle>
-      <span>
-        <Row>
-          <Col xs={0} sm={0} md={0} lg={24} xl={24} xxl={24}>
-            <Icon
-              type={collapsed ? "menu-unfold" : "menu-fold"}
-              onClick={toggle}
-            />
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={0} xl={0} xxl={0}>
-            <Icon
-              type={collapsed ? "menu-unfold" : "menu-fold"}
-              onClick={mbToggle}
-            />
-          </Col>
-        </Row>
-      </span>
+      <Icon
+        type={collapsed ? "menu-unfold" : "menu-fold"}
+        onClick={toggle}
+      />
       <div>
         <Dropdown overlay={menu}>
           <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
@@ -81,3 +70,28 @@ export default memo((props: IProps) => {
     </HeaderLayoutStyle>
   );
 });
+
+/**
+ * @description style
+ */
+const HeaderLayoutStyle = styled.div`
+  & > ul {
+    line-height: 64px;
+    float: right;
+  }
+  & > span {
+    font-size: 18px;
+    line-height: 66px;
+    cursor: pointer;
+    transition: color 0.3s;
+    float: left;
+    &:hover {
+      color: #1890ff;
+    }
+  }
+  & > div {
+    height: 60px;
+    float: right;
+    align-items: center;
+  }
+`;

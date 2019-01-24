@@ -12,6 +12,7 @@
     "jsx-key": false,
     "ordered-imports": false,
     "no-submodule-imports": false,
-    "object-literal-shorthand": false
+    "object-literal-shorthand": false,
+    "no-shadowed-variable": false
   }
 }

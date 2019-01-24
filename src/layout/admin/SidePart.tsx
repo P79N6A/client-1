@@ -1,35 +1,44 @@
-import React, { useState } from "react";
-import { Menu, Icon, Drawer } from "antd";
+import React, { Fragment } from "react";
+import { Menu, Icon } from "antd";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import { IRedux } from "../../typing/redux";
+import { rxAction } from "../../store/action";
 
-const SubMenu = Menu.SubMenu;
-
-export default (props: { collapsed: boolean; mbToggle(): void }) => {
-  // 存储侧边栏的选择值
-  const [selectTag, setSelectTag] = useState("stock");
-
-  // 侧边栏选中的回调
-  const select = ({ key }): void => {
-    setSelectTag(key);
+// Redux data and actions
+const rxProps = state => {
+  return {
+    admin: state.admin
   };
+};
+
+/**
+ * @description Admin  side frame and frame animation
+ */
+interface IProps extends IRedux {
+  someType?: any;
+}
+export default connect(
+  rxProps,
+  { rxAction }
+)((props: IProps) => {
+  const { rxAction, admin } = props;
+  // 侧边栏选中的回调
+  const select = (param: { key: string }): void => {
+    rxAction("ADMIN_SIDER_SELECT", param.key);
+  };
+  // 拓展菜单
+  const SubMenu = Menu.SubMenu;
 
   return (
-    <Drawer
-      title={"logo"}
-      bodyStyle={{
-        padding: 0,
-        background: "#001529",
-        zIndex:100
-      }}
-      placement="left"
-      closable={false}
-      onClose={props.mbToggle}
-      visible={props.collapsed}
-    >
+    <Fragment>
+      <Logo />
       <Menu
+        theme="dark"
         mode="inline"
         onSelect={select}
         defaultOpenKeys={["shop"]}
-        defaultSelectedKeys={[selectTag]}
+        defaultSelectedKeys={[admin.siderSelect]}
       >
         <Menu.Item key="home">
           <Icon type="home" />
@@ -66,6 +75,15 @@ export default (props: { collapsed: boolean; mbToggle(): void }) => {
           <span>营销</span>
         </Menu.Item>
       </Menu>
-    </Drawer>
+    </Fragment>
   );
-};
+});
+
+/**
+ * @description style
+ */
+const Logo = styled.div`
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+`;
