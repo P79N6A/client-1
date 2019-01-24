@@ -1,40 +1,55 @@
 import React, { Fragment } from "react";
-import { Menu, Icon } from "antd";
+import { Menu, Icon, Drawer } from "antd";
 import { connect } from "react-redux";
-import { Logo } from "./styled";
-import { IRxReducer } from "../../typing/store";
+import { IRedux } from "../../typing/redux";
 import { rxAction } from "../../store/action";
 
-const mapStateToProps = state => {
+// Redux data and actions
+const rxProps = state => {
   return {
     admin: state.admin
   };
 };
 
-interface IProps extends IRxReducer {
-  rxAction(type, payload): void;
+/**
+ * @description Admin  side frame and frame animation
+ */
+interface IProps extends IRedux {
+  collapsed: boolean;
+
+  toggle(): void;
 }
 
 export default connect(
-  mapStateToProps,
+  rxProps,
   { rxAction }
 )((props: IProps) => {
+  const { rxAction, admin, collapsed, toggle } = props;
   // 侧边栏选中的回调
-  const select = ({ key }): void => {
-    props.rxAction("ADMIN_SIDER_SELECT", key);
+  const select = (param: { key: string }): void => {
+    rxAction("ADMIN_SIDER_SELECT", param.key);
   };
-
+  // 拓展菜单
   const SubMenu = Menu.SubMenu;
 
   return (
-    <Fragment>
-      <Logo />
+    <Drawer
+      title={"logo"}
+      bodyStyle={{
+        padding: 0,
+        background: "#001529",
+        zIndex: 100
+      }}
+      placement="left"
+      closable={false}
+      onClose={toggle}
+      visible={collapsed}
+    >
       <Menu
-        theme="dark"
         mode="inline"
         onSelect={select}
         defaultOpenKeys={["shop"]}
-        defaultSelectedKeys={[props.admin.siderSelect]}
+        defaultSelectedKeys={[admin.siderSelect]}
       >
         <Menu.Item key="home">
           <Icon type="home" />
@@ -71,6 +86,6 @@ export default connect(
           <span>营销</span>
         </Menu.Item>
       </Menu>
-    </Fragment>
+    </Drawer>
   );
 });
