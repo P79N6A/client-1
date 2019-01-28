@@ -1,18 +1,43 @@
+/** @jsx jsx */
 import React, { memo } from "react";
-import styled from "styled-components";
+import { jsx, css } from "@emotion/core";
 import { Menu, Icon, Avatar, Dropdown } from "antd";
 
-
 interface IProps {
-  collapsed: boolean;
-
-
-
-  toggle(): void;
+  collapsed: boolean; // 侧边栏控制按钮熟悉
+  toggle(): void; // 侧边栏状态切换函数
 }
 
+/**
+ * @description admin 导航栏部分
+ * 功能
+ * 1. 导航栏链接
+ * 2. 侧边栏状态控制
+ */
 export default memo((props: IProps) => {
-  const { toggle, collapsed} = props;
+  const { toggle, collapsed } = props;
+  // 样式
+  const style = css`
+    & > ul {
+      line-height: 64px;
+      float: right;
+    }
+    & > span {
+      font-size: 18px;
+      line-height: 66px;
+      cursor: pointer;
+      transition: color 0.3s;
+      float: left;
+      &:hover {
+        color: #1890ff;
+      }
+    }
+    & > div {
+      height: 60px;
+      float: right;
+      align-items: center;
+    }
+  `;
   // 头像隐藏菜单
   const menu = (
     <Menu>
@@ -47,11 +72,8 @@ export default memo((props: IProps) => {
   );
 
   return (
-    <HeaderLayoutStyle>
-      <Icon
-        type={collapsed ? "menu-unfold" : "menu-fold"}
-        onClick={toggle}
-      />
+    <div css={style}>
+      <Icon type={collapsed ? "menu-unfold" : "menu-fold"} onClick={toggle} />
       <div>
         <Dropdown overlay={menu}>
           <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
@@ -67,31 +89,6 @@ export default memo((props: IProps) => {
           信息
         </Menu.Item>
       </Menu>
-    </HeaderLayoutStyle>
+    </div>
   );
 });
-
-/**
- * @description style
- */
-const HeaderLayoutStyle = styled.div`
-  & > ul {
-    line-height: 64px;
-    float: right;
-  }
-  & > span {
-    font-size: 18px;
-    line-height: 66px;
-    cursor: pointer;
-    transition: color 0.3s;
-    float: left;
-    &:hover {
-      color: #1890ff;
-    }
-  }
-  & > div {
-    height: 60px;
-    float: right;
-    align-items: center;
-  }
-`;

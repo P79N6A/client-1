@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Menu, Icon, Drawer } from "antd";
 import { connect } from "react-redux";
 import { IRedux } from "../../typing/redux";
-import { rxAction } from "../../store/action";
+import { rxAction } from "../../redux/action";
 
 // Redux data and actions
 const rxProps = state => {

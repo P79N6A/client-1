@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import React, { memo, Fragment } from "react";
 import { IRedux } from "../../typing/redux";
-import Stock from "../../page/admin/stock/Stock";
-import Supplier from "../../page/admin/supplier/Supplier";
-import Distribution from "../../page/admin/distribution/Distribution";
-import Purchase from "../../page/admin/purchase/Purchase";
+import Stock from "./stock/Stock";
+import Supplier from "./supplier/Supplier";
+import Distribution from "./distribution/Distribution";
+import Purchase from "./purchase/Purchase";
 
 // Redux data and actions
 const rxProps = state => {
