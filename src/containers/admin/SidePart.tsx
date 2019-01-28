@@ -1,9 +1,10 @@
+/** @jsx jsx */
 import React, { Fragment } from "react";
 import { Menu, Icon } from "antd";
 import { connect } from "react-redux";
-import styled from "styled-components";
+import { jsx, css } from "@emotion/core";
 import { IRedux } from "../../typing/redux";
-import { rxAction } from "../../store/action";
+import { rxAction } from "../../redux/action";
 
 // Redux data and actions
 const rxProps = state => {
@@ -13,15 +14,14 @@ const rxProps = state => {
 };
 
 /**
- * @description Admin  side frame and frame animation
+ * @description admin 侧边栏
+ * 功能
+ * 1. 侧边栏选择值同步至redux
  */
-interface IProps extends IRedux {
-  someType?: any;
-}
 export default connect(
   rxProps,
   { rxAction }
-)((props: IProps) => {
+)((props: IRedux) => {
   const { rxAction, admin } = props;
   // 侧边栏选中的回调
   const select = (param: { key: string }): void => {
@@ -29,10 +29,17 @@ export default connect(
   };
   // 拓展菜单
   const SubMenu = Menu.SubMenu;
-
+  // 样式
+  const style = {
+    logo: css`
+      height: 32px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 16px;
+    `
+  };
   return (
     <Fragment>
-      <Logo />
+      <div css={style.logo} />
       <Menu
         theme="dark"
         mode="inline"
@@ -78,12 +85,3 @@ export default connect(
     </Fragment>
   );
 });
-
-/**
- * @description style
- */
-const Logo = styled.div`
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-`;

@@ -14,7 +14,7 @@ const state: IRxReducer = {
 };
 
 /**
- *  @description store 数据处理中心
+ *  @description redux 数据处理中心
  *  中心数据为不可变数据结构
  *  使用框架参考：https://github.com/mweststrate/immer
  */

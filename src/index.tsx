@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import AppRouter from "./routes/AppRouter";
-import rxStore from "./store/store";
+import AppRouter from "./App";
+import rxStore from "./redux/store";
 
 // 程序入口
 ReactDOM.render(
@@ -11,4 +11,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
