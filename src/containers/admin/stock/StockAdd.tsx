@@ -1,3 +1,4 @@
+/** @jsx jsx  */
 import React, { memo, Fragment, useState } from "react";
 import {
   Button,
@@ -10,7 +11,7 @@ import {
   Select,
   Steps
 } from "antd";
-import { css, StyleSheet } from "aphrodite/no-important";
+import { jsx, css } from "@emotion/core";
 
 const Step = Steps.Step;
 const Option = Select.Option;
@@ -65,29 +66,30 @@ export default Form.create()(
       }
     };
     // 样式
-    const styles = StyleSheet.create({
-      layout: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-      },
-      stepContent: {
-        marginTop: 16,
-        border: "1px dashed #e9e9e9",
-        borderRadius: "6px",
-        backgroundColor: "#fafafa",
-        minHeight: 200,
-        textAlign: "center"
-      },
-      footer: {
-        marginTop: 16,
-        display: "flex",
-        justifyContent: "center"
-      }
-    });
+    const style = {
+      layout: css`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      `,
+      stepContent: css`
+        margin-top: 16px;
+        border: 1px dashed #e9e9e9;
+        border-radius: 6px;
+        background-color: #fafafa;
+        min-height: 200px;
+        text-align: center;
+      `,
+      footer: css`
+        margin-top: 16px;
+        display: flex;
+        justify-content: center;
+      `
+    };
+
     return (
       <Fragment>
-        <Row className={css(styles.layout)}>
+        <Row css={style.layout}>
           <Col lg={8} md={8} sm={12} xs={24}>
             <Steps direction={"horizontal"} current={current} size="small">
               {steps.map(item => (
@@ -363,7 +365,7 @@ export default Form.create()(
                 ""
               )}
             </div>
-            <div className={css(styles.footer)}>
+            <div css={style.footer}>
               {current < steps.length - 1 && (
                 <Button type="primary" onClick={next}>
                   下一步

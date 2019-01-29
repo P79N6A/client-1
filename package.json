@@ -12,7 +12,6 @@
     "@babel/polyfill": "^7.2.5",
     "@emotion/core": "^10.0.6",
     "antd": "^3.12.3",
-    "aphrodite": "^2.2.3",
     "immer": "^1.9.3",
     "lodash": "^4.17.11",
     "react": "^16.8.0-alpha.1",

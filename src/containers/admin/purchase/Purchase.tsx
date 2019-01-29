@@ -1,5 +1,6 @@
+/** @jsx jsx  */
 import React, { memo, Fragment } from "react";
-import { css, StyleSheet } from "aphrodite/no-important";
+import { jsx, css } from "@emotion/core";
 import { Button, Tabs, Card, Table } from "antd";
 
 export default memo(props => {
@@ -53,54 +54,54 @@ export default memo(props => {
     }
   ];
 
-  const styles = StyleSheet.create({
-    button: {
-      marginRight: 10
-    },
-    search: {
-      padding: 24,
-      background: "#fbfbfb",
-      border: "1px solid #d9d9d9",
-      borderRadius: 6,
-      marginTop: 10
-    },
-    table: {
-      marginTop: 10
-    },
-    card: {
-      marginTop: 10,
-      padding: 24,
-      background: "#fbfbfb",
-      border: "1px solid #d9d9d9",
-      borderRadius: 6
-    },
-    top: {
-      marginTop: 10
-    }
-  });
+  const style = {
+    button: css`
+      margin-right: 10px;
+    `,
+    search: css`
+      padding: 24px;
+      background: #fbfbfb;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      margin-top: 10px;
+    `,
+    table: css`
+      margin-top: 10px;
+    `,
+    card: css`
+      margin-top: 10px;
+      padding: 24px;
+      background: #fbfbfb;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+    `,
+    top: css`
+      margin-top: 10px;
+    `
+  };
 
   return (
     <Fragment>
-      <ButtonGroup className={css(styles.button)}>
+      <ButtonGroup css={style.button}>
         <Button htmlType={"button"} type="primary">
           新增采购订单
         </Button>
       </ButtonGroup>
 
-      <Card className={css(styles.card)}>搜索表单</Card>
+      <Card css={style.card}>搜索表单</Card>
 
-      <Tabs onChange={callback} type="card" className={css(styles.top)}>
+      <Tabs onChange={callback} type="card" css={style.top}>
         <TabPane tab="全部" key="1">
-          <Table className={css(styles.table)} columns={columns} />
+          <Table css={style.table} columns={columns} />
         </TabPane>
         <TabPane tab="待入库" key="2">
-          <Table className={css(styles.table)} columns={columns} />
+          <Table css={style.table} columns={columns} />
         </TabPane>
         <TabPane tab="已关闭" key="3">
-          <Table className={css(styles.table)} columns={columns} />
+          <Table css={style.table} columns={columns} />
         </TabPane>
         <TabPane tab="已完成" key="4">
-          <Table className={css(styles.table)} columns={columns} />
+          <Table css={style.table} columns={columns} />
         </TabPane>
       </Tabs>
     </Fragment>
