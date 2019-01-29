@@ -1,5 +1,6 @@
+/** @jsx jsx  */
 import React, { memo, useState } from "react";
-import { css, StyleSheet } from "aphrodite/no-important";
+import { jsx, css } from "@emotion/core";
 import { Button, Table, Icon, Tabs, Menu, Dropdown } from "antd";
 import StockAdd from "./StockAdd";
 import StockSearch from "./StockSearch";
@@ -74,31 +75,20 @@ export default memo(() => {
     </Menu>
   );
   // 样式
-  const styles = StyleSheet.create({
-    searchBg: {
-      marginTop: 10,
-      padding: 24,
-      background: "#fbfbfb",
-      border: "1px solid #d9d9d9",
-      borderRadius: 6
-    },
-    search: {
-      fontSize: 12,
-      marginLeft: 5
-    },
-    table: {
-      marginTop: 10
-    },
-    top: {
-      marginTop: 10
-    }
-  });
+  const style = {
+    table: css`
+      margin-top: 10px;
+    `,
+    top: css`
+      margin-top: 10px;
+    `
+  };
 
   return (
     <Tabs defaultActiveKey="1" onChange={callback}>
       <TabPane tab="库存数据" key="1">
         <StockSearch />
-        <ButtonGroup className={css(styles.top)}>
+        <ButtonGroup css={style.top}>
           <Button htmlType={"button"} type="primary">
             新增商品
           </Button>
@@ -117,7 +107,7 @@ export default memo(() => {
             emptyText: "暂无数据"
           }}
           rowSelection={rowSelection}
-          className={css(styles.table)}
+          css={style.table}
           columns={columns}
         />
       </TabPane>

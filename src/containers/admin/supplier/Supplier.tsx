@@ -1,7 +1,7 @@
+/** @jsx jsx  */
 import React, { memo, Fragment } from "react";
-import { css, StyleSheet } from "aphrodite/no-important";
+import { jsx, css } from "@emotion/core";
 import { Button, Table } from "antd";
-
 
 export default memo(props => {
   const ButtonGroup = Button.Group;
@@ -49,31 +49,31 @@ export default memo(props => {
     }
   ];
 
-  const styles = StyleSheet.create({
-    button: {
-      marginRight: 10
-    },
+  const style = {
+    button: css`
+      margin-right: 10px;
+    `,
 
-    card: {
-      marginTop: 10,
-      padding: 24,
-      background: "#fbfbfb",
-      border: "1px solid #d9d9d9",
-      borderRadius: 6
-    },
-    top: {
-      marginTop: 10
-    }
-  });
+    card: css`
+      margin-top: 10px;
+      padding: 24px;
+      background: #fbfbfb;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+    `,
+    top: css`
+      margin-top: 10px;
+    `
+  };
 
   return (
     <Fragment>
-      <ButtonGroup className={css(styles.button)}>
+      <ButtonGroup css={style.button}>
         <Button htmlType={"button"} type="primary">
           新增供应商
         </Button>
       </ButtonGroup>
-      <Table className={css(styles.top)} columns={columns} />
+      <Table css={style.top} columns={columns} />
     </Fragment>
   );
 });

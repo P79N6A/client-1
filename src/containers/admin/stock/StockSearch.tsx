@@ -1,5 +1,6 @@
-import React, { memo, useState } from "react";
-import { css, StyleSheet } from "aphrodite/no-important";
+/** @jsx jsx  */
+import React, { memo } from "react";
+import { jsx, css } from "@emotion/core";
 import { Button, Select, Form, Input, DatePicker, Row, Col } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 
@@ -31,24 +32,24 @@ export default Form.create()(
       }
     };
     // 样式
-    const styles = StyleSheet.create({
-      searchBg: {
-        marginTop: 10,
-        padding: 24,
-        background: "#fbfbfb",
-        border: "1px solid #d9d9d9",
-        borderRadius: 6
-      },
-      searchButton: {
-        marginRight: 4
-      },
-      searchEdit: {
-        textAlign: "right"
-      }
-    });
+    const style = {
+      searchBg: css`
+        margin-top: 10px;
+        padding: 24px;
+        background: #fbfbfb;
+        border: 1px solid #d9d9d9;
+        border-radius: 6px;
+      `,
+      searchButton: css`
+        margin-right: 4px;
+      `,
+      searchEdit: css`
+        text-align: right;
+      `
+    };
 
     return (
-      <Form className={css(styles.searchBg)}>
+      <Form css={style.searchBg}>
         <Row gutter={24}>
           <Col lg={8} md={8} sm={12} xs={24}>
             <Form.Item label={`商品筛选`} colon={false} {...formItemLayout}>
@@ -110,11 +111,11 @@ export default Form.create()(
           </Col>
         </Row>
         <Row>
-          <Col span={24} className={css(styles.searchEdit)}>
-            <Button htmlType="submit" className={css(styles.searchButton)}>
+          <Col span={24} css={style.searchEdit}>
+            <Button htmlType="submit" css={style.searchButton}>
               筛选
             </Button>
-            <Button htmlType={"button"} className={css(styles.searchButton)}>
+            <Button htmlType={"button"} css={style.searchButton}>
               重置
             </Button>
             <a style={{ fontSize: 12 }}> 导出报表</a>
