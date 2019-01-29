@@ -40,7 +40,7 @@ export default memo(() => {
     collapsible: true
   };
 
-  // style
+  // 样式
   const style = {
     layout: css`
       height: 100vh;

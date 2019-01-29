@@ -109,7 +109,7 @@ const common: webpack.Configuration = {
       debug: false,
       filename: "[name].js",
       entry: {
-        vendor: ["react-router-dom","react", "react-dom", "immer", "aphrodite","react-redux","styled-components","redux"]
+        vendor: ["react-router-dom","react", "react-dom", "immer","react-redux","redux"]
       }
     })
   ]
