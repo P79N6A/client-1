@@ -13,7 +13,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
  * admin   用户管理界面
  */
 export default memo(() => {
-  // style
+  // 样式
   const style = css`
     display: flex;
     align-items: center;

@@ -1,6 +1,6 @@
 {
   "name": "webpack-create-app",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "src/index.tsx",
   "repository": "https://github.com/AntoninSorrento/webpack-create-app.git",
   "license": "MIT",
