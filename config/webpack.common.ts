@@ -4,19 +4,21 @@ import AutoDllPlugin from "autodll-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import tsImportPluginFactory from "ts-import-plugin";
+import ProgressBarPlugin from "progress-bar-webpack-plugin";
 
 const common: webpack.Configuration = {
   /**
    * webpack 程序处理入口
    * 入口文件：src/index.tsx
    */
-  entry: ["@babel/polyfill", path.resolve(__dirname, "../src/index.tsx")],
+  entry: [path.resolve(__dirname, "../src/index.tsx")],
 
   /**
    * 文件后缀解析优化
    */
   resolve: {
-    extensions: [".tsx", ".js", ".ts"]
+    extensions: [".tsx", ".js", ".ts"],
+    symlinks: false
   },
 
   /**
@@ -44,6 +46,10 @@ const common: webpack.Configuration = {
                       camel2DashComponentName: false
                     },
                     {
+                      libraryName: "antd-mobile",
+                      style: true
+                    },
+                    {
                       libraryName: "antd",
                       libraryDirectory: "es",
                       style: true
@@ -58,7 +64,11 @@ const common: webpack.Configuration = {
           }
         ],
         exclude: /node_modules/,
-        include: path.resolve(__dirname, "../src")
+        include: [
+          path.resolve(__dirname, "../src"),
+          path.resolve(__dirname, "../api"),
+          path.resolve(__dirname, "../public")
+        ]
       },
       {
         test: /\.(c|le)ss$/,
@@ -87,7 +97,7 @@ const common: webpack.Configuration = {
    */
   output: {
     path: path.resolve(__dirname, "../public/static"),
-    // publicPath: "https://prodect.oss-cn-beijing.aliyuncs.com/"
+    publicPath: ""
   },
 
   /**
@@ -97,6 +107,7 @@ const common: webpack.Configuration = {
    * dll 分离打包
    */
   plugins: [
+    new ProgressBarPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
@@ -109,7 +120,7 @@ const common: webpack.Configuration = {
       debug: false,
       filename: "[name].js",
       entry: {
-        vendor: ["react-router-dom","react", "react-dom", "immer","react-redux","redux"]
+        vendor: ["react", "react-dom", "immer", "@emotion/core"]
       }
     })
   ]

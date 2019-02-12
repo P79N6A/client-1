@@ -32,7 +32,6 @@ module.exports = merge(common, {
     port: "8000"
   },
 
-
   /**
    * 开发环境下拓展功能
    * 优化错误输出

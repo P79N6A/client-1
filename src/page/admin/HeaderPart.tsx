@@ -1,21 +1,15 @@
 /** @jsx jsx */
 import React, { memo } from "react";
 import { jsx, css } from "@emotion/core";
-import { Menu, Icon, Avatar, Dropdown } from "antd";
-
-interface IProps {
-  collapsed: boolean; // 侧边栏控制按钮熟悉
-  toggle(): void; // 侧边栏状态切换函数
-}
+import { Menu, Icon, Avatar, Dropdown, AutoComplete, Input } from "antd";
 
 /**
- * @description admin 导航栏部分
+ * @description admin 导航栏
  * 功能
- * 1. 导航栏链接
- * 2. 侧边栏状态控制
+ * 1. 搜索服务 🚧
+ * 2. 页面导航 🚧
  */
-export default memo((props: IProps) => {
-  const { toggle, collapsed } = props;
+export default memo(() => {
   // 样式
   const style = css`
     & > ul {
@@ -23,17 +17,8 @@ export default memo((props: IProps) => {
       float: right;
     }
     & > span {
-      font-size: 18px;
-      line-height: 66px;
-      cursor: pointer;
-      transition: color 0.3s;
-      float: left;
-      &:hover {
-        color: #1890ff;
-      }
-    }
-    & > div {
-      height: 60px;
+      height: 64px;
+      padding: 15px 0;
       float: right;
       align-items: center;
     }
@@ -70,16 +55,30 @@ export default memo((props: IProps) => {
       </Menu.Item>
     </Menu>
   );
+  const dataSource = ["搜索服务一", "搜索服务二", "搜索服务三"];
 
   return (
     <div css={style}>
-      <Icon type={collapsed ? "menu-unfold" : "menu-fold"} onClick={toggle} />
-      <div>
-        <Dropdown overlay={menu}>
-          <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-        </Dropdown>
-      </div>
+      <Dropdown overlay={menu}>
+        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+      </Dropdown>
       <Menu mode="horizontal">
+        <Menu.Item key="search">
+          <AutoComplete
+            style={{ width: 200 }}
+            dataSource={dataSource}
+            placeholder="搜索服务项"
+            filterOption={(inputValue, option) =>
+              typeof option.props.children === "string"
+                ? option.props.children
+                    .toUpperCase()
+                    .indexOf(inputValue.toUpperCase()) !== -1
+                : ""
+            }
+          >
+            <Input suffix={<Icon type="search" />} />
+          </AutoComplete>
+        </Menu.Item>
         <Menu.Item key="help">
           <Icon type="question-circle" />
           帮助

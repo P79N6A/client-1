@@ -1,10 +1,9 @@
 import { connect } from "react-redux";
 import React, { memo, Fragment } from "react";
 import { IRedux } from "../../typing/redux";
-import Stock from "./stock/Stock";
-import Supplier from "./supplier/Supplier";
-import Distribution from "./distribution/Distribution";
-import Purchase from "./purchase/Purchase";
+import Stock from "../../containers/admin/cargo/Cargo";
+import Supplier from "../../containers/admin/supply/Supplier";
+import Distribution from "../../containers/admin/delivery/Delivery";
 
 // Redux data and actions
 const rxProps = state => {
@@ -22,15 +21,13 @@ interface IProps extends IRedux {
 }
 
 export default connect(rxProps)(
-  // Code snippet and logic
   memo((props: IProps) => {
     const { admin } = props;
     // 内容相应的组件
     const content = {
-      stock: <Stock />,
-      supplier: <Supplier />,
-      purchase: <Purchase />,
-      distribution: <Distribution />
+      cargo: <Stock />,
+      supply: <Supplier />,
+      delivery: <Distribution />
     };
     return <Fragment>{content[admin.siderSelect]}</Fragment>;
   })

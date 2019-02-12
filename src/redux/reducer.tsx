@@ -9,7 +9,8 @@ import { IReducer, IRxReducer } from "../typing/redux";
  */
 const state: IRxReducer = {
   admin: {
-    siderSelect: "home"
+    // 侧边栏选项
+    siderSelect: "dashboard"
   }
 };
 
