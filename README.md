@@ -2,7 +2,7 @@
 
 ![](https://prodect.oss-cn-beijing.aliyuncs.com/Saas.png)
 
-<p align="center">Saas商户管理系统</p>
+<p align="center">Saas商户管理系统，电脑端</p>
 
 ## 1. ✨ 功能特性
 
