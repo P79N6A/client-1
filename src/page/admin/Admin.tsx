@@ -1,11 +1,8 @@
 /** @jsx jsx */
+import { memo } from "react";
 import { connect } from "react-redux";
 import { jsx, css } from "@emotion/core";
-import React, { memo } from "react";
 import { Layout } from "antd";
-import HeaderPart from "./HeaderPart";
-import SidePart from "./SidePart";
-import ContentPart from "./ContentPart";
 
 /**
  * @description admin 页面
@@ -19,7 +16,7 @@ export default memo(() => {
   // 样式
   const style = {
     layout: css`
-      min-height: 100vh;
+      height: 100vh;
       box-sizing: border-box;
       overflow: hidden;
       clear: both;
@@ -36,6 +33,7 @@ export default memo(() => {
     `,
     footer: css`
       text-align: center;
+      align-items: center;
       background: #f0f2f5;
       color: rgba(0, 0, 0, 0.65);
       font-size: 14px;
@@ -44,18 +42,14 @@ export default memo(() => {
 
   return (
     <Layout css={style.layout}>
-      <SidePart/>
+      {/*<SidePart />*/}
       <Layout>
-        <Header css={style.header}>
-          <HeaderPart/>
-        </Header>
-        <Content css={style.content}>
-          <ContentPart/>
-        </Content>
+        <Header css={style.header}>{/*<HeaderPart/>*/}</Header>
+        <Content css={style.content}>{/*<ContentPart/>*/}</Content>
         <Footer css={style.footer}>
-          Copyright © 2018-{new Date().getFullYear()} `网站地址` All Rights
+          Copyright © 2018-{new Date().getFullYear()} 蚂蚁金服 All Rights
           Reserved.
-          <p>备案号：闽ICP备15012807号-1</p>
+          <p>备案号：苏ICP备15012807号-1</p>
         </Footer>
       </Layout>
     </Layout>

@@ -3,14 +3,12 @@
 
 # dependencies
 /node_modules
-public/static/
+
 # testing
 /coverage
 
 # production
 /build
-
-
 
 # misc
 .cache

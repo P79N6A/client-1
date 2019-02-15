@@ -11,4 +11,5 @@ interface IRxReducer {
 interface IRedux extends IRxReducer{
   rxAction: IRxAction;
 }
+// @ts-ignore
 export { IReducer, IRxAction, IRxReducer, IRedux };
