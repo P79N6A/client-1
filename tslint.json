@@ -10,11 +10,6 @@
     "no-implicit-dependencies": false,
     "jsx-no-lambda": false,
     "jsx-key": false,
-    "ordered-imports": false,
-    "no-submodule-imports": false,
-    "jsx-boolean-value": false,
-    "no-unused-expression": false,
-    "object-literal-shorthand": false,
-    "no-shadowed-variable": false
+    "ordered-imports": false
   }
 }

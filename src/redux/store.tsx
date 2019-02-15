@@ -8,6 +8,7 @@ import { rxReducer } from "./reducer";
 /**
  * @description redux 工具集成，创建唯一store
  */
+// @ts-ignore
 const rxStore = createStore(rxReducer, composeWithDevTools());
 
 export default rxStore;

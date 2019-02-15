@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { lazy, memo, Suspense } from "react";
+import { lazy, memo, Suspense } from "react";
 import { Spin } from "antd";
 import { jsx, css } from "@emotion/core";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -22,14 +22,13 @@ export default memo(() => {
     height: 100vh;
   `;
   // 管理页面
-  const Admin = lazy(() => import("./page/admin/Admin"));
+  const Admin = lazy(() => import("../page/admin/Admin"));
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Spin delay={300} size="large" css={style} />}>
         <Switch>
-          <Route exact path="/" component={Admin} />
-          {/*⚠️：用于cdn，重定向到页面，不可去除*/}
-          <Redirect to="/" />
+          <Route exact path="/" component={() => <Admin />} />
         </Switch>
       </Suspense>
     </BrowserRouter>
