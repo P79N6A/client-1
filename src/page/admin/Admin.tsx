@@ -1,8 +1,7 @@
-/** @jsx jsx */
-import { memo } from "react";
-import { connect } from "react-redux";
-import { jsx, css } from "@emotion/core";
+import * as React from "react";
 import { Layout } from "antd";
+import { css } from "@emotion/core";
+import AdminSider from "./AdminSider";
 
 /**
  * @description admin 页面
@@ -10,7 +9,7 @@ import { Layout } from "antd";
  * 1. 页面布局 ✅
  * 2. 底部版权信息 🚧
  */
-export default memo(() => {
+export default React.memo(() => {
   // antd 组件解构
   const { Header, Content, Footer } = Layout;
   // 样式
@@ -42,14 +41,13 @@ export default memo(() => {
 
   return (
     <Layout css={style.layout}>
-      {/*<SidePart />*/}
+      <AdminSider />
       <Layout>
-        <Header css={style.header}>{/*<HeaderPart/>*/}</Header>
-        <Content css={style.content}>{/*<ContentPart/>*/}</Content>
+        <Header css={style.header} />
+        <Content css={style.content} />
         <Footer css={style.footer}>
           Copyright © 2018-{new Date().getFullYear()} 蚂蚁金服 All Rights
-          Reserved.
-          <p>备案号：苏ICP备15012807号-1</p>
+          Reserved. 备案号：苏ICP备15012807号-1
         </Footer>
       </Layout>
     </Layout>

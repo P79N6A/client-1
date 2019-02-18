@@ -22,7 +22,6 @@ module.exports = merge(common, {
   },
 
   plugins: [
-
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: ["开发服务器已启动 http://localhost:8000"],

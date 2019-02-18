@@ -3,10 +3,19 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const WebpackBar = require("webpackbar");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer");
+const nodeExternals = require("webpack-node-externals");
 const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
   mode: "production",
+
+  target: "node",
+  externals: [
+    // 保留白名单，发布npm时使用
+    nodeExternals({
+      whitelist: []
+    })
+  ],
 
   output: {
     path: path.resolve(__dirname, "../dist"),

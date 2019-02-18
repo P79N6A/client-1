@@ -1,7 +1,6 @@
-/** @jsx jsx */
-import { lazy, memo, Suspense } from "react";
+import * as React from "react";
 import { Spin } from "antd";
-import { jsx, css } from "@emotion/core";
+import { css } from "@emotion/core";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 /**
@@ -12,7 +11,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
  * 页面及相对名称：
  * admin   用户管理界面 ✅
  */
-export default memo(() => {
+export default React.memo(() => {
   // 样式
   const style = css`
     display: flex;
@@ -22,15 +21,15 @@ export default memo(() => {
     height: 100vh;
   `;
   // 管理页面
-  const Admin = lazy(() => import("../page/admin/Admin"));
+  const Admin = React.lazy(() => import("../page/admin/Admin"));
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<Spin delay={300} size="large" css={style} />}>
+      <React.Suspense fallback={<Spin delay={300} size="large" css={style} />}>
         <Switch>
-          <Route exact path="/" component={() => <Admin />} />
+          <Route exact={true} path="/" component={() => <Admin />} />
         </Switch>
-      </Suspense>
+      </React.Suspense>
     </BrowserRouter>
   );
 });
