@@ -4,7 +4,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    mainFields: ["browser", "main", "module"],
+    extensions: [".tsx", ".ts", ".js", ".gql", ".graphql"],
     symlinks: false,
     alias: {
       "@ant-design/icons/lib/dist$": path.resolve(
@@ -22,6 +23,11 @@ module.exports = {
         test: /\.(ts|tsx|js)$/,
         exclude: /(node_modules)/,
         use: ["babel-loader"]
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        use: ["graphql-tag/loader"]
       },
       {
         test: /\.(c|le)ss$/,

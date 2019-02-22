@@ -2,6 +2,7 @@ import * as React from "react";
 import { Layout } from "antd";
 import { css } from "@emotion/core";
 import AdminSider from "./AdminSider";
+import AdminHeader from "./AdminHeader";
 
 /**
  * @description admin 页面
@@ -21,9 +22,9 @@ export default React.memo(() => {
       clear: both;
     `,
     header: css`
-      background: #fff !important;
-      padding: 0 24px !important;
-      overflow: hidden;
+      height: auto;
+      background: #fff;
+      padding: 0;
       clear: both;
     `,
     content: css`
@@ -43,7 +44,9 @@ export default React.memo(() => {
     <Layout css={style.layout}>
       <AdminSider />
       <Layout>
-        <Header css={style.header} />
+        <Header css={style.header}>
+          <AdminHeader />
+        </Header>
         <Content css={style.content} />
         <Footer css={style.footer}>
           Copyright © 2018-{new Date().getFullYear()} 蚂蚁金服 All Rights

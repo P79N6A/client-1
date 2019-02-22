@@ -13,6 +13,7 @@ export default React.memo(() => {
       margin: 16px;
     `
   };
+
   return (
     <Sider collapsible={true}>
       <div css={style.logo} />

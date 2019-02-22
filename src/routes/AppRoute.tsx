@@ -2,16 +2,26 @@ import * as React from "react";
 import { Spin } from "antd";
 import { css } from "@emotion/core";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import client from "../store/ApolloClient";
+import getUserMsg from "../api/userMsg";
+import changeUserMsgApi from "../api/changeUserMsg";
 
-/**
- * @description 页面路由组件
- * 功能
- * 1. 页面加载动画 ✅
- * 2. 页面路由拆分 ✅
- * 页面及相对名称：
- * admin   用户管理界面 ✅
- */
 export default React.memo(() => {
+  // 鉴权
+  React.useEffect(() => {
+    client
+      .query({
+        query: getUserMsg
+      })
+      .then(result => console.log(result));
+
+    client
+      .mutate({
+        variables: { name: "hello" },
+        mutation: changeUserMsgApi
+      })
+      .then(result => console.log(result));
+  }, []);
   // 样式
   const style = css`
     display: flex;

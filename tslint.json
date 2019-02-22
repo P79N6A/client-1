@@ -10,6 +10,8 @@
     "no-implicit-dependencies": false,
     "jsx-no-lambda": false,
     "jsx-key": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "class-name": false,
+    "object-literal-shorthand": false
   }
 }

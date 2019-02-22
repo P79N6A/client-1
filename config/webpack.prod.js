@@ -33,7 +33,7 @@ module.exports = merge(common, {
       cacheGroups: {
         commons: {
           name: "common",
-          test: /react|react-dom|react-router-dom|react-redux|redux|axios|immer|@emotion\/core/,
+          test: /react|react-dom|apollo-boost|react-apollo|graphql|graphql-tag |react-router-dom|immer|@emotion\/core/,
           chunks: "all"
         }
       }
