@@ -1,29 +1,20 @@
-import React, { memo } from 'react';
-import { Layout } from 'antd';
-import styles from './index.scss';
-import AdminLayout from '@/layouts/admin';
+import React from 'react';
+import styles from './index.css';
 
-interface IProps extends React.Props<any> {
+export type BasicLayoutComponent<P> = React.SFC<P>;
+
+export interface BasicLayoutProps extends React.Props<any> {
   history?: History;
   location?: Location;
 }
 
-export default memo((props: IProps) => {
-  const adminLayout = () => {
-    switch (props.location.pathname) {
-      case '/admin':
-      case '/admin/dashboard':
-        return true;
-      default:
-        return false;
-    }
-  };
-  if (adminLayout()) {
-    return <AdminLayout>{props.children}</AdminLayout>;
-  }
+const BasicLayout: BasicLayoutComponent<BasicLayoutProps> = props => {
   return (
-    <Layout className={styles.layout} tagName={'main'}>
-      {props.children}
-    </Layout>
+    <div className={styles.normal}>
+      <h1 className={styles.title}>Yay! Welcome to umi!</h1>
+      { props.children }
+    </div>
   );
-});
+};
+
+export default BasicLayout;

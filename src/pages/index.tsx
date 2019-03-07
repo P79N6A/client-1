@@ -1,15 +1,19 @@
-import React, { memo, Fragment } from 'react';
-import { Layout } from 'antd';
-import styles from './index.scss';
+import React from 'react';
+import styles from './index.css';
 
-export default memo(() => {
-  const { Header, Footer, Content } = Layout;
 
+export default function() {
   return (
-    <Fragment>
-      <Header tagName={'header'}>header</Header>
-      <Content tagName={'main'}>Content</Content>
-      <Footer tagName={'footer'}>Footer</Footer>
-    </Fragment>
+    <div className={styles.normal}>
+      <div className={styles.welcome} />
+      <ul className={styles.list}>
+        <li>To get started, edit <code>src/pages/index.js</code> and save to reload.</li>
+        <li>
+          <a href="https://umijs.org/guide/getting-started.html">
+            Getting Started
+          </a>
+        </li>
+      </ul>
+    </div>
   );
-});
+}

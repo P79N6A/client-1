@@ -1,9 +1,9 @@
 /**
- * @description 用户
+ * @description 权限
  */
 
 // 接口
-interface defaultUserState {
+interface defaultCompetenceState {
   // 命名空间
   namespace: string;
   // 状态
@@ -18,8 +18,8 @@ interface defaultUserState {
 }
 
 // 数据
-const user: defaultUserState = {
-  namespace: 'user',
+const competence: defaultCompetenceState = {
+  namespace: 'competence',
 
   state: {},
 
@@ -31,4 +31,4 @@ const user: defaultUserState = {
 };
 
 // 导出
-export default { ...user };
+export default { ...competence };
