@@ -3,7 +3,7 @@
  */
 
 // 接口
-interface defaultAppletState {
+interface defaultUiState {
   // 命名空间
   namespace: string;
   // 状态
@@ -18,8 +18,8 @@ interface defaultAppletState {
 }
 
 // 数据
-const applet: defaultAppletState = {
-  namespace: 'applet',
+const ui: defaultUiState = {
+  namespace: 'ui',
 
   state: {},
 
@@ -31,4 +31,4 @@ const applet: defaultAppletState = {
 };
 
 // 导出
-export default { ...applet };
+export default { ...ui };
