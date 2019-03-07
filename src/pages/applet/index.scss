@@ -1,0 +1,78 @@
+// 头部导航
+.header {
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  z-index: 10;
+  position: relative;
+}
+
+// 组件选择栏
+.components_menu_item {
+  height: 60px !important;
+  line-height: 0;
+  text-align: center;
+  padding: 0 !important;
+
+  & > i {
+    width: 100%;
+  }
+
+  & > div {
+    margin-top: -16px;
+  }
+}
+
+.components {
+  background: white;
+}
+
+.canvas {
+  position: relative;
+  background: rgb(120, 112, 255);
+  width: 320px;
+}
+
+.applet_title {
+  background: url('../../assets/applet_title.png');
+  width: 320px;
+  height: 66px;
+  position: relative;
+  & > h3 {
+    position: absolute;
+    top: 55%;
+    left: 44%;
+    color: white;
+  }
+}
+
+.applet_content {
+  overflow-x: hidden;
+  height: 500px;
+  width: 100%;
+  background: white;
+}
+
+.applet_footer {
+  width: 320px;
+  border-top: 1px #eee solid;
+  height: 50px;
+  background: white;
+}
+
+// 内容
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 编辑栏
+.edit {
+  background: white;
+}
+
+.logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}

@@ -1,20 +1,17 @@
-import React from 'react';
-import styles from './index.css';
+import React, { memo } from 'react';
+import { Layout } from 'antd';
+import styles from './index.scss';
 
-export type BasicLayoutComponent<P> = React.SFC<P>;
-
-export interface BasicLayoutProps extends React.Props<any> {
+interface IProps {
+  children?: object;
   history?: History;
   location?: Location;
 }
 
-const BasicLayout: BasicLayoutComponent<BasicLayoutProps> = props => {
+export default memo((props: IProps) => {
   return (
-    <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to umi!</h1>
-      { props.children }
-    </div>
+    <Layout tagName={'main'} className={styles.layout}>
+      {props.children}
+    </Layout>
   );
-};
-
-export default BasicLayout;
+});
