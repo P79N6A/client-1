@@ -4,6 +4,16 @@
   box-shadow: 0 2px 8px #f0f1f2;
   z-index: 10;
   position: relative;
+  padding: 0;
+  overflow: hidden;
+  & > ul {
+    border: none;
+    height: 64px;
+    line-height: 64px;
+    & > li {
+      border: none;
+    }
+  }
 }
 
 // 组件选择栏
@@ -26,6 +36,14 @@
   background: white;
 }
 
+// 内容
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .canvas {
   position: relative;
   background: rgb(120, 112, 255);
@@ -37,6 +55,7 @@
   width: 320px;
   height: 66px;
   position: relative;
+
   & > h3 {
     position: absolute;
     top: 55%;
@@ -59,11 +78,16 @@
   background: white;
 }
 
-// 内容
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.tools {
+  position: absolute;
+  top: 35%;
+  left: 90%;
+  height: 245px;
+  background: white;
+  width: 50px;
+  border-radius: 8px;
+  text-align: center;
+  padding: 5px;
 }
 
 // 编辑栏
