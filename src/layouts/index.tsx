@@ -8,9 +8,23 @@ interface IProps {
   location?: Location;
 }
 
+/**
+ * 程序入口
+ * 功能
+ * 1. 全局父div样式 ✅
+ * 2. 通过路由区分父级样式 ✅
+ */
 export default memo((props: IProps) => {
+  if (props.location.pathname === '/applet') {
+    return (
+      <Layout className={styles.applet} tagName={'main'}>
+        {props.children}
+      </Layout>
+    );
+  }
+
   return (
-    <Layout tagName={'main'} className={styles.layout}>
+    <Layout className={styles.layout} tagName={'main'}>
       {props.children}
     </Layout>
   );

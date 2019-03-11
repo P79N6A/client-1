@@ -10,8 +10,12 @@
   },
   "dependencies": {
     "antd": "^3.14.1",
+    "axios": "^0.18.0",
+    "braft-editor": "^2.2.9",
+    "braft-extensions": "^0.0.16",
     "dva": "^2.4.1",
     "react": "^16.8.4",
+    "react-color": "^2.17.0",
     "react-dom": "^16.8.4"
   },
   "devDependencies": {

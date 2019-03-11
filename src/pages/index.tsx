@@ -1,11 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './index.scss';
 
-
-export default function() {
-  return (
-    <div >
-      fasdf
-    </div>
-  );
-}
+export default memo(() => {
+  return <div>首页</div>;
+});
