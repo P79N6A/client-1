@@ -1,0 +1,32 @@
+---
+name: form
+route: /form
+menu: 📃 小程序页
+---
+
+import Form from "./Form";
+import { $$form } from "./database";
+
+# form component
+
+## 使用
+
+```
+  <Form {...data}/>
+```
+
+## 示例
+
+<Form {...$$form()} />
+
+## 接口
+
+```
+  type?: string;
+  item?: Array<{
+    type: string;
+    name: string;
+    value: Array<{ label: string; value: string | number }>;
+    key: string;
+  }>;
+```

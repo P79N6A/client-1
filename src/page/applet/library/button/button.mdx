@@ -1,0 +1,31 @@
+---
+name: button
+route: /button
+menu: 📃 小程序页
+---
+
+import Button from "./Button";
+import { $$button } from "./database";
+
+# button component
+
+## 使用
+
+```
+  <Button {...data}/>
+```
+
+## 示例
+
+<Button {...$$button("blue")} />
+
+## 接口
+
+```
+  type?: string; // 提供，不使用
+  desc: string;
+  fontSize: number;
+  color: string;
+  background: string;
+  theme: string;
+```

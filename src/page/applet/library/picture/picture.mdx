@@ -1,0 +1,29 @@
+---
+name: picture
+route: /picture
+menu: 📃 小程序页
+---
+
+import Picture from "./Picture";
+import { $$picture } from "./database";
+
+# picture component
+
+## 使用
+
+```
+  <Picture {...data}/>
+```
+
+## 示例
+
+<div style={{ width: "200px", height: "200px" }}>
+  <Picture {...$$picture()} />
+</div>
+
+## 接口
+
+```
+  type?: string;
+  src?: string;
+```

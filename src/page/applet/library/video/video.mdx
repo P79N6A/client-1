@@ -1,0 +1,29 @@
+---
+name: video
+route: /video
+menu: 📃 小程序页
+---
+
+import Video from "./Video";
+import { $$video } from "./database";
+
+# video component
+
+## 使用
+
+```
+  <Video {...data}/>
+```
+
+## 示例
+
+<Video {...$$video()} />
+
+## 接口
+
+```
+  type: string;
+  src: string;
+  poster: string;
+  autoPlay: false;
+```
