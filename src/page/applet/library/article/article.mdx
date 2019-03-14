@@ -1,0 +1,28 @@
+---
+name: article
+route: /article
+menu: 📃 小程序页
+---
+
+import Article from "./Article";
+import { $$article } from "./database";
+
+# article component
+
+## 使用
+
+```
+  <Article {...data}/>
+```
+
+## 示例
+
+<Article {...$$article()} />
+
+## 接口
+
+```
+  type?: string;
+  item?: [{ key: string; id: string; title: string; description: string }];
+  targetKeys?: [];
+```

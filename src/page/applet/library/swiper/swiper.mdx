@@ -1,0 +1,38 @@
+---
+name: swiper
+route: /swiper
+menu: 📃 小程序页
+---
+
+import Swiper from "./Swiper";
+import { $$swiper } from "./database";
+
+# swiper component
+
+## 使用
+
+```
+  <Swiper {...data}/>
+```
+
+## 示例
+
+<Swiper {...$$swiper()} width={"400px"} height={"300px"} />
+
+## 接口
+
+```
+  type?: string;
+  width?: string; // PC端样式问题，必须要有
+  height?: string; // PC端样式问题，必须要有
+  item?: Array<{
+    img?: string;
+    link?: {
+      use?: string;
+      map?: number[];
+      href?: string;
+      phone?: string;
+    };
+  }>;
+  autoPlay?: true;
+```
