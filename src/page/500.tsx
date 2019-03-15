@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
 /**
- * 访问页面不存在
+ * 服务器异常
  */
 export default memo(() => {
-  return <img alt={"404"} />;
+  return <img alt={"500"} />;
 });

@@ -2,17 +2,6 @@ import * as React from "react";
 import { TabBar } from "antd-mobile";
 
 export default React.memo(() => {
-  const renderContent = pageText => {
-    return (
-      <div
-        style={{
-          backgroundColor: "white",
-          height: "100%",
-          textAlign: "center"
-        }}
-      />
-    );
-  };
   return (
     <TabBar
       unselectedTintColor="#949494"
@@ -45,9 +34,7 @@ export default React.memo(() => {
         }
         badge={1}
         data-seed="logId"
-      >
-        {renderContent("Life")}
-      </TabBar.Item>
+      />
       <TabBar.Item
         title="Life"
         key="Life"
@@ -73,9 +60,7 @@ export default React.memo(() => {
         }
         badge={1}
         data-seed="logId"
-      >
-        {renderContent("Life")}
-      </TabBar.Item>
+      />
       <TabBar.Item
         title="Life"
         key="Life"
@@ -101,9 +86,7 @@ export default React.memo(() => {
         }
         badge={1}
         data-seed="logId"
-      >
-        {renderContent("Life")}
-      </TabBar.Item>
+      />
       <TabBar.Item
         title="Life"
         key="Life"
@@ -129,9 +112,7 @@ export default React.memo(() => {
         }
         badge={1}
         data-seed="logId"
-      >
-        {renderContent("Life")}
-      </TabBar.Item>
+      />
     </TabBar>
   );
 });
