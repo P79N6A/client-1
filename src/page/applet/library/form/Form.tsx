@@ -7,14 +7,18 @@ export default React.memo((props: IForm) => {
   const RadioItem = Radio.RadioItem;
 
   // 渲染form 表单
-  const FormItem = ({ data }: any) => {
+  const FormItem = ({
+    data
+  }: {
+    data: { type: string; name: string; value: [] };
+  }) => {
     // 演示
     return (
       <React.Fragment>
         {data.type === "radio" && (
           <React.Fragment>
             <List renderHeader={<div>{data.name}</div>}>
-              {data.value.map(i => (
+              {data.value.map((i: { value: string; label: string }) => (
                 <RadioItem key={i.value}>{i.label}</RadioItem>
               ))}
             </List>
@@ -23,7 +27,7 @@ export default React.memo((props: IForm) => {
         )}
         {data.type === "input" && (
           <React.Fragment>
-            {data.value.map(i => (
+            {data.value.map((i: { value: string; label: string }) => (
               <List renderHeader={<div>{data.name}</div>}>
                 <InputItem value={i.value}>{i.label}</InputItem>
               </List>
@@ -33,7 +37,7 @@ export default React.memo((props: IForm) => {
         )}
         {data.type === "switch" && (
           <React.Fragment>
-            {data.value.map(i => (
+            {data.value.map((i: { value: boolean; label: string }) => (
               <List renderHeader={<div>{data.name}</div>}>
                 <List.Item extra={<Switch checked={i.value} />}>
                   {i.label}
@@ -48,7 +52,7 @@ export default React.memo((props: IForm) => {
 
   return (
     <React.Fragment>
-      {item.map((data, index) => {
+      {item.map((data: any, index) => {
         return <FormItem data={data} key={index} />;
       })}
     </React.Fragment>

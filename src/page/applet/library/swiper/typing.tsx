@@ -2,7 +2,7 @@ export interface ISwiper {
   type?: string;
   width?: string;
   height?: string;
-  item?: Array<{
+  item: Array<{
     img?: string;
     link?: {
       use?: string;

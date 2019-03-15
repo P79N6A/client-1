@@ -1,0 +1,69 @@
+---
+name: 💄 Layout
+route: /layout
+order: 99
+---
+
+# Layout
+
+> 此组件为根组件，用于处理页面代码切割、路由及前置任务
+> 当前组件完成度及待完善可从下面预览
+
+## ✨ Further
+
+- routes controller 🍻
+
+```
+
+```
+
+- extra mission 🍻
+
+```
+
+```
+
+- 为路由添加错误边界 🍻
+
+```
+
+```
+
+- theme 🚧
+
+```
+     typography: {
+       // 字号
+       fontSize: 14,
+       // 字体样式
+       fontFamily: [
+         "-apple-system",
+         "BlinkMacSystemFont",
+         "Segoe UI",
+         "PingFang SC",
+         "Hiragino Sans GB",
+         "Microsoft YaHei",
+         "Helvetica Neue",
+         "Helvetica",
+         "Arial",
+         "sans-serif",
+         "Apple Color Emoji",
+         "Segoe UI Emoji",
+         "Segoe UI Symbol"
+       ].join(",")
+     }
+```
+
+- routes ant code splitting 🚧
+
+```
+    const Applet = lazy(() => import("../page/applet/Applet"));
+    const Home = lazy(() => import("../page/home/Home"));
+    const Admin = lazy(() => import("../page/admin/Admin"));
+```
+
+## 🔊 ChangeLog
+
+### 2019 年 03 月 15 日 15:35:12
+
+- 添加文档

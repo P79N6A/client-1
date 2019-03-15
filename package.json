@@ -13,8 +13,8 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.2",
-    "@material-ui/icons": "^3.0.2",
+    "@material-ui/core": "^4.0.0-alpha.3",
+    "@material-ui/icons": "^4.0.0-alpha.1",
     "antd-mobile": "^2.2.9",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
