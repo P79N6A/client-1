@@ -1,9 +1,8 @@
 import React, { lazy, memo, Suspense } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { LinearProgress } from "@material-ui/core";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { LinearProgress, createMuiTheme } from "@material-ui/core";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import indigo from "@material-ui/core/colors/indigo";
 
 /**
  * 功能
@@ -18,23 +17,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 export default memo(() => {
   // ui theme
   const theme = createMuiTheme({
-    typography: {
-      fontSize: 14,
-      fontFamily: [
-        "-apple-system",
-        "BlinkMacSystemFont",
-        "Segoe UI",
-        "PingFang SC",
-        "Hiragino Sans GB",
-        "Microsoft YaHei",
-        "Helvetica Neue",
-        "Helvetica",
-        "Arial",
-        "sans-serif",
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol"
-      ].join(",")
+    palette: {
+      primary: indigo
     }
   });
   // Loading Style
@@ -58,7 +42,6 @@ export default memo(() => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Router>
         <Suspense fallback={<Loading />}>
           <Switch>
