@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { makeStyles } from "@material-ui/styles";
 import {
   Paper,
@@ -9,32 +9,25 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  ListItemSecondaryAction,
-  Checkbox,
-  Divider
+  ListItemSecondaryAction
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import { Tag } from "antd";
 
-// 样式
+/**
+ * Styles
+ */
 const useStyles = makeStyles((theme: Theme) => ({
   layout: {
-    width: "100%",
-    height: "calc(100vh - 50px)",
     overflow: "hidden",
     padding: "4px 10px 0 10px "
   },
   search: {
     position: "relative",
-    borderRadius: theme.shape.borderRadius,
-
     marginRight: theme.spacing(2),
-    marginLeft: 0,
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto"
-    }
+    marginTop: 10
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -45,16 +38,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center"
   },
-  inputRoot: {
-    color: "inherit"
-  },
-  inputInput: {
+  input: {
+    color: "inherit",
     padding: theme.spacing(1, 1, 1, 7),
     transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: 200
-    }
+    fontSize: 14
+  },
+  recommend: {
+    marginTop: 10,
+    height: "100vh"
+  },
+  tag: {
+    margin: "5px !important"
   }
 }));
 
@@ -63,20 +59,6 @@ export default memo(() => {
   return (
     <div className={classes.layout}>
       <Paper>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="搜索..."
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput
-            }}
-          />
-        </div>
-      </Paper>
-      <Paper style={{ marginTop: 10 }}>
         <List dense>
           <ListItem button>
             <ListItemAvatar>
@@ -92,7 +74,42 @@ export default memo(() => {
           </ListItem>
         </List>
       </Paper>
-      <Paper style={{ marginTop: 10, height: "800px" }} />
+      <Paper className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase placeholder="搜索..." className={classes.input} />
+      </Paper>
+      <div className={classes.tag}>
+        <Tag color="magenta" className={classes.tag}>
+          ma
+        </Tag>
+        <Tag color="red" className={classes.tag}>
+          red
+        </Tag>
+        <Tag color="geekblue" className={classes.tag}>
+          geekblue
+        </Tag>
+        <Tag color="purple" className={classes.tag}>
+          purple
+        </Tag>
+        <Tag color="green" className={classes.tag}>
+          green
+        </Tag>
+        <Tag color="cyan" className={classes.tag}>
+          cyan
+        </Tag>
+        <Tag color="blue" className={classes.tag}>
+          blue
+        </Tag>
+        <Tag color="geekblue" className={classes.tag}>
+          geekblue
+        </Tag>
+        <Tag color="purple" className={classes.tag}>
+          purple
+        </Tag>
+      </div>
+      <Paper className={classes.recommend} />
     </div>
   );
 });

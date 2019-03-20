@@ -1,14 +1,15 @@
 import React, { memo } from "react";
 import { Layout } from "antd";
 import { makeStyles } from "@material-ui/styles";
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
-import ApSider from "./part/ApSider";
-import ApSiderContent from "./part/ApSiderContent";
-import ApCanvas from "./part/ApCanvas";
-import ApEdit from "./part/ApEdit";
+// Layout
+import ApHeader from "./layout/lazy/ApHeader";
+import ApCanvas from "./layout/lazy/ApCanvas";
+import ApSelect from "./layout/lazy/ApSelect";
+import ApEdit from "./layout/lazy/ApEdit";
+import ApSider from "./layout/lazy/ApSider";
 
 /**
- * 样式及antd 组件解析
+ * Styles and Deconstruction
  */
 const { Header, Sider, Content } = Layout;
 const useStyles = makeStyles(() => ({
@@ -20,20 +21,19 @@ const useStyles = makeStyles(() => ({
     minHeight: "900px"
   },
   header: {
-    background: "#fff !important",
-    height: "50px !important"
+    background: `transparent !important`
   },
   side: {
-    background: "transparent !important"
+    background: "transparent !important",
+    position: "relative"
   }
 }));
 
 /**
- * 小程序制作页 布局
- * 功能
- * 1. 页面布局
- * 2. 功能模块引入
- * 3. state 状态交给redux控制
+ * applet made page
+ * features
+ * 1. layout
+ * 2. state controller
  */
 export default memo(() => {
   const classes = useStyles();
@@ -41,20 +41,14 @@ export default memo(() => {
   return (
     <Layout className={classes.layout}>
       <Header className={classes.header}>
-        <AppBar position={"fixed"}>
-          <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit" noWrap>
-              Logo
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <ApHeader />
       </Header>
       <Layout>
         <Sider width={80} theme={"light"}>
           <ApSider />
         </Sider>
         <Sider width={320} theme={"light"} className={classes.side}>
-          <ApSiderContent />
+          <ApSelect />
         </Sider>
         <Content>
           <ApCanvas />

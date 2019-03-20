@@ -20,7 +20,8 @@ module.exports = override(
       camel2DashComponentName: false // default: true
     },
     {
-      libraryName: "antd-mobile"
+      libraryName: "antd-mobile",
+      style: "css"
     }
   ),
   addLessLoader({

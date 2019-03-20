@@ -7,11 +7,10 @@ import LocalMallIcon from "@material-ui/icons/LocalMall";
 import EditAttributesIcon from "@material-ui/icons/EditAttributes";
 import SettingsInputCompositeIcon from "@material-ui/icons/SettingsInputComposite";
 
-// 样式
+/**
+ *  Styles
+ */
 const useStyles = makeStyles(() => ({
-  layout: {
-    height: "calc(100vh - 50px)"
-  },
   item: {
     height: "60px !important",
     lineHeight: 0,
@@ -29,24 +28,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default memo(() => {
-  /**
-   * @description 记录侧边栏选择值，将记录值返回给父组件，组件内根据选择值显示不同样式
-   * 侧边栏工具：
-   * 1. 组件
-   * 2. 插件
-   * 3. 页面
-   */
-  const [select, setSelect] = useState("页面");
-  // 更改侧边栏记录值，数据回调给父组件
-  const onSelect = (name: string) => {
-    setSelect(name);
-    // TODO:数据回调给父组件
-  };
-
   const classes = useStyles();
 
   return (
-    <Menu mode="inline" defaultSelectedKeys={["1"]} className={classes.layout}>
+    <Menu mode="inline" defaultSelectedKeys={["1"]}>
       <Menu.Item key="1" className={classes.item}>
         <TextFieldsIcon />
         <div>文本</div>
