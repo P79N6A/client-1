@@ -32,7 +32,7 @@ export default React.memo(() => {
             }}
           />
         }
-        badge={1}
+
         data-seed="logId"
       />
       <TabBar.Item
@@ -58,7 +58,7 @@ export default React.memo(() => {
             }}
           />
         }
-        badge={1}
+
         data-seed="logId"
       />
       <TabBar.Item
@@ -84,7 +84,7 @@ export default React.memo(() => {
             }}
           />
         }
-        badge={1}
+
         data-seed="logId"
       />
       <TabBar.Item

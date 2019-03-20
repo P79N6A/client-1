@@ -1,5 +1,5 @@
 import React, { lazy, memo, Suspense } from "react";
-import { LinearProgress, createMuiTheme } from "@material-ui/core";
+import { LinearProgress, createMuiTheme, CssBaseline } from "@material-ui/core";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import indigo from "@material-ui/core/colors/indigo";
@@ -36,18 +36,19 @@ export default memo(() => {
     );
   };
   // code splitting
-  const Applet = lazy(() => import("../page/applet/Applet"));
+  const Applets = lazy(() => import("../page/applet/Applet"));
   const Home = lazy(() => import("../page/home/Home"));
   const Admin = lazy(() => import("../page/admin/Admin"));
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Router>
         <Suspense fallback={<Loading />}>
           <Switch>
             <Route path="/" exact component={() => <Home />} />
             <Route path="/admin" component={() => <Admin />} />
-            <Route path="/applet" component={() => <Applet />} />
+            <Route path="/applet" component={() => <Applets />} />
           </Switch>
         </Suspense>
       </Router>

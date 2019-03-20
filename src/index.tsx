@@ -1,12 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
-import Layout from "./layout/Layout"; // root component
+import { store } from "./model/redux/store";
+import Layout from "./layout/Layout";
 
-/**
- *application start
- */
-ReactDOM.render(<Layout />, document.getElementById("root"));
+import 'antd-mobile/dist/antd-mobile.css';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Layout />
+  </Provider>,
+  document.getElementById("root")
+);
 
 /**
  * If you want your app to work offline and load faster, you can change
