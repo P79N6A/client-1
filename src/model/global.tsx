@@ -1,16 +1,10 @@
 import produce from "immer";
+import { IGlobalState } from "../typing/model/model";
 
-interface IState {
+const stateDefault: IGlobalState = {
   user: {
-    name: string;
-    email: string;
-  };
-}
-
-const stateDefault: IState = {
-  user: {
-    name: "antoninsorrento",
-    email: "antonin.chenying@gamil.com"
+    email: "antonin.chenying@gamil.com",
+    name: "antoninsorrento"
   }
 };
 

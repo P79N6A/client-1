@@ -1,5 +1,5 @@
 import React, { memo } from "react";
 
 export default memo(() => {
-  return <div>homes</div>;
+  return <div>home</div>;
 });

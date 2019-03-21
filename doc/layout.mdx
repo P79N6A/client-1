@@ -32,37 +32,24 @@ order: 99
 - theme 🚧
 
 ```
-     typography: {
-       // 字号
-       fontSize: 14,
-       // 字体样式
-       fontFamily: [
-         "-apple-system",
-         "BlinkMacSystemFont",
-         "Segoe UI",
-         "PingFang SC",
-         "Hiragino Sans GB",
-         "Microsoft YaHei",
-         "Helvetica Neue",
-         "Helvetica",
-         "Arial",
-         "sans-serif",
-         "Apple Color Emoji",
-         "Segoe UI Emoji",
-         "Segoe UI Symbol"
-       ].join(",")
-     }
+    palette: {
+      primary: indigo
+    }
 ```
 
 - routes ant code splitting 🚧
 
 ```
-    const Applet = lazy(() => import("../page/applet/Applet"));
+    const Applets = lazy(() => import("../page/applet/Applets"));
     const Home = lazy(() => import("../page/home/Home"));
     const Admin = lazy(() => import("../page/admin/Admin"));
 ```
 
 ## 🔊 ChangeLog
+
+### 2019 年 03 月 21 日 16:56:46
+
+- 修缮文档
 
 ### 2019 年 03 月 15 日 15:35:12
 

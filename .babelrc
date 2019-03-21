@@ -1,0 +1,59 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "browsers": [
+            "last 1 version",
+            "> 1%",
+            "maintained node versions",
+            "not dead"
+          ]
+        },
+        "useBuiltIns": "entry",
+        "corejs": "core-js@3"
+      }
+    ],
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": true
+      },
+      "ant"
+    ],
+    [
+      "import",
+      {
+        "libraryName": "antd-mobile",
+        "libraryDirectory": "lib"
+      },
+      "antd-mobile"
+    ],
+    [
+      "import",
+      {
+        "libraryName": "@material-ui/core",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "@material-ui"
+    ],
+    [
+      "import",
+      {
+        "libraryName": "@material-ui/icons",
+        "style": false,
+        "camel2DashComponentName": false
+      },
+      "@material-ui/icons"
+    ],
+    ["@babel/plugin-syntax-dynamic-import"]
+  ]
+}
