@@ -1,12 +1,9 @@
-# admin
+# Clint
 
-## 开发
+> please check the document for details
 
-- 使用 create-react-app
-- 文档 docz
-- babel-plugin-import
+## log
 
-## 调试
+### 2019 年 03 月 21 日 16:59:38
 
-1. 在 webstorm 中先运行程序
-2. 程序运行成功后在代码中打断点，然后点击 debug 按钮即可进行调试
+- planning Map-route

@@ -1,11 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import * as serviceWorker from "./serviceWorker";
-import { store } from "./model/redux/store";
 import Layout from "./layout/Layout";
-
-import 'antd-mobile/dist/antd-mobile.css';
+import { store } from "./model/redux/store";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -15,8 +12,15 @@ ReactDOM.render(
 );
 
 /**
- * If you want your app to work offline and load faster, you can change
- * unregister() to register() below. Note this comes with some pitfalls.
- * Learn more about service workers: https://bit.ly/CRA-PWA
+ * TODO
+ * if you are using a production environment ,be sure
+ * to remove these codes
  */
-serviceWorker.register();
+
+// hmr
+// @ts-ignore
+if (module.hot) {
+  // @ts-ignore
+  module.hot.accept();
+}
+// mock
