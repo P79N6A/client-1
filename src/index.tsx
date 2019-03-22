@@ -16,11 +16,3 @@ ReactDOM.render(
  * if you are using a production environment ,be sure
  * to remove these codes
  */
-
-// hmr
-// @ts-ignore
-if (module.hot) {
-  // @ts-ignore
-  module.hot.accept();
-}
-// mock

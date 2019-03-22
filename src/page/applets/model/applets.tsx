@@ -6,15 +6,30 @@ const stateDefault: IApplets = {
   // 当前需要操作的组件 id
   edit_id: "theme",
   // 导航栏数据
-  nav: $$nav,
-  // 侧边栏父级下标
-  select: "page",
+  nav: ["1", "2", "3"],
   // ui数据集
   ui: {
-    [$$nav[0].ui_id]: []
+    "1": {
+      icon: "add",
+      title: "测试1",
+      desc:'',
+      ui: []
+    },
+    "2": {
+      icon: "add",
+      title: "测试1",
+      desc:'',
+      ui: []
+    },
+    "3": {
+      icon: "add",
+      title: "测试1",
+      desc:'',
+      ui: []
+    }
   },
   // 当前显示的ui下标
-  ui_id: $$nav[0].ui_id
+  ui_id: "1"
 };
 
 export const applets = (state = stateDefault, action: any) =>
