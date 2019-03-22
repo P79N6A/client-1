@@ -49,10 +49,20 @@
       "import",
       {
         "libraryName": "@material-ui/icons",
+        "libraryDirectory": "",
         "style": false,
         "camel2DashComponentName": false
       },
       "@material-ui/icons"
+    ],
+    [
+      "import",
+      {
+        "libraryName": "lodash",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "lodash"
     ],
     ["@babel/plugin-syntax-dynamic-import"]
   ]

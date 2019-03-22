@@ -1,5 +1,3 @@
-import { INav } from "../pages/applets/package/nav";
-
 export interface IGlobalState {
   user: {
     name: string;
@@ -10,11 +8,16 @@ export interface IGlobalState {
 export interface IApplets {
   edit_id: string;
 
-  nav: INav;
+  nav: string[];
 
-  select: string;
-
-  ui: {};
+  ui: {
+    [name: string]: { icon: string; title: string; ui: object[]; desc: string };
+  };
 
   ui_id: string;
+}
+
+export interface IState {
+  global: IGlobalState;
+  applets: IApplets;
 }

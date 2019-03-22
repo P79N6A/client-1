@@ -20,15 +20,11 @@ order: 800
 ```
   edit_id: string;
 
-  nav: Array<{
-    icon: string;
-    title: string;
-    ui_id: string;
-  }>;
+  nav: string[];
 
-  select: string;
-
-  ui: {};
+  ui: {
+    [name: string]: { icon: string; title: string; ui: object[]; desc: string };
+  };
 
   ui_id: string;
 ```
