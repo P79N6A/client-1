@@ -1,9 +1,11 @@
-# Clint
+# admin
 
-> please check the document for details
+## 🚧 TODO
 
-## log
+- Bundle size optimization
 
-### 2019 年 03 月 21 日 16:59:38
+## 🔊 change
 
-- planning Map-route
+### 2019 年 03 月 25 日 11:19:32
+
+- Change CLI to [create-react-app](https://facebook.github.io/create-react-app)

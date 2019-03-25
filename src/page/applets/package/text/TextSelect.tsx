@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import QueueAnim from "rc-queue-anim";
 import { Tag } from "antd";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
