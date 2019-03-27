@@ -1,11 +1,12 @@
 # admin
 
-## 🚧 TODO
 
-- Bundle size optimization
 
-## 🔊 change
+## 🚧 TODO 
 
-### 2019 年 03 月 25 日 11:19:32
+- add applet model
+- made applet layout and features
 
-- Change CLI to [create-react-app](https://facebook.github.io/create-react-app)
+## 🔊 ChangeLog
+
+- change umi.js cli
