@@ -11,8 +11,9 @@
 /dist
 
 # misc
-.DS_Store
 .idea
+.DS_Store
+
 # umi
 .umi
 .umi-production
