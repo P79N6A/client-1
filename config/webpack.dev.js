@@ -14,15 +14,15 @@ module.exports = merge(common, {
       warnings: true,
       errors: true
     },
-    port: "8000",
+    port: "8080",
     // 路由配置
     historyApiFallback: true
   },
   plugins: [
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: ["开发服务器已启动 http://localhost:8000"],
-        notes: ["局域网访问地址 http://[本机ip地址]:8000"]
+        messages: ["开发服务器已启动 http://localhost:8080"],
+        notes: ["局域网访问地址 http://[本机ip地址]:8080"]
       },
       clearConsole: true
     }),

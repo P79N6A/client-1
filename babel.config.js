@@ -9,6 +9,7 @@ const presets = [
         safari: "11.1",
         ie: "11"
       },
+      modules: false,
       useBuiltIns: "usage",
       corejs: 3
     }
@@ -17,6 +18,42 @@ const presets = [
   ["@babel/preset-react"]
 ];
 
-const plugins = [["@babel/plugin-syntax-dynamic-import"]];
+const plugins = [
+  [
+    "import",
+    {
+      libraryName: "antd",
+      libraryDirectory: "es",
+      style: true
+    },
+    "ant"
+  ],
+  [
+    "import",
+    {
+      libraryName: "antd-mobile",
+      libraryDirectory: "lib"
+    },
+    "antd-mobile"
+  ],
+  [
+    "import",
+    {
+      libraryName: "lodash",
+      libraryDirectory: "",
+      camel2DashComponentName: false
+    },
+    "lodash"
+  ],
+  [
+    "import",
+    {
+      libraryName: "@material-ui/core",
+      libraryDirectory: "", // default: package
+      camel2DashComponentName: false // default: true
+    }
+  ],
+  ["@babel/plugin-syntax-dynamic-import"]
+];
 
 module.exports = { presets, plugins };

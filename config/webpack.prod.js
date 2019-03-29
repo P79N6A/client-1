@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+const path = require("path");
 const merge = require("webpack-merge");
 const WebpackBar = require("webpackbar");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer");
@@ -13,16 +13,12 @@ module.exports = merge(common, {
   optimization: {
     removeAvailableModules: true,
     removeEmptyChunks: true,
+    runtimeChunk: true,
     splitChunks: {
       cacheGroups: {
-        react: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: "react",
-          chunks: "all"
-        },
-        material: {
-          test: /[\\/]node_modules[\\/](@material-ui|jss)[\\/]/,
-          name: "material",
+        common: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "common",
           chunks: "all"
         }
       }
@@ -35,9 +31,13 @@ module.exports = merge(common, {
     new WebpackBar({
       name: "build"
     }),
-    // moment.js 语言包过滤
-    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh/),
     // 包分析
     new BundleAnalyzerPlugin.BundleAnalyzerPlugin()
-  ]
+  ],
+
+  output: {
+    filename: "[name].[chunkhash].js",
+    chunkFilename: "[name].[chunkhash].js",
+    path: path.resolve(__dirname, "../dist")
+  }
 });
