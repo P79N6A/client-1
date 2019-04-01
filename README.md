@@ -1,35 +1,20 @@
-# Admin
+# 客户端
 
-> 客户端
+> 项目详情请查看文档  
+> ⚠️ 默认已安装 node.js 及 yarn
 
-## 📑 Pages
+## 📑 文档
 
-### home
+请将项目克隆至本地，并运行
 
-- add layout
+```
+  // 安装项目依赖
+  yarn install
 
-### applet
+  // 启动文档
+  yarn doc
+```
 
-- add layout
+## 🐵 开发人员
 
-### admin
-
-- add layout
-
-### applet-admin
-
-- add layout
-
-## 🏗 Webpack feature
- 
-- babel + typescript + tslint
-- code splitting
-- css extract
-- antd,material,lodash,antd-mobile config
-
-## 🔊 ChangeLog
-
-### 2019 年 03 月 29 日 11:41:17
-
-- pages layout
-- config webpack
+[陈迎](https://github.com/AntoninSorrento)
