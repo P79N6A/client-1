@@ -1,5 +1,5 @@
 import React, { memo, Suspense } from "react";
-import { Layout } from "antd";
+import { ConfigProvider, Empty, Icon, Layout } from "antd";
 import { LinearProgress } from "@material-ui/core";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -28,21 +28,24 @@ export default memo(() => {
   const Applet = React.lazy(() => import("../page/Applet"));
   const AppletAdmin = React.lazy(() => import("../page/AppletAdmin"));
 
+  const customizeRenderEmpty = () => <Empty description={"暂无数据"} />;
   // Render
   return (
     <Layout className={classes.root}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Suspense fallback={<LinearProgress />}>
-            <Switch>
-              <Route path="/" exact={true} component={Home} />
-              <Route path="/admin" component={Admin} />
-              <Route path="/applet" component={Applet} />
-              <Route path="/applet-admin" component={AppletAdmin} />
-            </Switch>
-          </Suspense>
-        </BrowserRouter>
-      </ThemeProvider>
+      <ConfigProvider renderEmpty={customizeRenderEmpty}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Suspense fallback={<LinearProgress />}>
+              <Switch>
+                <Route path="/" exact={true} component={Home} />
+                <Route path="/admin" component={Admin} />
+                <Route path="/applet" component={Applet} />
+                <Route path="/applet-admin" component={AppletAdmin} />
+              </Switch>
+            </Suspense>
+          </BrowserRouter>
+        </ThemeProvider>
+      </ConfigProvider>
     </Layout>
   );
 });

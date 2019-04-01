@@ -14,10 +14,10 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
     // splitting antd icon
     alias: {
-      "@ant-design/icons/lib/dist$": path.resolve(
-        __dirname,
-        "../public/icon.js"
-      )
+      // "@ant-design/icons/lib/dist$": path.resolve(
+      //   __dirname,
+      //   "../public/icon.js"
+      // )
     }
   },
   module: {
@@ -39,7 +39,10 @@ module.exports = {
             loader: "less-loader",
             options: {
               javascriptEnabled: true,
-              modifyVars: {}
+              modifyVars: {
+                "@layout-header-background": "transparent",
+                "@layout-sider-background": "transparent"
+              }
             }
           }
         ]

@@ -1,23 +1,27 @@
-import React, { memo, Fragment } from "react";
-import { Divider, Icon, Layout, Menu } from "antd";
-import { makeStyles } from "@material-ui/styles";
-import { AppBar, Button, Toolbar } from "@material-ui/core";
-import Logo from "../component/Logo";
+import React, { memo, Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { Divider, Layout, Menu } from "antd";
+import { makeStyles } from "@material-ui/styles";
+import { Button, Toolbar } from "@material-ui/core";
+import Logo from "../component/Logo";
+import SideRender from "../package/applet-made/SideRender";
+import EditRender from "../package/applet-made/EditRender";
 export default memo(() => {
+    // antd 组件解构
     const { Header, Content, Sider } = Layout;
-    // style
+    // 样式
     const useStyles = makeStyles((theme) => ({
         // layout
         root: { height: "100vh", overflow: "hidden" },
         // header
+        header: {
+            padding: 0
+        },
         bar: {
-            paddingLeft: 56,
             height: "64px",
             lineHeight: "64px",
             overflow: "hidden",
-            background: "#fff",
-            boxShadow: `${theme.shadows[0]} !important`
+            background: "transparent"
         },
         grow: {
             flexGrow: 1
@@ -29,6 +33,8 @@ export default memo(() => {
             marginLeft: theme.spacing(2)
         },
         icon: {
+            width: 20,
+            height: 20,
             marginRight: theme.spacing(1)
         },
         button: {
@@ -37,13 +43,24 @@ export default memo(() => {
             boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
             color: "#fff"
         },
-        // side
-        menu: {
-            position: "relative",
-            zIndex: 10000,
-            boxShadow: `${theme.shadows[15]} !important`
+        divider: {
+            background: "red !important"
         },
-        menu_item: {
+        // side
+        side: {
+            position: "relative",
+            zIndex: theme.zIndex.appBar + 1,
+            boxShadow: theme.shadows[15],
+            background: "#273543"
+        },
+        side_icon: {
+            width: 21,
+            height: 21,
+            verticalAlign: "-0.15em",
+            fill: "currentColor",
+            overflow: "hidden"
+        },
+        side_item: {
             boxShadow: "none",
             height: "60px !important",
             lineHeight: 0,
@@ -62,7 +79,7 @@ export default memo(() => {
         edit: {},
         // content
         content: {
-            padding: "16px"
+            padding: "24px"
         },
         canvas: {
             width: "340px",
@@ -73,55 +90,92 @@ export default memo(() => {
         }
     }));
     const classes = useStyles();
-    // side item data
+    // side menu 数据记录，默认 text
+    const [side, setSide] = useState("text");
+    const changeSide = ({ key }) => {
+        setSide(key);
+    }; //menu item 点击时回调
     const item = [
-        { desc: "文本", icon: React.createElement(Icon, { type: "font-colors" }), type: "text" },
-        { desc: "按钮", icon: React.createElement(Icon, { type: "select" }), type: "button" },
-        { desc: "图片", icon: React.createElement(Icon, { type: "picture" }), type: "picture" },
-        { desc: "商品", icon: React.createElement(Icon, { type: "shopping" }), type: "commodity" },
-        { desc: "插件", icon: React.createElement(Icon, { type: "deployment-unit" }), type: "plugin" }
-    ];
+        {
+            desc: "文本",
+            icon: (React.createElement("svg", { className: classes.side_icon, "aria-hidden": "true" },
+                React.createElement("use", { xlinkHref: "#iconfile" }))),
+            type: "text"
+        },
+        {
+            desc: "按钮",
+            icon: (React.createElement("svg", { className: classes.side_icon, "aria-hidden": "true" },
+                React.createElement("use", { xlinkHref: "#iconanniu" }))),
+            type: "button"
+        },
+        {
+            desc: "图片",
+            icon: (React.createElement("svg", { className: classes.side_icon, "aria-hidden": "true" },
+                React.createElement("use", { xlinkHref: "#icontupian" }))),
+            type: "picture"
+        },
+        {
+            desc: "商品",
+            icon: (React.createElement("svg", { className: classes.side_icon, "aria-hidden": "true" },
+                React.createElement("use", { xlinkHref: "#iconshangpin" }))),
+            type: "commodity"
+        },
+        {
+            desc: "插件",
+            icon: (React.createElement("svg", { className: classes.side_icon, "aria-hidden": "true" },
+                React.createElement("use", { xlinkHref: "#iconxingzhuanggongnengtubiao-" }))),
+            type: "plugin"
+        }
+    ]; // 侧边项 数据
     return (React.createElement(Fragment, null,
-        React.createElement(Sider, { width: 80, className: classes.menu },
+        React.createElement(Sider, { width: 80, className: classes.side },
             React.createElement(Logo, null),
-            React.createElement(Menu, { theme: "dark" }, item.map((data) => {
-                return (React.createElement(Menu.Item, { key: data.type, className: classes.menu_item },
+            React.createElement(Menu, { theme: "dark", selectedKeys: [side], onClick: changeSide }, item.map((data) => {
+                return (React.createElement(Menu.Item, { key: data.type, className: classes.side_item },
                     data.icon,
                     React.createElement("div", null, data.desc)));
             }))),
         React.createElement(Layout, null,
-            React.createElement(Header, null,
-                React.createElement(AppBar, { className: classes.bar },
-                    React.createElement(Toolbar, { variant: "dense", className: classes.bar },
-                        React.createElement(Link, { to: "/applet-admin" },
-                            React.createElement(Button, { className: classes.menuSpace },
-                                React.createElement(Icon, { type: "build", className: classes.icon }),
-                                "\u5C0F\u7A0B\u5E8F\u7BA1\u7406")),
+            React.createElement(Header, { className: classes.header },
+                React.createElement(Toolbar, { variant: "dense", className: classes.bar },
+                    React.createElement(Link, { to: "/applet-admin" },
                         React.createElement(Button, { className: classes.menuSpace },
-                            React.createElement(Icon, { type: "interation", className: classes.icon }),
-                            "\u6A21\u677F\u4E2D\u5FC3"),
-                        React.createElement(Button, { className: classes.menuSpace },
-                            React.createElement(Icon, { type: "question-circle", className: classes.icon }),
-                            "\u5E2E\u52A9"),
-                        React.createElement("div", { className: classes.grow }),
-                        React.createElement(Button, { variant: "contained", className: `${classes.menuSpace} ${classes.button}` },
-                            React.createElement(Icon, { type: "bulb", className: classes.icon }),
-                            "\u53D1\u5E03"),
-                        React.createElement(Button, { className: classes.menuSpace },
-                            React.createElement(Icon, { type: "eye", className: classes.icon }),
-                            "\u9884\u89C8"),
-                        React.createElement(Button, { className: classes.menuSpace },
-                            React.createElement(Icon, { type: "save", className: classes.icon }),
-                            "\u4FDD\u5B58"),
-                        React.createElement(Divider, { type: "vertical", style: { color: "blue" } }),
-                        React.createElement(Link, { to: "/" },
-                            React.createElement(Button, { className: classes.quite },
-                                React.createElement(Icon, { type: "poweroff", className: classes.icon }),
-                                "\u9000\u51FA"))))),
+                            React.createElement("svg", { "aria-hidden": "true", className: `${classes.icon} icon` },
+                                React.createElement("use", { xlinkHref: "#icongengduo" })),
+                            "\u5C0F\u7A0B\u5E8F\u7BA1\u7406")),
+                    React.createElement(Button, { className: classes.menuSpace },
+                        React.createElement("svg", { "aria-hidden": "true", className: `${classes.icon} icon` },
+                            React.createElement("use", { xlinkHref: "#iconmoban" })),
+                        "\u6A21\u677F\u4E2D\u5FC3"),
+                    React.createElement(Button, { className: classes.menuSpace },
+                        React.createElement("svg", { "aria-hidden": "true", className: `${classes.icon} icon` },
+                            React.createElement("use", { xlinkHref: "#iconbangzhu" })),
+                        "\u5E2E\u52A9"),
+                    React.createElement("div", { className: classes.grow }),
+                    React.createElement(Button, { variant: "contained", className: `${classes.menuSpace} ${classes.button}` },
+                        React.createElement("svg", { "aria-hidden": "true", className: `${classes.icon} icon` },
+                            React.createElement("use", { xlinkHref: "#iconfabu" })),
+                        "\u53D1\u5E03"),
+                    React.createElement(Button, { className: classes.menuSpace },
+                        React.createElement("svg", { "aria-hidden": "true", className: `${classes.icon} icon` },
+                            React.createElement("use", { xlinkHref: "#iconyulan" })),
+                        "\u9884\u89C8"),
+                    React.createElement(Button, { className: classes.menuSpace },
+                        React.createElement("svg", { "aria-hidden": "true", className: `${classes.icon} icon` },
+                            React.createElement("use", { xlinkHref: "#iconfuzhi" })),
+                        "\u4FDD\u5B58"),
+                    React.createElement(Divider, { type: "vertical", className: classes.divider }),
+                    React.createElement(Link, { to: "/" },
+                        React.createElement(Button, { className: classes.quite },
+                            React.createElement("svg", { "aria-hidden": "true", className: `${classes.icon} icon` },
+                                React.createElement("use", { xlinkHref: "#icontuichu" })),
+                            "\u9000\u51FA")))),
             React.createElement(Layout, { className: classes.content },
-                React.createElement(Sider, { width: 272, theme: "light" }),
+                React.createElement(Sider, { width: 272 },
+                    React.createElement(SideRender, { type: side })),
                 React.createElement(Content, null,
                     React.createElement("div", { className: classes.canvas })),
-                React.createElement(Sider, { width: 336, theme: "light" })))));
+                React.createElement(Sider, { width: 336 },
+                    React.createElement(EditRender, null))))));
 });
 //# sourceMappingURL=Applet.js.map
