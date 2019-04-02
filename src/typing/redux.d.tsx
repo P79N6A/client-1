@@ -28,6 +28,8 @@ interface IAppletState {
     };
   };
 
+  // 侧边栏选择记录
+  side: string;
   // 记录当前显示页面 id
   page_id: string;
   // 记录需编辑的 ui字段下的  组件下标

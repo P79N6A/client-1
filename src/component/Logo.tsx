@@ -1,16 +1,19 @@
+/** @jsx jsx
+ *  @description 小程序制作页
+ *  @author 陈迎
+ *  功能及完成度
+ * */
 import React, { memo } from "react";
-import { Theme } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import { css, jsx } from "@emotion/core";
 export default memo(() => {
-  // style
-  const useStyles = makeStyles((theme: Theme) => ({
-    logo: {
-      height: 32,
-      background: "rgba(255,255,255,.2)",
-      margin: 16
-    }
-  }));
-  const classes = useStyles();
+  // 样式
+  const styles = {
+    logo: css`
+      height: 32px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 16px;
+    `
+  };
 
-  return <div className={classes.logo} />;
+  return <div css={styles.logo} />;
 });

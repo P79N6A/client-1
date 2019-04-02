@@ -15,7 +15,14 @@ const presets = [
     }
   ],
   ["@babel/preset-typescript"],
-  ["@babel/preset-react"]
+  ["@babel/preset-react"],
+  [
+    "@emotion/babel-preset-css-prop",
+    {
+      autoLabel: true,
+      labelFormat: "[local]"
+    }
+  ]
 ];
 
 const plugins = [

@@ -11,7 +11,7 @@ module.exports = merge(common, {
     quiet: true,
     hot: true,
     overlay: {
-      warnings: true,
+      warnings: false,
       errors: true
     },
     port: "8080",

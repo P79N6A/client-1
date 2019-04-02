@@ -1,50 +1,48 @@
+/** @jsx jsx
+ *  @description 页面
+ *  @author 陈迎
+ *  功能及完成度
+ *  1. 页面切割
+ *  2. 错误页面
+ * */
 import React, { memo, Suspense } from "react";
-import { ConfigProvider, Empty, Icon, Layout } from "antd";
+import { css, jsx } from "@emotion/core";
+import { ConfigProvider, Empty, Layout, Spin } from "antd";
 import { LinearProgress } from "@material-ui/core";
-import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
-/**
- * TODO
- * 1. error handling
- */
 export default memo(() => {
-  // theme
-  const theme = createMuiTheme({});
+  // 样式
+  const styles = css`
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  `;
 
-  // Global style
-  const useStyles = makeStyles(() => ({
-    root: {
-      width: "100vw",
-      height: "100vh"
-    }
-  }));
-  const classes = useStyles();
+  // antd 全局配置配置 ->空状态
+  const customizeRenderEmpty = () => <Empty description={"暂无数据"} />;
 
-  // Code splitting
+  // 页面代码切割
   const Admin = React.lazy(() => import("../page/Admin"));
   const Home = React.lazy(() => import("../page/Home"));
-  const Applet = React.lazy(() => import("../page/Applet"));
+  const Applet = React.lazy(() => import("../page/applet/Applet"));
   const AppletAdmin = React.lazy(() => import("../page/AppletAdmin"));
 
-  const customizeRenderEmpty = () => <Empty description={"暂无数据"} />;
-  // Render
   return (
-    <Layout className={classes.root}>
+    <Layout css={styles}>
       <ConfigProvider renderEmpty={customizeRenderEmpty}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <Suspense fallback={<LinearProgress />}>
-              <Switch>
-                <Route path="/" exact={true} component={Home} />
-                <Route path="/admin" component={Admin} />
-                <Route path="/applet" component={Applet} />
-                <Route path="/applet-admin" component={AppletAdmin} />
-              </Switch>
-            </Suspense>
-          </BrowserRouter>
-        </ThemeProvider>
+        <BrowserRouter>
+          <Suspense
+            fallback={<Spin indicator={<LinearProgress />} delay={300} />}
+          >
+            <Switch>
+              <Route path="/" exact={true} component={Home} />
+              <Route path="/admin" component={Admin} />
+              <Route path="/applet" component={Applet} />
+              <Route path="/applet-admin" component={AppletAdmin} />
+            </Switch>
+          </Suspense>
+        </BrowserRouter>
       </ConfigProvider>
     </Layout>
   );
