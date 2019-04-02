@@ -1,7 +1,10 @@
 import produce from "immer";
 
+type IAction = { type: string; payload: any };
+
 const stateDefault: IAppletState = {
-  theme: "rgb(33, 150, 243)",
+  // 需要ajax 同步信息
+  theme: "#3f51b5",
   nav: [
     {
       page_id: "exname1",
@@ -70,25 +73,32 @@ const stateDefault: IAppletState = {
     }
   },
 
+  // 本地
+  side: "model",
   page_id: "exname1",
   ui_index: 0,
   edit_type: "theme"
 };
 
-export const applet = (
-  state = stateDefault,
-  action: { type: string; payload: any }
-) =>
+export const applet = (state = stateDefault, action: IAction) =>
   produce(state, draft => {
     switch (action.type) {
       case "nav":
         draft.nav = action.payload.data;
         break;
+      //  向ui字段中添加数据
       case "ui_add":
         draft.pages[draft.page_id].ui.push(action.payload.data);
+        draft.edit_type = action.payload.type;
+        draft.ui_index = draft.pages[draft.page_id].ui.length - 1;
         break;
-      case "theme":
+      //  主题色更改
+      case "themeChange":
         draft.theme = action.payload.data;
+        break;
+      // 侧边栏项目选择
+      case "sideChange":
+        draft.side = action.payload.data;
         break;
       default:
         return state;

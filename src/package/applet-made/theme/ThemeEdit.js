@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Icon, List } from "antd";
 import { HuePicker } from "react-color";
 import { xor, map, keys } from "lodash";
-import { Fab, CardHeader, Card, TextField, Snackbar, Slide, SnackbarContent, DialogTitle, DialogContentText, DialogContent, Dialog, DialogActions, Button, FormLabel, FormControl } from "@material-ui/core";
+import { Fab, CardHeader, Card, TextField, Snackbar, Slide, SnackbarContent, DialogTitle, DialogContent, Dialog, DialogActions, Button, FormControl, FormControlLabel, Checkbox, Select, MenuItem, InputLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { action } from "../../../model/action";
 import produce from "immer";
@@ -30,7 +30,7 @@ export default connect(mapStateToProps, { action })(memo((props) => {
         });
     };
     // 模态框设置
-    const [model, setModel] = useState(true);
+    const [model, setModel] = useState(false);
     const modelOpen = () => {
         setModel(true);
     };
@@ -206,12 +206,36 @@ export default connect(mapStateToProps, { action })(memo((props) => {
                     snackbar.msg) })),
         React.createElement(Dialog, { open: model, onClose: modelClose, "aria-labelledby": "form-dialog-title" },
             React.createElement(DialogTitle, { id: "form-dialog-title" }, "\u521B\u5EFA\u9875\u9762"),
-            React.createElement(DialogContent, { style: { zIndex: 100000 } },
-                React.createElement(DialogContentText, null, "\u586B\u5199\u4E0B\u5217\u8868\u5355\u540E\uFF0C\u5373\u53EF\u521B\u5EFA\u9875\u9762"),
-                React.createElement(FormControl, { style: { width: "100%" } },
-                    React.createElement(FormLabel, null, "\u57FA\u7840\u8BBE\u7F6E"),
+            React.createElement(DialogContent, null,
+                React.createElement(FormControl, { style: { width: 336 } },
                     React.createElement(TextField, { autoFocus: true, margin: "dense", id: "name", label: "\u6807\u9898", fullWidth: true }),
-                    React.createElement(TextField, { autoFocus: true, margin: "dense", id: "name", label: "\u56FE\u6807", fullWidth: true }))),
+                    React.createElement(FormControl, null,
+                        React.createElement(InputLabel, { htmlFor: "age-simple" }, "Age"),
+                        React.createElement(Select, { MenuProps: {
+                                PaperProps: {
+                                    style: {
+                                        maxHeight: 100,
+                                        width: 250
+                                    }
+                                }
+                            }, inputProps: {
+                                name: "age",
+                                id: "age-simple"
+                            } },
+                            " ",
+                            React.createElement(MenuItem, { value: 10 }, "Ten"),
+                            React.createElement(MenuItem, { value: 20 }, "Twenty"),
+                            React.createElement(MenuItem, { value: 30 }, "Thirty"),
+                            React.createElement(MenuItem, { value: 10 }, "Ten"),
+                            React.createElement(MenuItem, { value: 20 }, "Twenty"),
+                            React.createElement(MenuItem, { value: 30 }, "Thirty"),
+                            React.createElement(MenuItem, { value: 10 }, "Ten"),
+                            React.createElement(MenuItem, { value: 20 }, "Twenty"),
+                            React.createElement(MenuItem, { value: 30 }, "Thirty"),
+                            React.createElement(MenuItem, { value: 10 }, "Ten"),
+                            React.createElement(MenuItem, { value: 20 }, "Twenty"),
+                            React.createElement(MenuItem, { value: 30 }, "Thirty"))),
+                    React.createElement(FormControlLabel, { style: { marginTop: 8 }, control: React.createElement(Checkbox, { value: "checkedC" }), label: "\u5BA2\u670D" }))),
             React.createElement(DialogActions, null,
                 React.createElement(Button, { onClick: modelClose, color: "primary" }, "\u5173\u95ED"),
                 React.createElement(Button, { onClick: modelClose, color: "primary" }, "\u521B\u5EFA")))));

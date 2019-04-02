@@ -24,7 +24,11 @@ import {
   FormControlLabel,
   Switch,
   Checkbox,
-  Drawer
+  Drawer,
+  Grid,
+  Select,
+  MenuItem,
+  InputLabel
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { action } from "../../../model/action";
@@ -68,7 +72,7 @@ export default connect(
     };
 
     // 模态框设置
-    const [model, setModel] = useState(true);
+    const [model, setModel] = useState(false);
     const modelOpen = () => {
       setModel(true);
     };
@@ -336,7 +340,10 @@ export default connect(
             aria-describedby="client-snackbar"
             message={
               <span id="client-snackbar">
-                <Icon type="exclamation-circle" style={{ marginRight: 8 }} />
+                <Icon
+                  type="exclamation-circle"
+                  style={{ marginRight: 8 }}
+                />
                 {snackbar.msg}
               </span>
             }
@@ -349,10 +356,8 @@ export default connect(
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">创建页面</DialogTitle>
-          <DialogContent style={{ zIndex: 100000 }}>
-            <DialogContentText>填写下列表单后，即可创建页面</DialogContentText>
-            <FormControl style={{ width: "100%" }}>
-              <FormLabel>基础设置</FormLabel>
+          <DialogContent>
+            <FormControl style={{ width: 336 }}>
               <TextField
                 autoFocus={true}
                 margin="dense"
@@ -360,12 +365,41 @@ export default connect(
                 label="标题"
                 fullWidth={true}
               />
-              <TextField
-                autoFocus={true}
-                margin="dense"
-                id="name"
-                label="图标"
-                fullWidth={true}
+              <FormControl>
+                <InputLabel htmlFor="age-simple">Age</InputLabel>
+                <Select
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 100,
+                        width: 250
+                      }
+                    }
+                  }}
+                  inputProps={{
+                    name: "age",
+                    id: "age-simple"
+                  }}
+                >
+                  {" "}
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControlLabel
+                style={{ marginTop: 8 }}
+                control={<Checkbox value="checkedC" />}
+                label="客服"
               />
             </FormControl>
           </DialogContent>
