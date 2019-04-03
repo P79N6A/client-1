@@ -11,6 +11,7 @@
 /dist
 
 # misc
+.vscode
 .docz
 .idea
 .DS_Store

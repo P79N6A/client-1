@@ -1,51 +1,129 @@
-/** @jsx jsx
- *  @description 画布渲染
- *  @author 陈迎
- *  功能及完成度
- * */
-import React, { memo, Fragment } from "react";
-import { css, jsx } from "@emotion/core";
-import { connect } from "react-redux";
-import { action } from "../../model/action";
-import VideoUI from "../../package/applet-made/video/VideoUI";
-
-interface IProps {
-  applet: IAppletState;
-
-  action({ type: string, payload: any }): void;
-}
+/**
+ * @date 2019年04月03日10:23:16
+ * @author 陈迎（antonin.chenying@gmail.com）
+ * @description 页面部件：编辑栏： 显示组件 编辑表单
+ */
 
 /**
- * 获取reducer中的数据
- * @param state
+ * @description 第三方包引用
+ */
+import { css } from "@emotion/core";
+import { Popover, Typography } from "antd";
+import React, { memo } from "react";
+import { connect } from "react-redux";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+
+/**
+ * @description 项目文件引用
+ */
+import { action } from "../../model/action";
+import NavUI from "../../package/applet-made/nav/NavUI";
+import VideoUI from "../../package/applet-made/video/VideoUI";
+import { IRedux } from "../../typing/redux";
+
+/**
+ * @description 功能
+ * 1. 调用redux 信息，控制主题色
+ * 2. 组件上下拖动
+ * 3. 组件侧边功能设置
+ */
+const Canvas = memo((props: IRedux) => {
+  // props 结构
+  const { applet, action } = props;
+
+  // 样式
+  const styles = {
+    root: css`
+      width: 380px;
+      height: 660px;
+      margin: auto;
+      background: white;
+      overflow: hidden;
+    `,
+    header: css`
+      height: 65px;
+      width: 380px;
+      background: ${applet.theme};
+    `,
+    title: css`
+      margin-top: -35px;
+      text-align: center;
+    `,
+    canvas: css`
+      height: 545px;
+      overflow: auto;
+    `
+  };
+
+  // 编辑按钮
+  const contentEdit = (
+    <div>
+      <p>复制</p>
+      <p>编辑</p>
+      <p>删除</p>
+    </div>
+  );
+
+  // 拖动
+  const SortableItem = SortableElement(({ index, data }) => (
+    <div key={index}>{data.type === "video" && <VideoUI {...data} />}</div>
+  ));
+  const SortableList = SortableContainer(() => {
+    return (
+      <div>
+        {applet.pages[applet.pageId].ui.map((data, index) => {
+          return (
+            <Popover
+              key={index}
+              defaultVisible={true}
+              placement="right"
+              content={contentEdit}
+              trigger="click"
+            >
+              <SortableItem index={index} data={data} key={index} />
+            </Popover>
+          );
+        })}
+      </div>
+    );
+  });
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    // console.log(oldIndex, newIndex);
+  };
+  return (
+    <div css={styles.root}>
+      <div css={styles.header}>
+        <img
+          src={"http://oss-96.oss-cn-hangzhou.aliyuncs.com/applet-heade.png"}
+          alt={"phone"}
+          height={65}
+          width={380}
+        />
+        <div css={styles.title}>
+          <Typography.Text ellipsis={true}>
+            <span style={{ color: "#fff", fontSize: 16 }}>
+              {applet.pages[applet.pageId].title}
+            </span>
+          </Typography.Text>
+        </div>
+      </div>
+      <div css={styles.canvas}>
+        <SortableList onSortEnd={onSortEnd} />
+      </div>
+      <NavUI />
+    </div>
+  );
+});
+
+/**
+ * @description 获取reducer中的数据及 action ,并导出函数
  */
 const mapStateToProps = state => {
   return {
     applet: state.applet
   };
 };
-
-/**
- * 导出函数
- */
 export default connect(
   mapStateToProps,
   { action }
-)(
-  memo((props: IProps) => {
-    //props 结构
-    const { applet, action } = props;
-
-    return (
-      <div>
-        {applet.pages[applet.page_id].ui.map((data, index) => {
-          return (
-            <Fragment key={index}>
-              {data.type === "video" && <VideoUI {...data} />}
-            </Fragment>
-          );
-        })}
-      </div>
-    );
-  })
-);
+)(Canvas);

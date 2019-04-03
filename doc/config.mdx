@@ -13,6 +13,7 @@ route: /config
 - code splitting
 - css extract
 - antd,material,lodash,antd-mobile config
+- emotion 配置
 
 ## 二、package.json 管理
 
@@ -35,10 +36,9 @@ route: /config
     "redux": "^4.0.1" // 状态管理
     "immer": "^2.1.4", // 不可变数据， 用于reducer
     "react-color": "^2.17.0", // 颜色选择插件
+    "redux-devtools-extension": "^2.13.8", // 状态管理可视化工具
   },
   "devDependencies": {
-    "redux-devtools-extension": "^2.13.8", // 状态管理可视化工具
-
     "@babel/core": "^7.4.0", // babel 系列
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",  // babel 系列 ->代码拆分
     "@babel/polyfill": "^7.4.0",  // babel 系列
@@ -49,23 +49,19 @@ route: /config
     "core-js": "3", // babel 插件
     "babel-plugin-emotion": "^10.0.9", // babel 插件
 
-
     "typescript": "^3.3.4000", // ts 系统
     "@types/react": "^16.8.10", // 类型文件
     "@types/react-dom": "^16.8.3", // 类型文件
     "@types/react-router-dom": "^4.3.1", // 类型文件
 
-
     "docz": "^1.0.0-rc.7", // 文档编写包
     "docz-theme-default": "^1.0.0-rc.7", // 文档主题
-
 
     "prettier": "^1.16.4", // 代码约束
     "tslint": "^5.14.0", // 代码约束
     "tslint-config-prettier": "^1.18.0", // 代码约束
     "tslint-eslint-rules": "^5.4.0", // 代码约束
     "tslint-react": "^4.0.0", // 代码约束
-
 
     "css-loader": "^2.1.1", // webpack  系列
     "friendly-errors-webpack-plugin": "^1.7.0",  // webpack  系列

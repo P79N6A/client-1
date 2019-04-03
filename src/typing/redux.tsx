@@ -1,8 +1,15 @@
-interface IAppletState {
+/**
+ * @date 2019年04月03日10:23:16
+ * @author 陈迎（antonin.chenying@gmail.com）
+ * @description 程序商店接口
+ */
+
+// 小程序 数据集合 接口
+export interface IAppletState {
   // 主题色
   theme: string;
   // 导航菜单
-  nav: Array<{ page_id: string; title: string; icon: string }>;
+  nav: Array<{ pageId: string; title: string; icon: string }>;
   // 页面数据
   pages: {
     [id: string]: {
@@ -31,9 +38,21 @@ interface IAppletState {
   // 侧边栏选择记录
   side: string;
   // 记录当前显示页面 id
-  page_id: string;
+  pageId: string;
   // 记录需编辑的 ui字段下的  组件下标
-  ui_index: number;
+  uIndex: number;
   // 当前需要编辑的组件类型
-  edit_type: string;
+  editType: string;
+}
+
+// 发送负载
+export interface IAction {
+  type: string;
+  payload: any;
+}
+
+// Redux数据集+action
+export interface IRedux {
+  applet: IAppletState;
+  action({ type, payload }: { type: string; payload: any }): void;
 }
