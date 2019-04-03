@@ -1,11 +1,11 @@
-/** @jsx jsx
+/**
  *  @description 画布渲染
  *  @author 陈迎
  *  功能及完成度
  * */
-import { memo } from "react";
-import { css, jsx } from "@emotion/core";
-import { Form, Input } from "antd";
+import React, { memo, Fragment } from "react";
+import { css } from "@emotion/core";
+import { Form, Input, PageHeader, Tabs, Card } from "antd";
 const { TextArea } = Input;
 /**
  * video可编辑属性操作栏
@@ -27,10 +27,12 @@ export default Form.create({
         };
     }
 })(memo((props) => {
+    const TabPane = Tabs.TabPane;
     const { getFieldDecorator } = props.form;
     const style = {
         img: css `
         display: flex;
+
         justify-content: center;
         align-items: center;
         margin: auto;
@@ -58,7 +60,12 @@ export default Form.create({
             }
         });
     };
-    return (jsx(Form, null,
-        jsx(Form.Item, Object.assign({ label: "\u89C6\u9891\u94FE\u63A5" }, formItemLayout), getFieldDecorator("src")(jsx(TextArea, { rows: 4, placeholder: "\u89C6\u9891\u94FE\u63A5" })))));
+    return (React.createElement(Fragment, null,
+        React.createElement(PageHeader, { title: "\u89C6\u9891\u8BBE\u7F6E", subTitle: "\u7CBE\u7F8E\u7684\u89C6\u9891\u6709\u52A9\u6709\u54C1\u724C\u7684\u5BA3\u4F20", footer: React.createElement(Tabs, { defaultActiveKey: "1" },
+                React.createElement(TabPane, { tab: "\u57FA\u7840", key: "1" }),
+                React.createElement(TabPane, { tab: "\u6837\u5F0F", key: "2" })) }),
+        React.createElement(Card, null,
+            React.createElement(Form, { style: { marginTop: 16 } },
+                React.createElement(Form.Item, Object.assign({ label: "\u89C6\u9891\u94FE\u63A5" }, formItemLayout), getFieldDecorator("src")(React.createElement(TextArea, { rows: 4, placeholder: "\u89C6\u9891\u94FE\u63A5" })))))));
 }));
 //# sourceMappingURL=VideoEdit.js.map

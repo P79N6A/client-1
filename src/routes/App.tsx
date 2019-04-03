@@ -1,26 +1,45 @@
-/** @jsx jsx
- *  @description 页面
- *  @author 陈迎
- *  功能及完成度
- *  1. 页面切割
- *  2. 错误页面
- * */
-import React, { memo, Suspense } from "react";
-import { css, jsx } from "@emotion/core";
+/**
+ * @date 2019年04月03日10:23:16
+ * @author 陈迎（antonin.chenying@gmail.com）
+ * @description 页面路由
+ */
+
+/**
+ * @description 第三方包引用
+ */
+import { css } from "@emotion/core";
 import { ConfigProvider, Empty, Layout, Spin } from "antd";
-import { LinearProgress } from "@material-ui/core";
+import React, { memo, Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-export default memo(() => {
+/**
+ * @description 功能
+ * - 页面路由拆分
+ * - 防止页面加载失败的错误处理
+ * - 页面加载动画
+ * - 页面统一的最外层布局样式
+ */
+const App = memo(() => {
   // 样式
-  const styles = css`
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  `;
+  const styles = {
+    loading: css`
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+    `,
+    root: css`
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    `
+  };
 
-  // antd 全局配置配置 ->空状态
-  const customizeRenderEmpty = () => <Empty description={"暂无数据"} />;
+  // antd 全局配置配置 -> 空状态
+  const customizeEmpty = () => <Empty description={"暂无数据"} />;
 
   // 页面代码切割
   const Admin = React.lazy(() => import("../page/Admin"));
@@ -29,12 +48,10 @@ export default memo(() => {
   const AppletAdmin = React.lazy(() => import("../page/AppletAdmin"));
 
   return (
-    <Layout css={styles}>
-      <ConfigProvider renderEmpty={customizeRenderEmpty}>
+    <ConfigProvider renderEmpty={customizeEmpty}>
+      <Layout css={styles.root}>
         <BrowserRouter>
-          <Suspense
-            fallback={<Spin indicator={<LinearProgress />} delay={300} />}
-          >
+          <Suspense fallback={<Spin css={styles.loading} delay={300} />}>
             <Switch>
               <Route path="/" exact={true} component={Home} />
               <Route path="/admin" component={Admin} />
@@ -43,7 +60,12 @@ export default memo(() => {
             </Switch>
           </Suspense>
         </BrowserRouter>
-      </ConfigProvider>
-    </Layout>
+      </Layout>
+    </ConfigProvider>
   );
 });
+
+/**
+ * @description 导出页面
+ */
+export default App;

@@ -4,11 +4,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "importHelpers": true,
     "jsx": "react",
     "esModuleInterop": true,
-    "sourceMap": true,
-    "baseUrl": ".",
     "allowSyntheticDefaultImports": true
   }
 }

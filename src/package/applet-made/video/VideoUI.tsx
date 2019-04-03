@@ -1,10 +1,9 @@
-/** @jsx jsx
+/**
  *  @description 画布渲染
  *  @author 陈迎
  *  功能及完成度
- * */
+ */
 import React, { memo } from "react";
-import { css, jsx } from "@emotion/core";
 import { IVideo } from "./database";
 
 /**

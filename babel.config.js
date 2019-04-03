@@ -39,7 +39,8 @@ const plugins = [
     "import",
     {
       libraryName: "antd-mobile",
-      libraryDirectory: "lib"
+      libraryDirectory: "es",
+      style: "css"
     },
     "antd-mobile"
   ],

@@ -1,8 +1,8 @@
-export const $$text = (id?: string, type_id?: string) => {
+export const $$text = (id?: string, typeId?: string) => {
   return {
     type: "text",
-    type_id: type_id,
-    id: id,
+    typeId,
+    id,
     html: "<p>富文本组件</p>",
     height: 100
   };
