@@ -1,11 +1,7 @@
-/** @jsx jsx
- *  @description 小程序制作页
- *  @author 陈迎
- *  功能及完成度
- * */
+import { css } from "@emotion/core";
 import React, { memo } from "react";
-import { css, jsx } from "@emotion/core";
-export default memo(() => {
+
+const Logo = memo(() => {
   // 样式
   const styles = {
     logo: css`
@@ -17,3 +13,5 @@ export default memo(() => {
 
   return <div css={styles.logo} />;
 });
+
+export default Logo;

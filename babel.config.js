@@ -57,7 +57,7 @@ const plugins = [
     "import",
     {
       libraryName: "@material-ui/core",
-      libraryDirectory: "", // default: package
+      libraryDirectory: "", // default: applet-made
       camel2DashComponentName: false // default: true
     }
   ],

@@ -1,12 +1,3 @@
-/**
- * @date 2019年04月03日10:23:16
- * @author 陈迎（antonin.chenying@gmail.com）
- * @description 页面：小程序制作
- */
-
-/**
- * @description 第三方包引用
- */
 import { css } from "@emotion/core";
 import { Button, Toolbar } from "@material-ui/core";
 import { Divider, Icon, Layout, Menu, Typography } from "antd";
@@ -14,15 +5,11 @@ import React, { Fragment, memo } from "react";
 import { CirclePicker } from "react-color";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
-/**
- * @description 项目文件引用
- */
 import Logo from "../../component/Logo";
-import { action } from "../../model/action";
-import { IRedux } from "../../typing/redux";
+import { action } from "../../store/action";
+import { IRedux } from "../../store/typing";
+import AmEdit from "../../lib/applet-made/AmEdit";
 import Canvas from "./Canvas";
-import Edit from "./Edit";
 import Side from "./Side";
 
 /**
@@ -215,7 +202,7 @@ const Applet = memo((props: IRedux) => {
             <Canvas />
           </Content>
           <Sider width={336}>
-            <Edit />
+            <AmEdit />
           </Sider>
         </Layout>
       </Layout>
@@ -226,12 +213,11 @@ const Applet = memo((props: IRedux) => {
 /**
  * @description 获取reducer中的数据及 action ,并导出函数
  */
-const mapStateToProps = state => {
-  return {
-    applet: state.applet
-  };
-};
 export default connect(
-  mapStateToProps,
+  (state: IRedux) => {
+    return {
+      applet: state.applet
+    };
+  },
   { action }
 )(Applet);

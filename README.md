@@ -1,20 +1,27 @@
 # 客户端
 
-> 项目详情请查看文档  
-> ⚠️ 默认已安装 node.js 及 yarn
+## webpack
 
-## 📑 文档
+> 下面列出的功能及需求，都是项目必须要使用的功能  
+> 项目的环境升级及重新配置，都以下面列出的需求为准  
+> 通过不断的迭代运行环境，提升整个程序的运行性能
 
-请将项目克隆至本地，并运行
+### 功能
 
-```
-  // 安装项目依赖
-  yarn install
+- 代码切割
+- less(配合 antd,如后期去除 antd，则删除此插件)
+- babel (如有可能，还是希望使用 typescript 搭建，后期不断完善)
+- antd,material-ui,lodash,ant-mobile,emotion 的按需加载
 
-  // 启动文档
-  yarn doc
-```
+### 环境
 
-## 🐵 开发人员
+- html 文件自动生成及文件自动引用注入
+- babel 编译 typescript 及向下兼容的包引用
+- devServer 的路由配置及良好的热更新
+- webpack 开发环境及生产环境区分
 
-[陈迎](https://github.com/AntoninSorrento)
+### 性能及体验
+
+- 良好的控制台信息输出
+- 对整个文件进行细粒度的打包分配
+- 极快的打包速度，及生成运行环境
