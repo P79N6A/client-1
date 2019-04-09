@@ -8,18 +8,25 @@
  * @description 第三方包引用
  */
 import React from "react";
+import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import { store } from "./model/store"; // 状态管理
-import App from "./routes/App"; // 根组件
+/**
+ * @description 应用程序包引用
+ */
+import { client } from "./service/configure"; // 状态管理
+import App from "./App"; // 根组件
+import { store } from "./store/store";
 
 /**
  * @description 将应用程序渲染至 id 为 root 的 div 下
  */
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ApolloProvider>,
   document.getElementById("root")
 );

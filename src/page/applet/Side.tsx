@@ -15,9 +15,10 @@ import { connect } from "react-redux";
 /**
  * @description 项目文件引用
  */
-import { action } from "../../model/action";
-import $$video from "../../package/applet-made/video/database";
-import { IRedux } from "../../typing/redux";
+import { action } from "../../store/action";
+import { IRedux } from "../../store/typing";
+import $$picture from "../../lib/applet-made/picture/database";
+import $$video from "../../lib/applet-made/video/database";
 
 /**
  * @description 功能
@@ -61,6 +62,12 @@ const Side = memo((props: IRedux) => {
           type: "uiAdd"
         });
         break;
+      case "picture":
+        action({
+          payload: { data: $$picture, type },
+          type: "uiAdd"
+        });
+        break;
     }
   };
   const ModelItem = () => {
@@ -74,7 +81,7 @@ const Side = memo((props: IRedux) => {
             </div>
           </Card.Grid>
           <Card.Grid css={styles.item}>
-            <div>
+            <div onClick={() => addUI("picture")}>
               <Icon type="font-colors" /> <br />
               图片
             </div>

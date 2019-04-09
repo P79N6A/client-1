@@ -16,10 +16,10 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 /**
  * @description 项目文件引用
  */
-import { action } from "../../model/action";
-import NavUI from "../../package/applet-made/nav/NavUI";
-import VideoUI from "../../package/applet-made/video/VideoUI";
-import { IRedux } from "../../typing/redux";
+import { action } from "../../store/action";
+import { IRedux } from "../../store/typing";
+import NavUI from "../../lib/applet-made/nav/NavUI";
+import VideoUI from "../../lib/applet-made/video/VideoUI";
 
 /**
  * @description 功能
@@ -66,7 +66,9 @@ const Canvas = memo((props: IRedux) => {
 
   // 拖动
   const SortableItem = SortableElement(({ index, data }) => (
-    <div key={index}>{data.type === "video" && <VideoUI {...data} />}</div>
+    <div key={index}>
+      {data.type === "video" && <VideoUI {...data} theme={applet.theme} />}
+    </div>
   ));
   const SortableList = SortableContainer(() => {
     return (
@@ -88,7 +90,7 @@ const Canvas = memo((props: IRedux) => {
     );
   });
   const onSortEnd = ({ oldIndex, newIndex }) => {
-    // console.log(oldIndex, newIndex);
+    action({ type: "uiReSite", payload: { oldIndex, newIndex } });
   };
   return (
     <div css={styles.root}>

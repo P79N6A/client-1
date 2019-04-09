@@ -1,0 +1,6 @@
+query user {
+  cat(id: 1) {
+    id
+    name
+  }
+}
