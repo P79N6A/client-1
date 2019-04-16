@@ -1,12 +1,3 @@
-/**
- * @date 2019年04月03日10:23:16
- * @author 陈迎（antonin.chenying@gmail.com）
- * @description 全局统一负载发送函数
- */
-
-/**
- * @description 项目文件引用
- */
 import { IAction } from "./typing";
 
 /**

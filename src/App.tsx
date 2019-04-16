@@ -1,5 +1,6 @@
 import { css } from "@emotion/core";
-import { ConfigProvider, Empty, Layout, Spin } from "antd";
+import { ConfigProvider, Empty, Layout, LocaleProvider, Spin } from "antd";
+import zh_CN from "antd/lib/locale-provider/zh_CN";
 import React, { memo, Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -40,18 +41,20 @@ const App = memo(() => {
 
   return (
     <ConfigProvider renderEmpty={customizeEmpty}>
-      <Layout css={styles.root}>
-        <BrowserRouter>
-          <Suspense fallback={<Spin css={styles.loading} delay={300} />}>
-            <Switch>
-              <Route path="/" exact={true} component={Home} />
-              <Route path="/admin" component={Admin} />
-              <Route path="/applet" component={Applet} />
-              <Route path="/applet-admin" component={AppletAdmin} />
-            </Switch>
-          </Suspense>
-        </BrowserRouter>
-      </Layout>
+      <LocaleProvider locale={zh_CN}>
+        <Layout css={styles.root}>
+          <BrowserRouter>
+            <Suspense fallback={<Spin css={styles.loading} delay={300} />}>
+              <Switch>
+                <Route path="/" exact={true} component={Home} />
+                <Route path="/admin" component={Admin} />
+                <Route path="/applet" component={Applet} />
+                <Route path="/applet-admin" component={AppletAdmin} />
+              </Switch>
+            </Suspense>
+          </BrowserRouter>
+        </Layout>
+      </LocaleProvider>
     </ConfigProvider>
   );
 });

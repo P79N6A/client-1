@@ -8,24 +8,16 @@ module.exports = {
     filename: "[name].[hash].js",
     path: path.resolve(__dirname, "../dist")
   },
-  // change how modules are resolved.
   resolve: {
     // Automatically resolve certain extensions
-    extensions: [".tsx", ".ts", ".js"],
-    // splitting antd icon
-    alias: {
-      // "@ant-design/icons/lib/dist$": path.resolve(
-      //   __dirname,
-      //   "../public/icon.js"
-      // )
-    }
+    extensions: [".tsx", ".ts", ".js"]
   },
   module: {
     rules: [
       {
         test: /\.(tsx|ts|js)$/,
         exclude: /(node_modules|bower_components)/,
-
+        include: /(src)/,
         use: {
           loader: "babel-loader"
         }
@@ -41,7 +33,9 @@ module.exports = {
               javascriptEnabled: true,
               modifyVars: {
                 "@layout-header-background": "transparent",
-                "@layout-sider-background": "transparent"
+                "@layout-sider-background": "transparent",
+                "@text-color": "#4e5b6a",
+                "@heading-color": "#020814"
               }
             }
           }
@@ -51,6 +45,11 @@ module.exports = {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
         loader: "graphql-tag/loader"
+      },
+      {
+        loader: "webpack-ant-icon-loader",
+        enforce: "pre",
+        include: [path.resolve("node_modules/@ant-design/icons/lib/dist")]
       }
     ]
   },
