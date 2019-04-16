@@ -53,15 +53,8 @@ const plugins = [
     },
     "lodash"
   ],
-  [
-    "import",
-    {
-      libraryName: "@material-ui/core",
-      libraryDirectory: "", // default: applet-made
-      camel2DashComponentName: false // default: true
-    }
-  ],
-  ["@babel/plugin-syntax-dynamic-import"]
+  ["@babel/plugin-syntax-dynamic-import"],
+  ["@babel/plugin-proposal-class-properties"]
 ];
 
 module.exports = { presets, plugins };
