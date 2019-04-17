@@ -6,10 +6,13 @@ import { connect } from "react-redux";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import ButtonUI from "../../lib/applet-made/common/button/ButtonUI";
 import DragUI from "../../lib/applet-made/common/drag/DragUI";
+import FormUI from "../../lib/applet-made/common/form/FormUI";
+import NavigationUI from "../../lib/applet-made/common/navigation/NavigationUI";
 import PictureUI from "../../lib/applet-made/common/picture/PictureUI";
+import ShowUI from "../../lib/applet-made/common/show/ShowUI";
 import TextUI from "../../lib/applet-made/common/text/TextUI";
 import VideoUI from "../../lib/applet-made/common/video/VideoUI";
-import NavUI from "../../lib/applet-made/nav/NavUI";
+import NavUI from "../../lib/applet-made/NavUI";
 import { action } from "../../store/action";
 import { IRedux } from "../../store/typing";
 
@@ -103,7 +106,10 @@ const AppletCanvas = memo((props: IRedux) => {
     button: ButtonUI,
     picture: PictureUI,
     drag: DragUI,
-    video: VideoUI
+    video: VideoUI,
+    navigation: NavigationUI,
+    show: ShowUI,
+    form: FormUI
   };
 
   // 组件拖动结束回调

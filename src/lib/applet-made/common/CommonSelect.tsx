@@ -6,7 +6,10 @@ import { action } from "../../../store/action";
 import { IRedux } from "../../../store/typing";
 import $$button from "./button/database";
 import $$drag from "./drag/database";
+import $$form from "./form/database";
+import $$navigation from "./navigation/database";
 import $$picture from "./picture/database";
+import $$show from "./show/database";
 import $$text from "./text/database";
 import $$video from "./video/database";
 
@@ -74,7 +77,7 @@ const CommonSelect = memo((props: IRedux) => {
   // 可选择列表
   const dragList = ["自由布局"];
   const commonList = ["文本", "按钮", "图片"];
-  const commodityList = ["魔方导航", "商品分类", "商品展示"];
+  const commodityList = ["魔方导航", "商品展示"];
   const interactionList = ["表单", "视频"];
 
   const addUI = (itemName: string) => {
@@ -103,6 +106,21 @@ const CommonSelect = memo((props: IRedux) => {
         return action({
           type: "uiAdd",
           payload: $$video
+        });
+      case "魔方导航":
+        return action({
+          type: "uiAdd",
+          payload: $$navigation
+        });
+      case "商品展示":
+        return action({
+          type: "uiAdd",
+          payload: $$show
+        });
+      case "表单":
+        return action({
+          type: "uiAdd",
+          payload: $$form
         });
     }
   };

@@ -5,7 +5,10 @@ import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
 import ButtonEdit from "../../lib/applet-made/common/button/ButtonEdit";
 import DragEdit from "../../lib/applet-made/common/drag/DragEdit";
+import FormEdit from "../../lib/applet-made/common/form/FormEdit";
+import NavigationEdit from "../../lib/applet-made/common/navigation/NavigationEdit";
 import PictureEdit from "../../lib/applet-made/common/picture/PictureEdit";
+import ShowEdit from "../../lib/applet-made/common/show/ShowEdit";
 import TextEdit from "../../lib/applet-made/common/text/TextEdit";
 import VideoEdit from "../../lib/applet-made/common/video/VideoEdit";
 import { action } from "../../store/action";
@@ -117,6 +120,12 @@ const AppletEdit = memo((props: IRedux) => {
         return <DragEdit />;
       case "video":
         return <VideoEdit />;
+      case "navigation":
+        return <NavigationEdit />;
+      case "show":
+        return <ShowEdit />;
+      case "form":
+        return <FormEdit />;
     }
   };
 
@@ -181,7 +190,6 @@ const AppletEdit = memo((props: IRedux) => {
           </TreeNode>
         </Tree>
       </PageHeader>
-
       <Drawer
         title={
           <div style={{ height: "32px", lineHeight: "32px" }}>组件编辑</div>

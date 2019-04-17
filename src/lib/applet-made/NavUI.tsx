@@ -2,8 +2,8 @@ import { Icon } from "antd";
 import { TabBar } from "antd-mobile";
 import React, { memo } from "react";
 import { connect } from "react-redux";
-import { action } from "../../../store/action";
-import { IRedux } from "../../../store/typing";
+import { action } from "../../store/action";
+import { IRedux } from "../../store/typing";
 
 const NavUI = memo((props: IRedux) => {
   const { action, applet } = props;
