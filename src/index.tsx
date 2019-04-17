@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "./store/store";
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: "http://localhost:5000/graphql"
 });
 
