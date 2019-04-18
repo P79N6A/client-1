@@ -2,13 +2,13 @@ import { css } from "@emotion/core";
 import { Icon, Layout, Menu } from "antd";
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "../../component/Logo";
-import AdminAssets from "./AdminAssets";
-import AdminChart from "./AdminChart";
-import AdminCustomer from "./AdminCustomer";
-import AdminOrder from "./AdminOrder";
-import AdminShop from "./AdminShop";
-import AdminStorage from "./AdminStorage";
+import Logo from "../component/Logo";
+import AdminAssets from "../component/admin/AdminAssets";
+import AdminChart from "../component/admin/AdminChart";
+import AdminCustomer from "../component/admin/AdminCustomer";
+import AdminOrder from "../component/admin/AdminOrder";
+import AdminShop from "../component/admin/AdminShop";
+import AdminStorage from "../component/admin/AdminStorage";
 
 const { Header, Sider } = Layout;
 

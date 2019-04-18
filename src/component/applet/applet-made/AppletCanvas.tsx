@@ -1,9 +1,10 @@
-import { css } from "@emotion/core";
-import { Button, Icon, Popconfirm, Tooltip } from "antd";
-import { debounce } from "lodash";
 import React, { Fragment, memo } from "react";
+import { css } from "@emotion/core";
+import { debounce } from "lodash";
 import { connect } from "react-redux";
+import { Button, Icon, Popconfirm, Tooltip } from "antd";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
+
 import ButtonUI from "../../../lib/applet-made/common/button/ButtonUI";
 import DragUI from "../../../lib/applet-made/common/drag/DragUI";
 import FormUI from "../../../lib/applet-made/common/form/FormUI";
@@ -16,8 +17,14 @@ import NavUI from "../../../lib/applet-made/NavUI";
 import { action } from "../../../store/action";
 import { IRedux } from "../../../store/typing";
 
+/**
+ * TODO 使drag组件渲染机制与原始渲染机制共存
+ * 原因：因为自由拖动组件无法与既定渲染机制共存所以需要额外一套机制进行渲染
+ */
 const AppletCanvas = memo((props: IRedux) => {
   const { applet, action } = props;
+
+  // 样式
   const styles = {
     // 画布
     root: css`
@@ -100,17 +107,6 @@ const AppletCanvas = memo((props: IRedux) => {
   const uiDel = (index: number) => {
     action({ type: "uiDel", payload: index });
   };
-  // 展示组件列表集合
-  const uiList = {
-    text: TextUI,
-    button: ButtonUI,
-    picture: PictureUI,
-    drag: DragUI,
-    video: VideoUI,
-    navigation: NavigationUI,
-    show: ShowUI,
-    form: FormUI
-  };
 
   // 组件拖动结束回调
   const onSortEnd = ({ oldIndex, newIndex }) => {
@@ -122,7 +118,9 @@ const AppletCanvas = memo((props: IRedux) => {
     action({ type: "changeEditShow", payload: true });
   };
 
-  // 拖动渲染
+  /**
+   * 可拖拽组件渲染（默认渲染机制）
+   */
   const SortableItem = SortableElement(({ data, index }) => {
     const Component = uiList[data.type];
     return (
@@ -163,61 +161,30 @@ const AppletCanvas = memo((props: IRedux) => {
     return (
       <div>
         {applet.pages[applet.pageId].ui.map((data, index: number) => {
-          return <SortableItem key={index} index={index} data={data} />;
+          return (
+            <SortableItem
+              key={index}
+              index={index}
+              data={data}
+              disabled={applet.uIndex === index && applet.dragUse}
+            />
+          );
         })}
       </div>
     );
   });
 
-  // 普通模块渲染
-  const ItemShow = () => {
-    return (
-      <Fragment>
-        {applet.pages[applet.pageId].ui.map((data, index: number) => {
-          const Component = uiList[data.type];
-          return (
-            <Fragment key={index}>
-              {applet.uIndex === index ? (
-                <div
-                  css={styles.editUItem}
-                  onMouseDown={() => onEnterHover(index)}
-                >
-                  <Component theme={applet.theme} data={data} key={index} />
-                  <div css={styles.uiItemHelp}>
-                    <Button.Group size={"small"}>
-                      <Tooltip placement="bottom" title={"编辑"}>
-                        <Button htmlType={"button"} onClick={openEditShow}>
-                          <Icon type="edit" />
-                        </Button>
-                      </Tooltip>
-                      <Popconfirm
-                        onConfirm={() => uiDel(index)}
-                        placement="top"
-                        title={"确定删除此组件?"}
-                        okText="是"
-                        cancelText="否"
-                      >
-                        <Tooltip placement="bottom" title={"删除"}>
-                          <Button htmlType={"button"}>
-                            <Icon type="delete" />
-                          </Button>
-                        </Tooltip>
-                      </Popconfirm>
-                    </Button.Group>
-                  </div>
-                </div>
-              ) : (
-                <div onMouseDown={() => onEnterHover(index)}>
-                  <Component theme={applet.theme} data={data} key={index} />
-                </div>
-              )}
-            </Fragment>
-          );
-        })}
-      </Fragment>
-    );
+  // 展示组件列表集合
+  const uiList = {
+    text: TextUI,
+    button: ButtonUI,
+    picture: PictureUI,
+    drag: DragUI,
+    video: VideoUI,
+    navigation: NavigationUI,
+    show: ShowUI,
+    form: FormUI
   };
-
   return (
     <div css={styles.root}>
       <div css={styles.header}>
@@ -230,11 +197,7 @@ const AppletCanvas = memo((props: IRedux) => {
         <div css={styles.title}>{applet.pages[applet.pageId].title}</div>
       </div>
       <div css={styles.canvas}>
-        {applet.dragShow ? (
-          <ItemShow />
-        ) : (
-          <SortableList onSortEnd={onSortEnd} lockAxis={"y"} />
-        )}
+        <SortableList onSortEnd={onSortEnd} />
       </div>
       <NavUI />
     </div>

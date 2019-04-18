@@ -11,5 +11,4 @@ rules:
   no-shadowed-variable: false
   object-literal-sort-keys: false
   no-submodule-imports: false
-
-
+  ordered-imports: false

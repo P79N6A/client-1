@@ -81,7 +81,7 @@ const stateDefault: IAppletState = {
   uIndex: 0,
   editType: "theme",
   editShow: false,
-  dragShow: false, // 控制画布的渲染，当使用自由布局组件时，将UI排序列表关闭
+  dragUse: false, // 控制画布的渲染，当使用自由布局组件时，将UI排序列表关闭
   dragIndex: 0 // 移动的组件下表
 };
 
@@ -149,9 +149,8 @@ export const applet = (state = stateDefault, action: IAction) =>
       //  更改ui编辑下标
       case "changeUIndex":
         draft.uIndex = action.payload;
-        // 判断是否选中的是drag组件，如果是则使用 "changeDragShow"
-        draft.dragShow =
-          draft.pages[draft.pageId].ui[draft.uIndex].type === "drag";
+        // dragUse 关闭
+        draft.dragUse = false;
         break;
       //  更改当前操作页面下标
       case "changePageId":
@@ -160,6 +159,11 @@ export const applet = (state = stateDefault, action: IAction) =>
       //  改变页面标题
       case "changePageTitle":
         draft.pages[action.payload.pageId].title = action.payload.title;
+        break;
+
+      //  修改编辑器当前edit显示类型
+      case "changeEditType":
+        draft.editType = action.payload;
         break;
       //  控制编辑侧边栏是否显示
       case "changeEditShow":
@@ -196,13 +200,11 @@ export const applet = (state = stateDefault, action: IAction) =>
         draft.pages[draft.pageId].ui[draft.uIndex].uiList[draft.dragIndex].top =
           action.payload.top;
         break;
-      //  控制dragDow 的开关
-      case "changeDragShow":
-        draft.dragShow = action.payload;
-        break;
+
       //  控制当前移动组件下标
       case "setDragIndex":
         draft.dragIndex = action.payload;
+        draft.dragUse = true;
         break;
 
       // 同步drag ui 的数值

@@ -2,7 +2,7 @@ import { css } from "@emotion/core";
 import { Icon, Menu } from "antd";
 import React, { Fragment, memo } from "react";
 import { connect } from "react-redux";
-import Logo from "../../../component/Logo";
+import Logo from "../../Logo";
 import { action } from "../../../store/action";
 import { IRedux } from "../../../store/typing";
 
@@ -17,9 +17,12 @@ const AppletSider = memo((props: IRedux) => {
       padding: 0;
       & > i {
         width: 100%;
+        font-size: 15px;
       },
       & > div {
         margin-top: -16px;
+        font-size: 15px;
+        
       },
     `
   };

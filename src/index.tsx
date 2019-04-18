@@ -1,20 +1,23 @@
-import ApolloClient from "apollo-boost";
 import React from "react";
-import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { ApolloProvider } from "react-apollo";
+
 import App from "./App";
 import { store } from "./store/store";
+import { ApolloClientConfig } from "./service/config";
 
-export const client = new ApolloClient({
-  uri: "http://localhost:5000/graphql"
-});
-
+/**
+ * 将根组件渲染至页面 div 中
+ * @param <ApolloProvider> 用于graphql请求
+ * @param <Provider>  使Redux store数可用于全局
+ * @param <App /> 根组件
+ */
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <ApolloProvider client={ApolloClientConfig}>
       <App />
-    </Provider>
-  </ApolloProvider>,
+    </ApolloProvider>
+  </Provider>,
   document.getElementById("root")
 );

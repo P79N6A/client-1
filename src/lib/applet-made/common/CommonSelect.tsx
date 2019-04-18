@@ -1,5 +1,5 @@
 import { css } from "@emotion/core";
-import { Card } from "antd";
+import { Button, Card, Icon, Modal } from "antd";
 import React, { memo } from "react";
 import { connect } from "react-redux";
 import { action } from "../../../store/action";
@@ -74,12 +74,26 @@ const CommonSelect = memo((props: IRedux) => {
     `
   };
 
-  // 可选择列表
-  const dragList = ["自由布局"];
-  const commonList = ["文本", "按钮", "图片"];
-  const commodityList = ["魔方导航", "商品展示"];
-  const interactionList = ["表单", "视频"];
+  // 侧边栏显示项列表
+  const itemNameList = ["拖拽", "基础", "产品", "交互"];
+  const itemList = [
+    [{ name: "自由布局", icon: "icon-jiaohushituozhuaicaozuo-" }],
+    [
+      { name: "文本", icon: "icon-wenben" },
+      { name: "按钮", icon: "icon-anniu" },
+      { name: "图片", icon: "icon-tupian" }
+    ],
+    [
+      { name: "魔方导航", icon: "icon-daohang" },
+      { name: "商品展示", icon: "icon-zhanshi" }
+    ],
+    [
+      { name: "表单", icon: "icon-biaodanzidingyi" },
+      { name: "视频", icon: "icon-shipin" }
+    ]
+  ];
 
+  // 先redux 中添加选择的组件数据
   const addUI = (itemName: string) => {
     switch (itemName) {
       case "文本":
@@ -125,68 +139,117 @@ const CommonSelect = memo((props: IRedux) => {
     }
   };
 
+  // 帮助信息
+  const helpMsg = (type: string) => {
+    switch (type) {
+      case "拖拽":
+        Modal.info({
+          title: "拖拽组件介绍",
+          content: (
+            <div>
+              <p>
+                可以在自由布局中添加 文本、按钮、图片，并通过拖拽进行样式的排版
+              </p>
+            </div>
+          ),
+          onOk() {
+            return "";
+          }
+        });
+        break;
+      case "基础":
+        Modal.info({
+          title: "基础组件介绍",
+          content: (
+            <div>
+              <p>基础组件适合于简单的网店样式排版及搭建</p>
+            </div>
+          ),
+          onOk() {
+            return "";
+          }
+        });
+        break;
+      case "产品":
+        Modal.info({
+          title: "拖拽组件介绍",
+          content: (
+            <div>
+              <p>
+                将商品添加至组件中，用户每一次的购买行为都会在后台中进行统计
+              </p>
+            </div>
+          ),
+          onOk() {
+            return "";
+          }
+        });
+        break;
+      case "交互":
+        Modal.info({
+          title: "拖拽组件介绍",
+          content: (
+            <div>
+              <p>用于收集用户信息，简化用户的操作</p>
+            </div>
+          ),
+          onOk() {
+            return "";
+          }
+        });
+        break;
+    }
+  };
   return (
     <div css={styles.layout}>
-      <Card
-        title={"拖拽"}
-        bordered={false}
-        size={"small"}
-        css={styles.mgBottom}
-        bodyStyle={{ padding: 0 }}
-      >
-        {dragList.map((itemName: string, index: number) => {
+      {itemList.map(
+        (data: Array<{ name: string; icon: string }>, index: number) => {
           return (
-            <div onClick={() => addUI(itemName)} key={index}>
-              <Card.Grid css={styles.component_item}>{itemName}</Card.Grid>
-            </div>
+            <Card
+              title={
+                <div>
+                  <Icon type="caret-down" style={{ marginRight: 8 }} />
+                  {itemNameList[index]}
+                </div>
+              }
+              bordered={false}
+              size={"small"}
+              css={styles.mgBottom}
+              bodyStyle={{ padding: 0 }}
+              extra={
+                <Icon
+                  type={"question-circle"}
+                  onClick={() => helpMsg(itemNameList[index])}
+                />
+              }
+              key={index}
+            >
+              {data.map(
+                (itemName: { name: string; icon: string }, index: number) => {
+                  return (
+                    <div onClick={() => addUI(itemName.name)} key={index}>
+                      <Card.Grid css={styles.component_item}>
+                        <svg
+                          style={{
+                            width: 20,
+                            height: 20,
+                            fill: "currentColor",
+                            overflow: "hidden"
+                          }}
+                          aria-hidden="true"
+                        >
+                          <use xlinkHref={`#${itemName.icon}`} />
+                        </svg>
+                        <div>{itemName.name}</div>
+                      </Card.Grid>
+                    </div>
+                  );
+                }
+              )}
+            </Card>
           );
-        })}
-      </Card>
-      <Card
-        title={"基础"}
-        bordered={false}
-        size={"small"}
-        css={styles.mgBottom}
-        bodyStyle={{ padding: 0 }}
-      >
-        {commonList.map((itemName: string, index: number) => {
-          return (
-            <div onClick={() => addUI(itemName)} key={index}>
-              <Card.Grid css={styles.component_item}>{itemName}</Card.Grid>
-            </div>
-          );
-        })}
-      </Card>
-      <Card
-        title={"产品"}
-        bordered={false}
-        size={"small"}
-        css={styles.mgBottom}
-        bodyStyle={{ padding: 0 }}
-      >
-        {commodityList.map((data: string, index: number) => {
-          return (
-            <div onClick={() => addUI(data)} key={index}>
-              <Card.Grid css={styles.component_item}>{data}</Card.Grid>
-            </div>
-          );
-        })}
-      </Card>
-      <Card
-        title={"交互"}
-        bordered={false}
-        size={"small"}
-        css={styles.mgBottom}
-        bodyStyle={{ padding: 0 }}
-      >
-        {interactionList.map((data: string, index: number) => {
-          return (
-            <div onClick={() => addUI(data)} key={index}>
-              <Card.Grid css={styles.component_item}>{data}</Card.Grid>
-            </div>
-          );
-        })}
-      </Card>
+        }
+      )}
     </div>
   );
 });

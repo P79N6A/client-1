@@ -126,6 +126,8 @@ const AppletEdit = memo((props: IRedux) => {
         return <ShowEdit />;
       case "form":
         return <FormEdit />;
+      case "template":
+        return <div />;
     }
   };
 
@@ -192,12 +194,14 @@ const AppletEdit = memo((props: IRedux) => {
       </PageHeader>
       <Drawer
         title={
-          <div style={{ height: "32px", lineHeight: "32px" }}>组件编辑</div>
+          <div style={{ height: "32px", lineHeight: "32px" }}>
+            {applet.editType === "template" ? "模板选择" : "组件编辑"}
+          </div>
         }
         onClose={closeEditShow}
         closable={true}
         visible={applet.editShow}
-        width={348}
+        width={355}
         mask={false}
       >
         {/*放置相应的编辑组件*/}

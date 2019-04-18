@@ -1,7 +1,7 @@
 import { css } from "@emotion/core";
 import { Icon, Layout, Menu } from "antd";
 import React, { Fragment, memo, useState } from "react";
-import Logo from "../../component/Logo";
+import Logo from "../component/Logo";
 const { Header, Sider } = Layout;
 
 export default memo(() => {

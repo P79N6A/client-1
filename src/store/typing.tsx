@@ -47,7 +47,7 @@ export interface IAppletState {
   // 是否展示编辑界面
   editShow: boolean;
   // 控制画布的渲染，当使用自由布局组件时，将UI排序列表关闭
-  dragShow: boolean;
+  dragUse: boolean;
   // 移动的组件下表
   dragIndex: number;
 }
