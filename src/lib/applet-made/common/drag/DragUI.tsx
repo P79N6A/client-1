@@ -26,6 +26,7 @@ const DragUI = memo((props: IProps) => {
       ${bgImg ? `background:url(${bgImg})` : ""};
     `
   };
+
   // 组件列表
   const uiList = {
     text: TextUI,
@@ -75,6 +76,7 @@ const DragUI = memo((props: IProps) => {
                 top={data.top}
                 width={data.width}
                 height={data.height}
+                zIndex={200}
                 zoomable="n, w, s, e, nw, ne, se, sw"
                 onResize={handleResize}
                 onDrag={handleDrag}
