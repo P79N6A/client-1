@@ -34,11 +34,14 @@ const App = memo(() => {
   const customizeEmpty = () => <Empty description={"暂无数据"} />;
 
   // 页面代码切割
-  const Admin = React.lazy(() => import("./page/Admin"));
+  const Admin = React.lazy(() => import("./page/admin/Admin"));
   const Home = React.lazy(() => import("./page/Home"));
-  const Applet = React.lazy(() => import("./page/applet/Applet"));
-  const AppletAdmin = React.lazy(() => import("./page/AppletAdmin"));
-
+  const AppletMade = React.lazy(() =>
+    import("./page/applet/applet-made/AppletMade")
+  );
+  const AppletAdmin = React.lazy(() => import("./page/applet/AppletAdmin"));
+  const Login = React.lazy(() => import("./page/user/Login"));
+  const Register = React.lazy(() => import("./page/user/Register"));
   return (
     <ConfigProvider renderEmpty={customizeEmpty}>
       <LocaleProvider locale={zh_CN}>
@@ -48,8 +51,10 @@ const App = memo(() => {
               <Switch>
                 <Route path="/" exact={true} component={Home} />
                 <Route path="/admin" component={Admin} />
-                <Route path="/applet" component={Applet} />
+                <Route path="/applet" component={AppletMade} />
                 <Route path="/applet-admin" component={AppletAdmin} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
               </Switch>
             </Suspense>
           </BrowserRouter>

@@ -1,10 +1,10 @@
 import React, { Fragment, memo } from "react";
 import { connect } from "react-redux";
 import { animated, useTransition } from "react-spring";
-import CommonSelect from "../../lib/applet-made/common/CommonSelect";
+import CommonSelect from "../../../lib/applet-made/common/CommonSelect";
 
-import { action } from "../../store/action";
-import { IRedux } from "../../store/typing";
+import { action } from "../../../store/action";
+import { IRedux } from "../../../store/typing";
 
 const AppletSelect = memo((props: IRedux) => {
   const { applet } = props;

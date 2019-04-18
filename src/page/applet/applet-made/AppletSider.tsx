@@ -2,9 +2,9 @@ import { css } from "@emotion/core";
 import { Icon, Menu } from "antd";
 import React, { Fragment, memo } from "react";
 import { connect } from "react-redux";
-import Logo from "../../component/Logo";
-import { action } from "../../store/action";
-import { IRedux } from "../../store/typing";
+import Logo from "../../../component/Logo";
+import { action } from "../../../store/action";
+import { IRedux } from "../../../store/typing";
 
 const AppletSider = memo((props: IRedux) => {
   const { action, applet } = props;
