@@ -1,0 +1,68 @@
+---
+name: 3、💧 Redux
+---
+
+# Redux
+
+> redux 数据规划，全部采用符合范式化的数据集进行定义
+
+什么是范式：
+顾名思义，一个规范模式
+
+第一范式 1NF
+表的列具有原子性，不可再分解。
+只要是关系型数据库就满足 1NF
+
+第二范式 2NF
+前提是满足 1NF，在 1NF 的基础上。每一行或者实例必须唯一可以被区分，即需要我们说的主键(key)。
+
+第三范式 3NF
+满足 1NF 和 2NF，且一个数据库表中不包含已在其他表中包含的非主键字段。
+
+🔥 表中不冗余，可以通过关系从其他表中获取就不要单独存放了，也就是相关信息可以通过外键相关联
+
+## applet
+
+```typescript jsx
+interface IAppletState {
+  // 主题色
+  theme: string;
+  // 导航菜单
+  navigation: { [id: number]: { pageId: number } };
+  // 页面数据
+  page: {
+    [id: number]: {
+      pageId: number;
+      uiId: number;
+      title: string;
+      icon: string;
+    };
+  };
+  // 页面ui
+  ui: {
+    [id: number]: {
+      uiId: number;
+      pageId: number;
+      uiStyleId: number;
+    };
+  };
+  // ui公共样式
+  uiStyle: {
+    [id: string]: {
+      uiId: number;
+      uiStyleId: number;
+      left: number;
+      top: number;
+      marginTop: number;
+      marginBottom: number;
+      paddingTop: number;
+      paddingBottom: number;
+      height: number;
+      paddingLeft: number;
+      paddingRight: number;
+      bgColor: string;
+      bgImg: string;
+    };
+  };
+}
+```

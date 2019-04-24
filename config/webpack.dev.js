@@ -3,6 +3,13 @@ const merge = require("webpack-merge");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const common = require("./webpack.common.js");
 
+/**
+ * TODO [HMR]控制台输出删除
+ * @description 功能
+ * 1. 开发服务器设置
+ * 2. 热更新设置
+ * 3. 友好的错误输出提示
+ */
 module.exports = merge(common, {
   mode: "development",
   devtool: "inline-source-map",
@@ -11,7 +18,7 @@ module.exports = merge(common, {
     quiet: true,
     hot: true,
     overlay: {
-      warnings: false,
+      warnings: true,
       errors: true
     },
     port: "8080",
@@ -21,8 +28,7 @@ module.exports = merge(common, {
   plugins: [
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: ["开发服务器已启动 http://localhost:8080"],
-        notes: ["局域网访问地址 http://[本机ip地址]:8080"]
+        messages: ["开发服务器已启动 http://localhost:8080"]
       },
       clearConsole: true
     }),
