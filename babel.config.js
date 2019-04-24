@@ -44,15 +44,6 @@ const plugins = [
     },
     "antd-mobile"
   ],
-  [
-    "import",
-    {
-      libraryName: "lodash",
-      libraryDirectory: "",
-      camel2DashComponentName: false
-    },
-    "lodash"
-  ],
   ["@babel/plugin-syntax-dynamic-import"],
   ["@babel/plugin-proposal-class-properties"]
 ];

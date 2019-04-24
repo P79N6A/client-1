@@ -1,23 +1,24 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+/**
+ * TODO antd-icon 问题(https://github.com/ant-design/ant-design/issues/12011)
+ * @description 功能
+ * 1. 文件编译入口
+ * 2. 文件后缀解析
+ * 3. 模块解析 （tsx,css，graphql及antd-icon提取异步加载）
+ * 4. HTML模板自动生辰添加链接
+ */
 module.exports = {
   entry: path.resolve(__dirname, "../src/index.tsx"),
-  output: {
-    filename: "[name].[hash].js",
-    path: path.resolve(__dirname, "../dist")
-  },
   resolve: {
-    // Automatically resolve certain extensions
     extensions: [".tsx", ".ts", ".js"]
   },
   module: {
     rules: [
       {
-        test: /\.(tsx|ts|js)$/,
+        test: /\.(tsx|ts|js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
-        include: /(src)/,
         use: {
           loader: "babel-loader"
         }
@@ -44,6 +45,7 @@ module.exports = {
       {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
+        include: path.resolve(__dirname, "src"),
         loader: "graphql-tag/loader"
       },
       {
@@ -54,11 +56,6 @@ module.exports = {
     ]
   },
   plugins: [
-    // css extract
-    new MiniCssExtractPlugin({
-      filename: "common.[chunkhash].css"
-    }),
-    // auto generate html  and binging src
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../public/index.html")
     })
