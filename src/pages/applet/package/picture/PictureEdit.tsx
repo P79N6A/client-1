@@ -5,11 +5,11 @@ import { action } from "../../../../models/action";
 import CommonEditForm from "../common/CommonEditForm";
 import { UIEditStore } from "../../model/reselect";
 import { UIEditFace } from "../../types";
-import { setUIData } from "../../model/logic";
+import { componentSetData } from "../../model/logic";
 
 const PictureEdit = memo((props: UIEditFace) => {
-  const { action, ui, uiKey } = props;
-  const { radius, width, height, img } = ui[uiKey];
+  const { action, components, componentIndex } = props;
+  const { radius, width, height, img } = components[componentIndex];
   const TabPane = Tabs.TabPane;
   // 表单样式排版
   const formItemLayout = {
@@ -25,7 +25,7 @@ const PictureEdit = memo((props: UIEditFace) => {
 
   // 数据修改同步至reducer 中
   const changeValue = (name, e) => {
-    setUIData(action, { [name]: e });
+    componentSetData(action, { [name]: e });
   };
 
   return (

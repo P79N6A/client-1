@@ -9,16 +9,16 @@ import { action } from "../../../../models/action";
 import CommonEditForm from "../common/CommonEditForm";
 import { UIEditStore } from "../../model/reselect";
 import { UIEditFace } from "../../types";
-import { setUIData } from "../../model/logic";
+import { componentSetData } from "../../model/logic";
 
 BraftEditor.use(ColorPicker());
 
 const TextEdit = memo((props: UIEditFace) => {
   const TabPane = Tabs.TabPane;
 
-  const { action, ui, uiKey } = props;
+  const { action, components, componentIndex } = props;
 
-  const { html, id } = ui[uiKey];
+  const { html, id } = components[componentIndex];
   const [state, setState] = useState(BraftEditor.createEditorState(html));
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const TextEdit = memo((props: UIEditFace) => {
   const handleEditorChange = e => {
     setState(e);
     // 用于外部数据同步
-    setUIData(action, { html: e.toHTML() });
+    componentSetData(action, { html: e.toHTML() });
   };
 
   const editorConfig: { excludeControls: any } = {

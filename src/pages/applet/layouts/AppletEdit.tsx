@@ -1,95 +1,106 @@
 import { css } from "@emotion/core";
-import { Button, Icon, PageHeader, Popconfirm, Tree, Typography } from "antd";
-import React, { Fragment, memo, useState } from "react";
+import {
+  AutoComplete,
+  Button,
+  Icon,
+  PageHeader,
+  Popconfirm,
+  Tree,
+  Typography
+} from "antd";
+import React, { Fragment, memo, useEffect, useState } from "react";
 import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
 import { action } from "../../../models/action";
 import {
-  addPageLogic,
-  delPageLogic,
-  setPageIdLogic,
-  setPageTitleLogic,
-  setThemeLogic
+  pageAddLogic,
+  pageRemoveLogic,
+  pageSetIndexLogic,
+  pageSetTitleLogic,
+  themeSetLogic
 } from "../model/logic";
 import { appletEditStore } from "../model/reselect";
 import { AppletEditFace } from "../types";
 
-const styles = {
-  // 常用组件
-  theme: css`
-    margin-bottom: 8px !important;
-    & > div > div {
-      border: none !important;
-      box-shadow: none !important;
-      & > div {
-        padding: 0 !important;
-      }
-    }
-  `,
-  theme_item: css`
-    height: 28px;
-  `,
-  // 组件列表
-  component_item: css`
-    width: 33.3%;
-    text-align: center;
-    padding: 8px !important;
-  `,
-  // 模板
-  template: css`
-    height: calc(100vh - 222px);
-    overflow: auto;
-    width: 100%;
-    scrollbar-arrow-color: transparent;
-    scrollbar-face-color: transparent;
-    scrollbar-highlight-color: transparent;
-    scrollbar-shadow-color: transparent;
-    scrollbar-darkshadow-color: transparent;
-    scrollbar-track-color: transparent;
-    scrollbar-base-color: transparent;
-    &::-webkit-scrollbar {
-      border: none;
-      width: 0;
-      height: 0;
-      background-color: transparent;
-    }
-    &::-webkit-scrollbar-button {
-      display: none;
-    }
-    &::-webkit-scrollbar-track {
-      display: none;
-    }
-    &::-webkit-scrollbar-track-piece {
-      display: none;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      display: none;
-    }
-    &::-webkit-scrollbar-corner {
-      display: none;
-    }
-    &::-webkit-resizer {
-      display: none;
-    }
-    background-color: #fff;
-  `
-};
-
 const AppletEdit = memo((props: AppletEditFace) => {
-  const { action, theme, pageKey, pages } = props;
+  const { action, theme, pageIndex, pages } = props;
+
+  const styles = {
+    // 常用组件
+    theme: css`
+      margin-bottom: 8px !important;
+      & > div > div {
+        border: none !important;
+        box-shadow: none !important;
+        & > div {
+          padding: 0 !important;
+        }
+      }
+    `,
+    theme_item: css`
+      height: 28px;
+    `,
+    // 组件列表
+    component_item: css`
+      width: 33.3%;
+      text-align: center;
+      padding: 8px !important;
+    `,
+    // 模板
+    template: css`
+      height: calc(100vh - 222px);
+      overflow: auto;
+      width: 100%;
+      scrollbar-arrow-color: transparent;
+      scrollbar-face-color: transparent;
+      scrollbar-highlight-color: transparent;
+      scrollbar-shadow-color: transparent;
+      scrollbar-darkshadow-color: transparent;
+      scrollbar-track-color: transparent;
+      scrollbar-base-color: transparent;
+      &::-webkit-scrollbar {
+        border: none;
+        width: 0;
+        height: 0;
+        background-color: transparent;
+      }
+      &::-webkit-scrollbar-button {
+        display: none;
+      }
+      &::-webkit-scrollbar-track {
+        display: none;
+      }
+      &::-webkit-scrollbar-track-piece {
+        display: none;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        display: none;
+      }
+      &::-webkit-scrollbar-corner {
+        display: none;
+      }
+      &::-webkit-resizer {
+        display: none;
+      }
+      background-color: #fff;
+    `
+  };
 
   // 记录需要删除的页面
-  const [treeClick, setTreeClick] = useState([]);
+  const [treeClick, setTreeClick] = useState([pageIndex]);
   const onCheck = (checkedKeys: string[]): void => {
     setTreeClick(checkedKeys);
   };
+  useEffect(() => {
+    setTreeClick([pageIndex]);
+  }, [pageIndex]);
 
   return (
     <Fragment>
       <PageHeader title="主题色" subTitle="应用至所有页面" css={styles.theme}>
         <TwitterPicker
-          onChange={e => setThemeLogic(action, e.hex)}
+          onChange={e => themeSetLogic(action, e.hex)}
           color={theme}
           colors={[
             "#DE443A",
@@ -115,14 +126,14 @@ const AppletEdit = memo((props: AppletEditFace) => {
               type="primary"
               htmlType={"button"}
               size={"small"}
-              onClick={() => addPageLogic(action)}
+              onClick={() => pageAddLogic(action)}
             >
               <Icon type={"plus"} />
               添加
             </Button>
             <Popconfirm
               title="确定删除此页面?"
-              onConfirm={() => delPageLogic(action, treeClick, pages)}
+              onConfirm={() => pageRemoveLogic(action, treeClick, pages)}
               okText="是"
               cancelText="否"
             >
@@ -134,12 +145,31 @@ const AppletEdit = memo((props: AppletEditFace) => {
           </Button.Group>
         ]}
       >
+        <AutoComplete
+          style={{ marginBottom: 8, width: "100%" }}
+          placeholder="搜索页面"
+          onSelect={e => pageSetIndexLogic(action, [`${e}`])}
+          filterOption={(inputValue, option) =>
+            typeof option.props.children === "string"
+              ? option.props.children
+                  .toUpperCase()
+                  .indexOf(inputValue.toUpperCase()) !== -1
+              : ""
+          }
+        >
+          {Object.keys(pages).map(data => (
+            <AutoComplete.Option key={data}>
+              {pages[data].title}
+            </AutoComplete.Option>
+          ))}
+        </AutoComplete>
         <Tree
           blockNode={true}
           defaultExpandAll={true}
           checkable={true}
-          defaultSelectedKeys={[pageKey]}
-          onSelect={e => setPageIdLogic(action, e)}
+          selectedKeys={[pageIndex]}
+          checkedKeys={treeClick}
+          onSelect={e => pageSetIndexLogic(action, e)}
           onCheck={onCheck}
         >
           {Object.keys(pages).map(data => {
@@ -149,7 +179,7 @@ const AppletEdit = memo((props: AppletEditFace) => {
                   <Typography.Paragraph
                     ellipsis={true}
                     editable={{
-                      onChange: title => setPageTitleLogic(action, data, title)
+                      onChange: title => pageSetTitleLogic(action, data, title)
                     }}
                   >
                     {pages[data].title}

@@ -9,14 +9,21 @@ import { action } from "../../../../models/action";
 import CommonEditForm from "../common/CommonEditForm";
 import { UIEditStore } from "../../model/reselect";
 import { UIEditFace } from "../../types";
-import { setUIData } from "../../model/logic";
+import { componentSetData } from "../../model/logic";
 
 const ButtonEdit = memo((props: UIEditFace) => {
-  const { action, ui, uiKey, theme } = props;
+  const { action, components, componentIndex, theme } = props;
 
-  const { color, desc, radius, width, height, fontSize, btnImg, btnColor } = ui[
-    uiKey
-  ];
+  const {
+    color,
+    desc,
+    radius,
+    width,
+    height,
+    fontSize,
+    btnImg,
+    btnColor
+  } = components[componentIndex];
   const TabPane = Tabs.TabPane;
   const Dragger = Upload.Dragger;
   // 表单样式排版
@@ -45,7 +52,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
   };
   // 数据修改同步至reducer 中
   const changeValue = (name, e) => {
-    setUIData(action, { [name]: e });
+    componentSetData(action, { [name]: e });
   };
 
   return (

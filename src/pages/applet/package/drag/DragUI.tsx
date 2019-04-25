@@ -6,22 +6,12 @@ import PictureUI from "../picture/PictureUI";
 import TextUI from "../text/TextUI";
 import { action } from "../../../../models/action";
 import { DragStore } from "../../model/reselect";
-import { setUIData } from "../../model/logic";
+import { componentSetData } from "../../model/logic";
 import ResizableRect from "../../../../tools/drag/ResizableRect";
+import { DragUIFace } from "../../types";
 
-interface DragFace {
-  theme;
-  data;
-  style;
-
-  action;
-  dragKey;
-  uiStyle;
-  ui;
-}
-
-const DragUI = memo((props: DragFace) => {
-  const { theme, data, action, style, uiStyle, ui } = props;
+const DragUI = memo((props: DragUIFace) => {
+  const { theme, data, action, style, componentStyle, components } = props;
   const styles = {
     block: css`
       position: relative;
@@ -48,18 +38,18 @@ const DragUI = memo((props: DragFace) => {
   return (
     <div css={styles.block}>
       {data.uiList.map((data, index) => {
-        const Component = uiList[ui[data].type];
+        const Component = uiList[components[data].type];
         return (
           <ResizableRect
             key={index}
-            left={ui[data].left}
-            top={ui[data].top}
-            width={ui[data].width}
-            height={ui[data].height}
+            left={components[data].left}
+            top={components[data].top}
+            width={components[data].width}
+            height={components[data].height}
             zIndex={200}
             zoomable="n, w, s, e, nw, ne, se, sw"
             onResize={({ top, left, width, height }) =>
-              setUIData(action, {
+              componentSetData(action, {
                 width,
                 height,
                 top,
@@ -67,17 +57,17 @@ const DragUI = memo((props: DragFace) => {
               })
             }
             onDrag={(deltaX: number, deltaY: number) =>
-              setUIData(action, {
-                left: deltaX + ui[data].left,
-                top: deltaY + ui[data].top
+              componentSetData(action, {
+                left: deltaX + components[data].left,
+                top: deltaY + components[data].top
               })
             }
           >
             <Component
               absolute={true}
-              data={ui[data]}
+              data={components[data]}
               theme={theme}
-              style={uiStyle[data]}
+              style={componentStyle[data]}
             />
           </ResizableRect>
         );

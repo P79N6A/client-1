@@ -14,8 +14,8 @@ import { UIEditFace } from "../../types";
  */
 const FormEdit = memo((props: UIEditFace) => {
   const [itemChoose, setItemChoose] = useState("");
-  const { action, ui, uiKey, theme } = props;
-  const { formItem } = ui[uiKey];
+  const { action, components, componentIndex, theme } = props;
+  const { formItem } = components[componentIndex];
   const Panel = Collapse.Panel;
   // 实现对应操作
   const itemSet = (name: string, index: number): any => {

@@ -8,8 +8,8 @@ import { UIEditFace } from "../../types";
 import CommonEditForm from "../common/CommonEditForm";
 
 const ShowEdit = memo((props: UIEditFace) => {
-  const { action, ui, uiKey, theme } = props;
-  const { showItem } = ui[uiKey];
+  const { action, components, componentIndex, theme } = props;
+  const { showItem } = components[componentIndex];
   const TabPane = Tabs.TabPane;
   const Panel = Collapse.Panel;
   const Dragger = Upload.Dragger;
