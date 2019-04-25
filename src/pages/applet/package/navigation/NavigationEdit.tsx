@@ -7,8 +7,8 @@ import CommonEditForm from "../common/CommonEditForm";
 import { UIEditFace } from "../../types";
 
 const NavigationEdit = memo((props: UIEditFace) => {
-  const { action, ui, uiKey, theme } = props;
-  const { item } = ui[uiKey];
+  const { action, components, componentIndex, theme } = props;
+  const { item } = components[componentIndex];
   const TabPane = Tabs.TabPane;
   const Panel = Collapse.Panel;
   const Dragger = Upload.Dragger;

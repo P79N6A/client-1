@@ -1,19 +1,11 @@
-import React, { memo, Suspense, lazy } from "react";
+import React, { memo } from "react";
 import { css } from "@emotion/core";
-import { Layout as AntdLayout, LocaleProvider, Spin } from "antd";
-import { withRouter, Route, Switch } from "react-router-dom";
+import { Layout as AntdLayout, LocaleProvider } from "antd";
+import { withRouter } from "react-router-dom";
 import zh_CN from "antd/lib/locale-provider/zh_CN";
+import PageRoute from "../routes/PageRoute";
 
-/**
- * TODO 路由切换动画
- * @description 功能
- * - 页面路由拆分
- * - ant 全局配置
- * - 页面加载动画
- * - 页面统一的最外层布局样式
- */
 const Layout = memo(props => {
-  // 样式
   const styles = {
     // 页面根样式
     root: css`
@@ -33,21 +25,10 @@ const Layout = memo(props => {
     `
   };
 
-  // 页面切割
-  const Home = lazy(() => import("../pages/Home"));
-  const Applet = lazy(() => import("../pages/applet/Applet"));
-  const Error404 = lazy(() => import("../pages/Error404"));
-
   return (
     <LocaleProvider locale={zh_CN}>
       <AntdLayout css={styles.root}>
-        <Suspense fallback={<Spin css={styles.loading} delay={300} />}>
-          <Switch>
-            <Route path="/" exact={true} component={Home} />
-            <Route path="/applet" component={Applet} />
-            <Route component={Error404} />
-          </Switch>
-        </Suspense>
+        <PageRoute />
       </AntdLayout>
     </LocaleProvider>
   );

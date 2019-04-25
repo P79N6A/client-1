@@ -15,10 +15,10 @@ import { connect } from "react-redux";
 import { action } from "../../../../models/action";
 import { UIStyleEditStore } from "../../model/reselect";
 import { UIStyleEditFace } from "../../types";
-import { setUIStyleData } from "../../model/logic";
+import { componentStyleSetData } from "../../model/logic";
 
 const CommonEditForm = memo((props: UIStyleEditFace) => {
-  const { action, uiStyle, uiKey } = props;
+  const { action, componentStyle, componentIndex } = props;
   const styles = {
     // 常用组件
     theme: css`
@@ -41,7 +41,7 @@ const CommonEditForm = memo((props: UIStyleEditFace) => {
     bgImg,
     paddingLeft,
     paddingRight
-  } = uiStyle[uiKey];
+  } = componentStyle[componentIndex];
   const Dragger = Upload.Dragger;
   // 表单样式排版
   const formItemLayout = {
@@ -57,7 +57,7 @@ const CommonEditForm = memo((props: UIStyleEditFace) => {
 
   // 数据修改同步至reducer 中
   const changeValue = (name, e) => {
-    setUIStyleData(action, { [name]: e });
+    componentStyleSetData(action, { [name]: e });
   };
   return (
     <Form {...formItemLayout}>

@@ -1,4 +1,3 @@
-import { AppletAction } from "./store";
 import $$button from "../package/button/database";
 import $$picture from "../package/picture/database";
 import $$text from "../package/text/database";
@@ -7,29 +6,33 @@ import $$navigation from "../package/navigation/database";
 import $$show from "../package/show/database";
 import $$video from "../package/video/database";
 import $$form from "../package/form/database";
+import { appletAction } from "./store";
+// ==============================================applet-edit页面================
 
 /**
- * 新建页面
+ * pages -> uiList 添加 ui组件
+ * TODO bug警告：pageIndex 必须有值，即必须有页面存在
+ * 流程：
+ * 1. 创建 index 用于 components , components style
+ * 2. 将 index 填充进 pages -> uiList 中
+ * 3. 根据 index 创建 components ，components style 新 item
+ * 4. 展示 drawer
+ * 5. drawer 中展示相对应的 组件编辑器
+ * 6. 设置 componentIndex 为当前Index
  * @param action
+ * @param componentType 需要填充的组件数据集
  */
-export const addPageLogic = action => {
-  // id 用于页面key
-  const createId = `${new Date().getTime()}`;
-  action({ type: AppletAction.addPage, payload: createId });
-};
-
-/**
- * 向页面UI中添加数据
- * @param action
- * @param typeName
- */
-export const addUiLogic = (action, typeName) => {
-  // id 用于page_ui 与 ui_style 的key
-  const createId = `${new Date().getTime()}`;
-  // 记录将要传递额数据
-  let dataSource;
-  // 创建 page_ui 数据
-  switch (typeName) {
+export const componentAddLogic = (action, componentType) => {
+  // 1. 创建 index 用于 components , components style
+  const index = `${new Date().getTime()}`;
+  // 2. 将 index 填充进 pages -> uiList 中
+  action({
+    type: appletAction.pageSet,
+    payload: { setType: "uiList", componentIndex: index }
+  });
+  // 3. 根据 index 创建 components ，components style 新 item
+  let dataSource; // 记录将要传递额数据
+  switch (componentType) {
     case "按钮":
       dataSource = $$button;
       break;
@@ -54,164 +57,265 @@ export const addUiLogic = (action, typeName) => {
     case "表单":
       dataSource = $$form;
       break;
-  }
-  // 创建 page_ui 数据
+  } // 创建 component 数据
   action({
-    type: AppletAction.addUi,
-    payload: { uiKey: createId, data: dataSource }
+    type: appletAction.componentsAdd,
+    payload: { componentIndex: index, componentData: dataSource }
   });
-  // 创建 ui_style 数据
-  action({ type: AppletAction.addUiStyle, payload: createId });
-  // 将下标绑定至页面editDrawerVisible中
   action({
-    type: AppletAction.setPageInUIList,
-    payload: createId
+    type: appletAction.componentStyleAdd,
+    payload: { componentStyleIndex: index }
   });
-  // 显示对应的编辑项
-  action({ type: AppletAction.setDrawer, payload: true });
-  // 修改当前的编辑项名称
-  action({ type: AppletAction.setDrawerType, payload: dataSource.type });
-  // 设置当前设置组件的下标
-  action({ type: AppletAction.setUIKey, payload: createId });
-};
-
-/**
- * 修改page_id
- * @param action
- * @param key 选择的下标 （antd 给的是数据集合,我们只要一个数据就可以）
- */
-export const setPageIdLogic = (action, key) => {
-  if (key.length !== 0) {
-    action({ type: AppletAction.setPageKey, payload: key[0] });
-  }
-};
-
-/**
- * 修改指定页面title
- * @param action
- * @param pageKey
- * @param title
- */
-export const setPageTitleLogic = (action, pageKey, title): void => {
+  // 4. 展示 drawer
+  action({ type: appletAction.drawerSet, payload: { drawer: true } });
+  // 5. drawer 中展示相对应的 组件编辑器
   action({
-    type: AppletAction.setPageInTitle,
-    payload: { pageKey, title }
+    type: appletAction.drawerTypeSet,
+    payload: { drawerType: dataSource.type }
+  });
+  // 6. 设置 componentIndex 为当前Index
+  action({
+    type: appletAction.componentIndexSet,
+    payload: { componentIndex: index }
   });
 };
 
 /**
- * 修改主题色
+ * pages add 新建页面
+ * 流程：
+ * 1. 创建 index 用于 page
+ * 2. 根据 index 新建页面
+ * 3. pageIndex 落点 落在新建的页面中
+ * 4. drawer 关闭展示
+ * 5. 设置 componentIndex 为默认
+ * 6. drawer 中展示组件编辑器 设为默认
  * @param action
- * @param color
  */
-export const setThemeLogic = (action, color) => {
-  action({ type: AppletAction.setTheme, payload: color });
+export const pageAddLogic = action => {
+  // 1. 创建 index 用于 page
+  const index = `${new Date().getTime()}`;
+  // 2. 根据 index 新建页面
+  action({ type: appletAction.pageAdd, payload: { pageIndex: index } });
+  // 3. pageIndex 落点 落在新建的页面中
+  action({
+    type: appletAction.pageIndexSet,
+    payload: { pageIndex: index }
+  });
+  // 4. drawer 关闭展示
+  action({ type: appletAction.drawerSet, payload: { drawer: false } });
+  // 5. 设置 componentIndex 为默认
+  action({
+    type: appletAction.componentIndexSet,
+    payload: { componentIndex: undefined }
+  });
+  // 6. drawer 中展示组件编辑器 设为默认
+  action({
+    type: appletAction.drawerTypeSet,
+    payload: { drawerType: undefined }
+  });
 };
 
 /**
- * 删除页面
+ * pages remove 删除页面
+ * 流程：
+ * 1. 循环需要删除的存有页面index 的 页面列表
+ * 2. 删除页面
+ * 3. 根据页面中 的 uiList 列表删除对应的 components 与 component style 数据
+ * 4. pageIndex 落点 第一页中（TODO bug警告：如果页面全部删除，有可能会报错，暂时无法复现,目前返回undefined）
+ * 5. 设置 componentIndex 为默认
  * @param action
- * @param pageKeyList
+ * @param pageIndexList
  * @param pages
  */
-export const delPageLogic = (action, pageKeyList, pages) => {
-  pageKeyList.map(pageKey => {
-    pages[pageKey].uiList.map(uiKey => {
-      action({ type: AppletAction.delUi, payload: uiKey });
-      action({ type: AppletAction.delUiStyle, payload: uiKey });
+export const pageRemoveLogic = (action, pageIndexList, pages) => {
+  // 1. 循环需要删除的存有页面index 的 页面列表
+  pageIndexList.map(pageIndex => {
+    // 2. 删除页面
+    action({
+      type: appletAction.pageRemove,
+      payload: { pageIndex }
     });
-    action({ type: AppletAction.delPage, payload: pageKey });
+    // 3. 根据页面中 的 uiList 列表删除对应的 components 与 component style 数据
+    pages[pageIndex].uiList.map(componentIndex => {
+      action({ type: appletAction.componentsRemove, payload: componentIndex });
+      action({
+        type: appletAction.componentStyleRemove,
+        payload: componentIndex
+      });
+    });
   });
+  // 4. pageIndex 落点 落在新建的页面中
   action({
-    type: AppletAction.setPageKey,
-    payload: Object.keys(pages)[0]
+    type: appletAction.pageIndexSet,
+    payload: {
+      pageIndex: undefined
+    }
+  });
+  // 5. 设置 componentIndex 为默认
+  action({
+    type: appletAction.componentIndexSet,
+    payload: { componentIndex: undefined }
   });
 };
 
 /**
- * 关闭/开启drawer
- * @param action
- * @param isShow
- */
-export const setDrawerLogic = (action, isShow) => {
-  action({ type: AppletAction.setDrawer, payload: isShow });
-};
-
-/**
- * 修改ui中的数据
- * @param action
- * @param data
- */
-export const setUIData = (action, data) => {
-  action({ type: AppletAction.setUi, payload: { data } });
-};
-
-/**
- * 修改uiStyle中的数据
- * @param action
- * @param data
- */
-export const setUIStyleData = (action, data) => {
-  action({ type: AppletAction.setUiStyle, payload: { data } });
-};
-
-/**
- * 修改uiKey
+ * page Index 修改
+ * 流程：
+ * 1. 传递的是一个数组，所以先判断这个数组是否为空
+ * 2. 取出目标  页面下标 并传递
+ * 3. 设置 componentIndex 为默认
  * @param action
  * @param key 选择的下标 （antd 给的是数据集合,我们只要一个数据就可以）
+ */
+export const pageSetIndexLogic = (action, key: string[]) => {
+  // 1. 传递的是一个数组，所以先判断这个数组是否为空
+  if (key.length !== 0) {
+    // 2. 取出目标  页面下标 并传递
+    action({ type: appletAction.pageIndexSet, payload: { pageIndex: key[0] } });
+    // 3.  设置 componentIndex 为默认
+    action({
+      type: appletAction.componentIndexSet,
+      payload: { componentIndex: undefined }
+    });
+  }
+};
+
+/**
+ * theme 修改主题色
+ * 流程
+ * 1. 传递新的主题色
+ * @param action
+ * @param theme
+ */
+export const themeSetLogic = (action, theme) => {
+  // 1. 传递新的主题色
+  action({ type: appletAction.themeSet, payload: { theme } });
+};
+
+/**
+ * pages-> title 修改指定页面title
+ * 流程
+ * 1. 传递新的title
+ * @param action
+ * @param pageIndex
+ * @param title
+ */
+export const pageSetTitleLogic = (action, pageIndex, title): void => {
+  // 1. 传递新的title
+  action({
+    type: appletAction.pageSet,
+    payload: { setType: "title", pageIndex, title }
+  });
+};
+
+// ==============================================applet-canvas页面================
+
+/**
+ * pages-> uiList   组件下移
+ * 流程
+ * 1. 获取需要下移的组件 index，并发送action
+ * @param action
+ * @param uiListIndex
+ */
+export const componentMoveDown = (action, uiListIndex) => {
+  // 1. 获取需要下移的组件 index，并发送action
+  action({
+    type: appletAction.pageSet,
+    payload: { setType: "uiListItemDown", uiListIndex }
+  });
+};
+
+/**
+ * pages-> uiList   组件上移
+ * 流程
+ * 1. 获取需要上移的组件 index，并发送action
+ * @param action
+ * @param uiListIndex
+ */
+export const componentMoveUp = (action, uiListIndex) => {
+  // 1. 获取需要下移的组件 index，并发送action
+  action({
+    type: appletAction.pageSet,
+    payload: { setType: "uiListItemUp", uiListIndex }
+  });
+};
+
+/**
+ * pages-> uiList 组件删除
+ * 流程
+ * 1. 根据 uiList index 删除
+ * 2. 删除component 与 component style 中相关的 index
+ * 3. 关闭 drawer 的显示
+ * 4. drawer 中当前的操作项为默认值
+ * 5. component index 设为默认值
+ * @param action
+ * @param uiListIndex
+ */
+export const pageUIListRemoveItem = (action, uiListIndex) => {
+  // 1. 根据 uiList index 删除
+  action({
+    type: appletAction.pageSet,
+    payload: { setType: "uiListItemRemove", uiListIndex }
+  });
+  // 2. 删除component 与 component style 中相关的 index
+  action({
+    type: appletAction.componentsRemove,
+    payload: { componentIndex: uiListIndex }
+  });
+  action({
+    type: appletAction.componentStyleRemove,
+    payload: { componentIndex: uiListIndex }
+  });
+  // 3. 关闭 drawer 的显示
+  action({ type: appletAction.drawerSet, payload: { drawer: false } });
+  // 4. 关闭 drawer 中当前的操作想
+  action({ type: appletAction.drawerTypeSet, payload: undefined });
+  // 5. component index 设为默认值
+  action({
+    type: appletAction.componentIndexSet,
+    payload: { componentIndex: undefined }
+  });
+};
+
+/**
+ * component Index  切换至当前选中的组件
+ * 流程
+ * 1. 发送需要修改的新 componentIndex
+ * 2. 打开 drawer
+ * 3. 修改 drawer 的操作类型
+ * @param action
+ * @param componentIndex 选择的下标
  * @param type
  */
-export const canvasUIChoose = (action, key, type) => {
-  action({ type: AppletAction.setUIKey, payload: key });
-  action({ type: AppletAction.setDrawerType, payload: type });
+export const componentChange = (action, componentIndex, type) => {
+  // 1. 发送需要修改的新 componentIndex
+  action({ type: appletAction.componentIndexSet, payload: { componentIndex } });
+  // 2. 打开 drawer
+  action({ type: appletAction.drawerSet, payload: { drawer: true } });
+  // 3. 修改 drawer 的操作类型
+  action({ type: appletAction.drawerTypeSet, payload: { drawerType: type } });
 };
 
 /**
- * 组件上移
- * @param action
- * @param key
- */
-export const canvasUIMoveUp = (action, key) => {
-  action({ type: AppletAction.movePageInUIListUp, payload: key });
-};
-
-/**
- * 组件下移
- * @param action
- * @param key
- */
-export const canvasUIMoveDown = (action, key) => {
-  action({ type: AppletAction.movePageInUIListDown, payload: key });
-};
-
-/**
- * 组件删除
- * @param action
- * @param key
- */
-export const canvasUIDel = (action, key) => {
-  action({ type: AppletAction.delPageInUIList, payload: key });
-  action({ type: AppletAction.delUi, payload: key });
-  action({ type: AppletAction.delUiStyle, payload: key });
-
-  action({ type: AppletAction.setDrawer, payload: false });
-
-  action({ type: AppletAction.setUIKey, payload: undefined });
-  action({ type: AppletAction.setDrawerType, payload: undefined });
-};
-
-/**
- * 项drag中添加组件
+ * component drag -> uiList 向drag UIList中添加组件
+ * 流程
+ * 1. 创建index 用于 components 与 components style 的index
+ * 2. 将 index 插入 drag uiList 中
+ * 3. 使用 index 创建 components 与 components style
+ * 4. 设置 componentIndex 为当前Index
  * @param action
  * @param type
- * @param length
  */
-export const addUITODrag = (action, type, length) => {
-  // id 用于page_ui 与 ui_style 的key
-  const createId = `${new Date().getTime()}`;
-  // 记录将要传递额数据
-  let dataSource;
-  // 创建 page_ui 数据
+export const dragAddComponent = (action, type) => {
+  // 1. id 用于page_ui 与 ui_style 的key
+  const index = `${new Date().getTime()}`;
+  // 2. 将 index 插入 drag uiList 中
+  action({
+    type: appletAction.componentsSet,
+    payload: { setType: "dragAddComponent", componentIndex: index }
+  });
+  // 3. 使用 index 创建 components 与 components style
+  let dataSource; // 记录将要传递额数据
   switch (type) {
     case "button":
       dataSource = $$button;
@@ -222,19 +326,55 @@ export const addUITODrag = (action, type, length) => {
     case "text":
       dataSource = $$text(new Date().getTime());
       break;
-  }
-  // 创建 ui 数据
+  } // 创建 page_ui 数据
   action({
-    type: AppletAction.addUi,
-    payload: { uiKey: createId, data: dataSource }
+    type: appletAction.componentsAdd,
+    payload: { componentIndex: index, componentData: dataSource }
   });
-  // 创建 ui_style 数据
-  action({ type: AppletAction.addUiStyle, payload: createId });
-  // 将下标绑定至drag uiList中
   action({
-    type: AppletAction.setUiDrag,
-    payload: createId
+    type: appletAction.componentStyleAdd,
+    payload: { componentStyleIndex: index }
   });
-  // 修改当前的编辑项名称
-  action({ type: AppletAction.setUIKey, payload: createId });
+  // 4. 设置 componentIndex 为当前Index
+  action({
+    type: appletAction.componentIndexSet,
+    payload: { componentIndex: index }
+  });
+};
+
+// ==============================================公共================
+
+/**
+ * drawer 关闭/开启drawer
+ * 流程
+ * 1. 控制drawer 的开关
+ * @param action
+ * @param drawer
+ */
+export const drawerSetLogic = (action, drawer) => {
+  action({ type: appletAction.drawerSet, payload: { drawer } });
+};
+
+/**
+ * component -> Data 修改component中的数据
+ * @param action
+ * @param componentData
+ */
+export const componentSetData = (action, componentData) => {
+  action({
+    type: appletAction.componentsSet,
+    payload: { setType: "common", componentData }
+  });
+};
+
+/**
+ * component style 修改其中的数据
+ * @param action
+ * @param componentStyleData
+ */
+export const componentStyleSetData = (action, componentStyleData) => {
+  action({
+    type: appletAction.componentStyleSet,
+    payload: { componentStyleData }
+  });
 };

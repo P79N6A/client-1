@@ -9,8 +9,8 @@ import { UIEditFace } from "../../types";
 import CommonEditForm from "../common/CommonEditForm";
 
 const VideoEdit = memo((props: UIEditFace) => {
-  const { action, ui, uiKey, theme } = props;
-  const { height, src, autoPlay } = ui[uiKey];
+  const { action, components, componentIndex, theme } = props;
+  const { height, src, autoPlay } = components[componentIndex];
   const TabPane = Tabs.TabPane;
 
   // 表单样式排版

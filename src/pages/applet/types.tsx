@@ -74,7 +74,7 @@ interface AppletStateFace {
   // 主题色
   theme: string | "#3A82F8";
   // 导航菜单
-  navigation: {
+  navigations: {
     [id: string]: {
       pageKey: string | undefined;
       link: { type: string | undefined; data: string | undefined };
@@ -89,11 +89,11 @@ interface AppletStateFace {
     };
   };
   // 页面ui
-  ui: {
+  components: {
     [id: string]: UIMapFace;
   };
   // ui样式
-  uiStyle: {
+  componentStyle: {
     [id: string]: {
       marginTop: number;
       marginBottom: number;
@@ -106,10 +106,6 @@ interface AppletStateFace {
       bgImg: string;
     };
   };
-  // 当前正在编辑的页面id
-  pageKey: string | undefined;
-  //  drag组件当前编辑组价下标
-  dragKey: string | undefined;
   // 控制组件编辑器的显示
   drawer: boolean;
   // 当前编辑的组件名称
@@ -124,23 +120,25 @@ interface AppletStateFace {
     | "show"
     | "form"
     | "video";
+  // 当前正在编辑的页面id
+  pageIndex: string | undefined;
   // 当前编辑的ui下标
-  uiKey: string | undefined;
+  componentIndex: string | undefined;
 }
 
 // applet 页面中使用的 state 数据集合
 interface AppletCanvasFace {
   theme: AppletStateFace["theme"];
-  pageKey: AppletStateFace["pageKey"];
+  pageIndex: AppletStateFace["pageIndex"];
   pages: AppletStateFace["pages"];
-  ui: AppletStateFace["ui"];
-  uiStyle: AppletStateFace["uiStyle"];
-  uiKey: AppletStateFace["uiKey"];
+  components: AppletStateFace["components"];
+  componentStyle: AppletStateFace["componentStyle"];
+  componentIndex: AppletStateFace["componentIndex"];
   action({ type, payload }: { type: string; payload: any }): void;
 }
 interface AppletEditFace {
   theme: AppletStateFace["theme"];
-  pageKey: AppletStateFace["pageKey"];
+  pageIndex: AppletStateFace["pageIndex"];
   pages: AppletStateFace["pages"];
   action({ type, payload }: { type: string; payload: any }): void;
 }
@@ -153,15 +151,22 @@ interface AppletMadeEditFace {
 // applet 组件中使用的数据集合
 interface UIEditFace {
   theme: AppletStateFace["theme"];
-  ui: AppletStateFace["ui"];
-  uiKey: AppletStateFace["uiKey"];
-  dragKey: AppletStateFace["dragKey"];
+  components: AppletStateFace["components"];
+  componentIndex: AppletStateFace["componentIndex"];
   action({ type, payload }: { type: string; payload: any }): void;
 }
 interface UIStyleEditFace {
   theme: AppletStateFace["theme"];
-  uiStyle: AppletStateFace["uiStyle"];
-  uiKey: AppletStateFace["uiKey"];
+  componentStyle: AppletStateFace["componentStyle"];
+  componentIndex: AppletStateFace["componentIndex"];
+  action({ type, payload }: { type: string; payload: any }): void;
+}
+interface DragUIFace {
+  theme: AppletStateFace["theme"];
+  components: AppletStateFace["components"];
+  data: any;
+  style: any;
+  componentStyle: AppletStateFace["componentStyle"];
   action({ type, payload }: { type: string; payload: any }): void;
 }
 
@@ -179,5 +184,6 @@ export {
   NavigationFace,
   VideoFace,
   FormFace,
-  ShowFace
+  ShowFace,
+  DragUIFace
 };
