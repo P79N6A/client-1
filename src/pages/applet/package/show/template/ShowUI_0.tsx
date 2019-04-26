@@ -1,5 +1,4 @@
-import { css } from "@emotion/core";
-import { Carousel, Col, Row } from "antd";
+import { Carousel } from "antd";
 import React, { memo } from "react";
 import { ShowFace } from "../../../types";
 

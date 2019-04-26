@@ -1,40 +1,22 @@
-import { css } from "@emotion/core";
-import React, { memo } from "react";
+import React, { Fragment, memo } from "react";
 import { VideoFace } from "../../types";
+import TextUI_0 from "../text/TextUI";
+import VideoUI_0 from "./template/VideoUI_0";
 
 interface IProps {
   theme: string;
   data: VideoFace;
-  style: any;
 }
 
 const VideoUI = memo((props: IProps) => {
-  const { theme, data, style } = props;
-  const {
-    height,
-    src,
-
-    autoPlay
-  } = data;
-  const styles = {
-    block: css`
-      white-space: pre-wrap;
-      width: 100%;
-      height: ${height}px;
-      margin-top: ${style.marginTop}px;
-      margin-bottom: ${style.marginBottom}px;
-      padding-top: ${style.paddingTop}px;
-      padding-bottom: ${style.paddingBottom}px;
-      background-color: ${style.bgColor};
-      ${style.bgImg ? `background:url(${style.bgImg})` : ""};
-      padding-left: ${style.paddingLeft}px;
-      padding-right: ${style.paddingRight}px;
-    `
+  // 模板列表
+  const template = {
+    // 默认显示
+    0: <VideoUI_0 {...props} />
   };
 
-  return (
-    <video css={styles.block} controls={true} src={src} autoPlay={autoPlay} />
-  );
+  // 更具typeId 展示组件
+  return <Fragment>{template[props.data.typeId]}</Fragment>;
 });
 
 export default VideoUI;

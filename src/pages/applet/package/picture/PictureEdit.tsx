@@ -1,4 +1,4 @@
-import { Card, Form, Icon, InputNumber, Tabs } from "antd";
+import { Card, Empty, Form, Icon, InputNumber, Tabs } from "antd";
 import React, { memo } from "react";
 import { connect } from "react-redux";
 import { action } from "../../../../models/action";
@@ -30,12 +30,13 @@ const PictureEdit = memo((props: UIEditFace) => {
 
   return (
     <Tabs defaultActiveKey="1">
-      <TabPane tab="基础属性" key="1">
+      <TabPane tab="属性" key="1">
         <Form {...formItemLayout}>
           <Form.Item label={"图片宽度"}>
             <Card
+              bodyStyle={{ padding: 0 }}
               style={{ width: "100%" }}
-              cover={<img alt="example" src={img} />}
+              cover={<img alt="example" src={img} height={120} />}
               actions={[
                 <Icon type="setting" key={1} />,
                 <Icon type="edit" key={2} />,
@@ -72,8 +73,11 @@ const PictureEdit = memo((props: UIEditFace) => {
           </Form.Item>
         </Form>
       </TabPane>
-      <TabPane tab="模块样式" key="2">
+      <TabPane tab="样式" key="2">
         <CommonEditForm />
+      </TabPane>
+      <TabPane tab="模板" key="3">
+        <Empty style={{ marginTop: 32 }} />
       </TabPane>
     </Tabs>
   );
