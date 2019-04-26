@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { Empty, Tabs } from "antd";
 import BraftEditor from "braft-editor";
 import "braft-editor/dist/index.css";
 import ColorPicker from "braft-extensions/dist/color-picker";
@@ -58,15 +58,18 @@ const TextEdit = memo((props: UIEditFace) => {
   };
   return (
     <Tabs defaultActiveKey="1">
-      <TabPane tab="基础属性" key="1">
+      <TabPane tab="属性" key="1">
         <BraftEditor
           {...editorConfig}
           value={state}
           onChange={handleEditorChange}
         />
       </TabPane>
-      <TabPane tab="模块样式" key="2">
+      <TabPane tab="样式" key="2">
         <CommonEditForm />
+      </TabPane>
+      <TabPane tab="模板" key="3">
+        <Empty style={{ marginTop: 32 }} />
       </TabPane>
     </Tabs>
   );

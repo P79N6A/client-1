@@ -2,6 +2,7 @@ import { ButtonFace } from "../../types";
 
 const $$button: ButtonFace = {
   type: "button",
+  typeId: 0,
   desc: "按钮",
   fontSize: 14,
   color: "",

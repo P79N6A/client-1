@@ -31,6 +31,7 @@ import { FormFace } from "../../types";
 
 const $$form: FormFace = {
   type: "form",
+  typeId: 0,
   formItem: [
     {
       type: "input",

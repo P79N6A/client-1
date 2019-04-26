@@ -31,20 +31,24 @@ const appletAction = {
   pageIndexSet: "APPLET_PAGE_INDEX_SET", // 当前操作的页面下标
 
   // component index 组件/组件样式 下标
-  componentIndexSet: "APPLET_COMPONENT_INDEX_SET" // 控制 编辑抽屉 是否显示
+  componentIndexSet: "APPLET_COMPONENT_INDEX_SET", // 控制 编辑抽屉 是否显示
+
+  // drag index 组件/组件样式 下标
+  dragIndexSet: "APPLET_DRAG_INDEX_SET" // 控制 编辑抽屉 是否显示
 };
 
 // store 默认数据
 const stateDefault: AppletStateFace = {
   theme: "#3A82F8",
-  navigations: {},
+  tabBar: [],
   pages: {},
   components: {},
   componentStyle: {},
   drawer: false,
   drawerType: undefined,
   pageIndex: undefined,
-  componentIndex: undefined
+  componentIndex: undefined,
+  dragIndex: undefined
 };
 
 // applet redux 数据集合
@@ -131,6 +135,13 @@ const appletStore = (state = stateDefault, action: { type; payload }) =>
               1
             );
             break;
+          //  根据 drag index 修改相对应的数据
+          case "dragMoveComponent":
+            draft.components[draft.dragIndex] = {
+              ...draft.components[draft.dragIndex],
+              ...payload.componentData
+            };
+            break;
         }
         break;
 
@@ -140,7 +151,7 @@ const appletStore = (state = stateDefault, action: { type; payload }) =>
           marginBottom: 0,
           paddingTop: 0,
           paddingBottom: 0,
-          height: 80,
+          height: 200,
           bgColor: "",
           bgImg: "",
           paddingLeft: 0,
@@ -173,6 +184,9 @@ const appletStore = (state = stateDefault, action: { type; payload }) =>
         draft.drawer = payload.drawer;
         break;
 
+      case appletAction.dragIndexSet:
+        draft.dragIndex = payload.dragIndex;
+        break;
       default:
         return state;
     }

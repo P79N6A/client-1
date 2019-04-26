@@ -164,6 +164,7 @@ export const pageRemoveLogic = (action, pageIndexList, pages) => {
  * 1. 传递的是一个数组，所以先判断这个数组是否为空
  * 2. 取出目标  页面下标 并传递
  * 3. 设置 componentIndex 为默认
+ * 4. drawType 设为默认值
  * @param action
  * @param key 选择的下标 （antd 给的是数据集合,我们只要一个数据就可以）
  */
@@ -176,6 +177,11 @@ export const pageSetIndexLogic = (action, key: string[]) => {
     action({
       type: appletAction.componentIndexSet,
       payload: { componentIndex: undefined }
+    });
+    // 4. drawType 设为默认值
+    action({
+      type: appletAction.drawerTypeSet,
+      payload: { componentIndex: { drawerType: undefined } }
     });
   }
 };
@@ -302,7 +308,7 @@ export const componentChange = (action, componentIndex, type) => {
  * 1. 创建index 用于 components 与 components style 的index
  * 2. 将 index 插入 drag uiList 中
  * 3. 使用 index 创建 components 与 components style
- * 4. 设置 componentIndex 为当前Index
+ * 4. 设置 dragIndex 为当前Index
  * @param action
  * @param type
  */
@@ -335,10 +341,22 @@ export const dragAddComponent = (action, type) => {
     type: appletAction.componentStyleAdd,
     payload: { componentStyleIndex: index }
   });
-  // 4. 设置 componentIndex 为当前Index
+  // 4. 设置 dragIndex 为当前Index
   action({
-    type: appletAction.componentIndexSet,
-    payload: { componentIndex: index }
+    type: appletAction.dragIndexSet,
+    payload: { dragIndex: index }
+  });
+};
+
+/**
+ * component -> Data 修改component drag中的数据
+ * @param action
+ * @param componentData
+ */
+export const componentDragSetData = (action, componentData) => {
+  action({
+    type: appletAction.componentsSet,
+    payload: { setType: "dragMoveComponent", componentData }
   });
 };
 
@@ -376,5 +394,15 @@ export const componentStyleSetData = (action, componentStyleData) => {
   action({
     type: appletAction.componentStyleSet,
     payload: { componentStyleData }
+  });
+};
+
+/**
+ *  drag index 的值修改
+ */
+export const dragSet = (action, dragIndex) => {
+  action({
+    type: appletAction.dragIndexSet,
+    payload: { dragIndex }
   });
 };

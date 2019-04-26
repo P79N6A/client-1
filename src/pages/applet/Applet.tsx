@@ -8,7 +8,7 @@ import AppletCanvas from "./layouts/AppletCanvas";
 import AppletEdit from "./layouts/AppletEdit";
 import AppletMadeEdit from "./package/AppletMadeEdit";
 
-const Applet = memo(() => {
+export default memo(() => {
   // 一级侧边栏选项值
   const [item, setItem] = useState("common");
   // 修改一级侧边栏选项
@@ -63,5 +63,3 @@ const Applet = memo(() => {
     </Fragment>
   );
 });
-
-export default Applet;

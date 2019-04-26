@@ -1,4 +1,3 @@
-import { css } from "@emotion/core";
 import React, { Fragment, memo } from "react";
 import { connect } from "react-redux";
 import ButtonUI from "../button/ButtonUI";
@@ -6,27 +5,19 @@ import PictureUI from "../picture/PictureUI";
 import TextUI from "../text/TextUI";
 import { action } from "../../../../models/action";
 import { DragStore } from "../../model/reselect";
-import { componentSetData } from "../../model/logic";
+import { componentDragSetData, dragSet } from "../../model/logic";
 import ResizableRect from "../../../../tools/drag/ResizableRect";
 import { DragUIFace } from "../../types";
+import { css } from "@emotion/core";
 
 const DragUI = memo((props: DragUIFace) => {
-  const { theme, data, action, style, componentStyle, components } = props;
-  const styles = {
-    block: css`
-      position: relative;
-      width: 100%;
-      height: ${style.height}px;
-      margin-top: ${style.marginTop}px;
-      margin-bottom: ${style.marginBottom}px;
-      padding-top: ${style.paddingTop}px;
-      padding-bottom: ${style.paddingBottom}px;
-      background-color: ${style.bgColor};
-      ${style.bgImg ? `background:url(${style.bgImg})` : ""};
-      padding-left: ${style.paddingLeft}px;
-      padding-right: ${style.paddingRight}px;
-    `
-  };
+  const { theme, data, action, components, dragIndex } = props;
+
+  const styles = css`
+    user-select: none;
+    pointer-events: none;
+    overflow: hidden;
+  `;
 
   // 组件列表
   const uiList = {
@@ -36,43 +27,63 @@ const DragUI = memo((props: DragUIFace) => {
   };
 
   return (
-    <div css={styles.block}>
+    <Fragment>
       {data.uiList.map((data, index) => {
         const Component = uiList[components[data].type];
         return (
-          <ResizableRect
-            key={index}
-            left={components[data].left}
-            top={components[data].top}
-            width={components[data].width}
-            height={components[data].height}
-            zIndex={200}
-            zoomable="n, w, s, e, nw, ne, se, sw"
-            onResize={({ top, left, width, height }) =>
-              componentSetData(action, {
-                width,
-                height,
-                top,
-                left
-              })
-            }
-            onDrag={(deltaX: number, deltaY: number) =>
-              componentSetData(action, {
-                left: deltaX + components[data].left,
-                top: deltaY + components[data].top
-              })
-            }
-          >
-            <Component
-              absolute={true}
-              data={components[data]}
-              theme={theme}
-              style={componentStyle[data]}
-            />
-          </ResizableRect>
+          <Fragment key={index}>
+            {dragIndex === data ? (
+              <ResizableRect
+                css={styles}
+                onMouseDown={() => dragSet(action, index)}
+                key={index}
+                left={components[data].left}
+                top={components[data].top}
+                width={components[data].width}
+                height={components[data].height}
+                zoomable="n, w, s, e, nw, ne, se, sw"
+                onResize={({ top, left, width, height }) =>
+                  componentDragSetData(action, {
+                    width,
+                    height,
+                    top,
+                    left
+                  })
+                }
+                onDrag={(deltaX: number, deltaY: number) =>
+                  componentDragSetData(action, {
+                    left: deltaX + components[data].left,
+                    top: deltaY + components[data].top
+                  })
+                }
+              >
+                <Component
+                  data={components[data]}
+                  theme={theme}
+                  absolute={true}
+                />
+              </ResizableRect>
+            ) : (
+              <div
+                style={{
+                  position: "absolute",
+                  top: `${components[data].top}px`,
+                  left: `${components[data].left}px`
+                }}
+                onMouseDown={() => dragSet(action, data)}
+              >
+                <Component
+                  css={styles}
+                  data={components[data]}
+                  theme={theme}
+                  absolute={true}
+                />
+              </div>
+            )}
+          </Fragment>
         );
       })}
-    </div>
+    </Fragment>
   );
 });
 

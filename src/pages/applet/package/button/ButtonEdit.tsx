@@ -1,5 +1,14 @@
 import { css } from "@emotion/core";
-import { Form, Icon, Input, InputNumber, Tabs, Tooltip, Upload } from "antd";
+import {
+  Empty,
+  Form,
+  Icon,
+  Input,
+  InputNumber,
+  Tabs,
+  Tooltip,
+  Upload
+} from "antd";
 import "braft-editor/dist/index.css";
 import "braft-extensions/dist/color-picker.css";
 import React, { memo } from "react";
@@ -57,7 +66,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
 
   return (
     <Tabs defaultActiveKey="1">
-      <TabPane tab="基础属性" key="1">
+      <TabPane tab="属性" key="1">
         <Form {...formItemLayout}>
           <Form.Item label="文案">
             <Input
@@ -186,8 +195,11 @@ const ButtonEdit = memo((props: UIEditFace) => {
           </Form.Item>
         </Form>
       </TabPane>
-      <TabPane tab="模块样式" key="2">
+      <TabPane tab="样式" key="2">
         <CommonEditForm />
+      </TabPane>
+      <TabPane tab="模板" key="3">
+        <Empty style={{ marginTop: 32 }} />
       </TabPane>
     </Tabs>
   );

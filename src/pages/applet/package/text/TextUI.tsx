@@ -1,42 +1,23 @@
+import React, { memo, Fragment } from "react";
 import { css } from "@emotion/core";
-import React, { memo } from "react";
 import { TextFace } from "../../types";
+import TextUI_0 from "./template/TextUI_0";
 
 interface IProps {
   data: TextFace;
-  style: {
-    marginTop: number;
-    marginBottom: number;
-    paddingTop: number;
-    paddingBottom: number;
-    height: number;
-    paddingLeft: number;
-    paddingRight: number;
-    bgColor: string;
-    bgImg: string;
-  };
   absolute?: boolean;
 }
 
+/**
+ * 根据typeId 展示相对应的组件
+ */
 export default memo((props: IProps) => {
-  // 私有属性
-  const { data, style, absolute } = props;
-  const styles = css`
-    white-space: pre-wrap;
-    width: ${absolute ? data.width : "100%"};
-    height: ${absolute ? data.height : "auto"};
-    margin-top: ${style.marginTop}px;
-    margin-bottom: ${style.marginBottom}px;
-    padding-top: ${style.paddingTop}px;
-    padding-bottom: ${style.paddingBottom}px;
-    background-color: ${style.bgColor};
-    ${style.bgImg ? `background:url(${style.bgImg})` : ""};
-    padding-left: ${style.paddingLeft}px;
-    padding-right: ${style.paddingRight}px;
-    p {
-      margin: 0;
-    }
-  `;
+  // 模板列表
+  const template = {
+    // 默认显示
+    0: <TextUI_0 buttonSource={props.data} />
+  };
 
-  return <div css={styles} dangerouslySetInnerHTML={{ __html: data.html }} />;
+  // 更具typeId 展示组件
+  return <Fragment>{template[props.data.typeId]}</Fragment>;
 });
