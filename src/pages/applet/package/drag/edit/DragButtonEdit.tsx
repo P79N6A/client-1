@@ -43,7 +43,7 @@ const DragButtonEdit = memo((props: IProps) => {
   };
   // 数据修改同步至reducer 中
   const changeValue = (name, e) => {
-    action({ type: "changeDragUIValue", payload: { [name]: e } });
+    action({ [name]: e });
   };
 
   return (

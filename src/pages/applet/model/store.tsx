@@ -40,13 +40,29 @@ const appletAction = {
 // store 默认数据
 const stateDefault: AppletStateFace = {
   theme: "#3A82F8",
-  tabBar: [],
-  pages: {},
-  components: {},
+  tabBar: [
+    { type: "pageIndex", data: "home" },
+    { type: "pageIndex", data: "user" }
+  ],
+  pages: {
+    user: {
+      uiList: ["user"],
+      title: "个人中心",
+      icon: "icon-Set-up"
+    },
+    home: {
+      uiList: [],
+      title: "首页",
+      icon: "icon-Set-up"
+    }
+  },
+  components: {
+    user: { type: "user", typeId: "0" }
+  },
   componentStyle: {},
   drawer: false,
   drawerType: undefined,
-  pageIndex: undefined,
+  pageIndex: "home",
   componentIndex: undefined,
   dragIndex: undefined
 };
@@ -146,17 +162,8 @@ const appletStore = (state = stateDefault, action: { type; payload }) =>
         break;
 
       case appletAction.componentStyleAdd:
-        draft.componentStyle[payload.componentStyleIndex] = {
-          marginTop: 0,
-          marginBottom: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
-          height: 200,
-          bgColor: "",
-          bgImg: "",
-          paddingLeft: 0,
-          paddingRight: 0
-        };
+        draft.componentStyle[payload.componentStyleIndex] =
+          payload.componentStyleData;
         break;
       case appletAction.componentStyleRemove:
         delete draft.componentStyle[payload.componentStyleIndex];

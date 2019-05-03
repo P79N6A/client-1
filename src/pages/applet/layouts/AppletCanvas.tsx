@@ -15,7 +15,7 @@ const AppletCanvas = memo((props: AppletCanvasFace) => {
     // 画布
     root: css`
       width: 378px;
-      height: 600px;
+      height: 615px;
       margin: 80px auto auto;
       background: #fff;
       box-shadow: rgba(0, 0, 0, 0.15) 0 0 15px;
@@ -34,7 +34,7 @@ const AppletCanvas = memo((props: AppletCanvasFace) => {
       font-size: 16px;
     `,
     canvas: css`
-      height: 485px;
+      height: 500px;
       overflow: auto;
       width: 100%;
       scrollbar-arrow-color: transparent;

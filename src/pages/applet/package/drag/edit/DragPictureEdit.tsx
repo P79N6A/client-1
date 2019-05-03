@@ -24,7 +24,7 @@ const DragPictureEdit = memo((props: IProps) => {
 
   // 数据修改同步至reducer 中
   const changeValue = (name, e) => {
-    props.action({ type: "changeDragUIValue", payload: { [name]: e } });
+    props.action({ [name]: e });
   };
 
   return (

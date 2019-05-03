@@ -8,7 +8,7 @@ import {
   componentChange
 } from "../model/logic";
 import CommonUI from "./common/CommonUI";
-import { AppletCanvasFace, AppletMadeCanvasFace } from "../types";
+import { AppletMadeCanvasFace } from "../types";
 
 import DragUI from "../package/drag/DragUI";
 import ShowUI from "../package/show/ShowUI";
@@ -19,8 +19,9 @@ import ButtonUI from "../package/button/ButtonUI";
 import TextUI from "../package/text/TextUI";
 import PictureUI from "../package/picture/PictureUI";
 import { connect } from "react-redux";
-import { appletCanvasStore, appletMadeCanvasStore } from "../model/reselect";
+import { appletMadeCanvasStore } from "../model/reselect";
 import { action } from "../../../models/action";
+import UserPageUI from "./pages/user/UserPageUI";
 
 /**
  * 展示组件
@@ -63,7 +64,8 @@ const AppletMadeCanvas = memo((props: AppletMadeCanvasFace) => {
     show: ShowUI,
     form: FormUI,
     navigation: NavigationUI,
-    video: VideoUI
+    video: VideoUI,
+    user: UserPageUI
   };
 
   return (
@@ -71,41 +73,50 @@ const AppletMadeCanvas = memo((props: AppletMadeCanvasFace) => {
       {uiList.map((data: string, index: number) => {
         const Component = componentUI[components[data].type];
         return (
-          <Tooltip
-            placement="right"
-            trigger="click"
-            key={index}
-            title={
-              <div css={styles.tooltip}>
-                <div key={1} onClick={() => componentMoveUp(action, index)}>
-                  上移
-                </div>
-                <div key={2} onClick={() => componentMoveDown(action, index)}>
-                  下移
-                </div>
-                <div
-                  key={3}
-                  onClick={() => pageUIListRemoveItem(action, index)}
-                >
-                  删除
-                </div>
-              </div>
-            }
-          >
-            <div
-              onClick={() => {
-                componentChange(action, data, components[data].type);
-              }}
-              css={data === componentIndex ? styles.editItem : styles.item}
-            >
-              <CommonUI
-                {...componentStyle[data]}
-                drag={components[data].type === "drag"}
+          <Fragment key={index}>
+            {components[data].type === "user" ? (
+              <Component data={components[data]} theme={theme} />
+            ) : (
+              <Tooltip
+                placement="right"
+                trigger="click"
+                key={index}
+                title={
+                  <div css={styles.tooltip}>
+                    <div key={1} onClick={() => componentMoveUp(action, index)}>
+                      上移
+                    </div>
+                    <div
+                      key={2}
+                      onClick={() => componentMoveDown(action, index)}
+                    >
+                      下移
+                    </div>
+                    <div
+                      key={3}
+                      onClick={() => pageUIListRemoveItem(action, index)}
+                    >
+                      删除
+                    </div>
+                  </div>
+                }
               >
-                <Component data={components[data]} theme={theme} />
-              </CommonUI>
-            </div>
-          </Tooltip>
+                <div
+                  onClick={() => {
+                    componentChange(action, data, components[data].type);
+                  }}
+                  css={data === componentIndex ? styles.editItem : styles.item}
+                >
+                  <CommonUI
+                    {...componentStyle[data]}
+                    drag={components[data].type === "drag"}
+                  >
+                    <Component data={components[data]} theme={theme} />
+                  </CommonUI>
+                </div>
+              </Tooltip>
+            )}
+          </Fragment>
         );
       })}
     </Fragment>

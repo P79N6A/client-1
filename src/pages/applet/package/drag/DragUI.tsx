@@ -1,14 +1,14 @@
 import React, { Fragment, memo } from "react";
 import { connect } from "react-redux";
+import { css } from "@emotion/core";
 import ButtonUI from "../button/ButtonUI";
 import PictureUI from "../picture/PictureUI";
 import TextUI from "../text/TextUI";
 import { action } from "../../../../models/action";
 import { DragStore } from "../../model/reselect";
 import { componentDragSetData, dragSet } from "../../model/logic";
-import ResizableRect from "../../../../tools/drag/ResizableRect";
 import { DragUIFace } from "../../types";
-import { css } from "@emotion/core";
+import DragRef from "../../../../tools/DragTools";
 
 const DragUI = memo((props: DragUIFace) => {
   const { theme, data, action, components, dragIndex } = props;
@@ -25,35 +25,31 @@ const DragUI = memo((props: DragUIFace) => {
     picture: PictureUI,
     button: ButtonUI
   };
+  // 拖拽组件的数据列表
+  const dataList = [];
+  let editId = 0;
+  data.uiList.map((data, index) => {
+    dataList.push(components[data]);
+    if (dragIndex === data) {
+      editId = index;
+    }
+  });
 
   return (
     <Fragment>
       {data.uiList.map((data, index) => {
         const Component = uiList[components[data].type];
+        console.log(dragIndex, data);
         return (
           <Fragment key={index}>
             {dragIndex === data ? (
-              <ResizableRect
-                css={styles}
-                onMouseDown={() => dragSet(action, index)}
-                key={index}
-                left={components[data].left}
-                top={components[data].top}
-                width={components[data].width}
-                height={components[data].height}
-                zoomable="n, w, s, e, nw, ne, se, sw"
-                onResize={({ top, left, width, height }) =>
+              <DragRef
+                dataList={dataList}
+                position={components[data]}
+                editId={editId}
+                reSize={data =>
                   componentDragSetData(action, {
-                    width,
-                    height,
-                    top,
-                    left
-                  })
-                }
-                onDrag={(deltaX: number, deltaY: number) =>
-                  componentDragSetData(action, {
-                    left: deltaX + components[data].left,
-                    top: deltaY + components[data].top
+                    ...data
                   })
                 }
               >
@@ -62,15 +58,15 @@ const DragUI = memo((props: DragUIFace) => {
                   theme={theme}
                   absolute={true}
                 />
-              </ResizableRect>
+              </DragRef>
             ) : (
               <div
+                onClick={() => dragSet(action, data)}
                 style={{
                   position: "absolute",
                   top: `${components[data].top}px`,
                   left: `${components[data].left}px`
                 }}
-                onMouseDown={() => dragSet(action, data)}
               >
                 <Component
                   css={styles}
