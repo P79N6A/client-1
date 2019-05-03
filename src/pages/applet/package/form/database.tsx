@@ -56,5 +56,16 @@ const $$form: FormFace = {
     }
   ]
 };
+export const $$formStyle0 = {
+  marginTop: 0,
+  marginBottom: 0,
+  paddingTop: 10,
+  paddingBottom: 10,
+  height: 300,
+  bgColor: "",
+  bgImg: "",
+  paddingLeft: 40,
+  paddingRight: 40
+};
 
 export default $$form;

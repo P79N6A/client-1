@@ -24,7 +24,7 @@ const DragTextEdit = memo((props: IProps) => {
   const handleEditorChange = e => {
     setState(e);
     // 用于外部数据同步
-    props.action({ type: "changeDragUIValue", payload: { html: e.toHTML() } });
+    props.action({ html: e.toHTML() });
   };
 
   const editorConfig: { excludeControls: any } = {

@@ -76,8 +76,8 @@ export const DragStore = createSelector(
 );
 
 export const TabBarUIStore = createSelector(
-  [pageIndex, theme, tabBar, pages],
-  (pageIndex, theme, tabBar, pages) => {
-    return { pageIndex, theme, tabBar, pages };
+  [pageIndex, theme, tabBar, pages, componentIndex],
+  (pageIndex, theme, tabBar, pages, componentIndex) => {
+    return { pageIndex, theme, tabBar, pages, componentIndex };
   }
 );

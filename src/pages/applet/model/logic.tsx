@@ -1,12 +1,25 @@
-import $$button from "../package/button/database";
-import $$picture from "../package/picture/database";
-import $$text from "../package/text/database";
-import $$drag from "../package/drag/database";
-import $$navigation from "../package/navigation/database";
-import $$show from "../package/show/database";
-import $$video from "../package/video/database";
-import $$form from "../package/form/database";
+import $$form, { $$formStyle0 } from "../package/form/database";
 import { appletAction } from "./store";
+import { $$text0, $$textStyle0 } from "../package/text/template/TextUI_0";
+import {
+  $$button0,
+  $$buttonStyle0
+} from "../package/button/template/ButtonUI_0";
+import {
+  $$picture0,
+  $$pictureStyle0
+} from "../package/picture/template/PictureUI_0";
+import {
+  $$drag0,
+  $$drag0List,
+  $$dragStyle0
+} from "../package/drag/template/database-0";
+import { $$video0, $$videoStyle0 } from "../package/video/template/VideoUI_0";
+import { $$show0, $$showStyle0 } from "../package/show/template/ShowUI_0";
+import {
+  $$navigation0,
+  $$navigationStyle0
+} from "../package/navigation/template/NavigationUI_0";
 // ==============================================applet-edit页面================
 
 /**
@@ -31,48 +44,164 @@ export const componentAddLogic = (action, componentType) => {
     payload: { setType: "uiList", componentIndex: index }
   });
   // 3. 根据 index 创建 components ，components style 新 item
-  let dataSource; // 记录将要传递额数据
   switch (componentType) {
     case "按钮":
-      dataSource = $$button;
+      action({
+        type: appletAction.componentsAdd,
+        payload: { componentIndex: index, componentData: $$button0 }
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$buttonStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: $$button0.type }
+      });
       break;
     case "图片":
-      dataSource = $$picture;
+      action({
+        type: appletAction.componentsAdd,
+        payload: { componentIndex: index, componentData: $$picture0 }
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$pictureStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: "picture" }
+      });
       break;
     case "文本":
-      dataSource = $$text(new Date().getTime());
+      action({
+        type: appletAction.componentsAdd,
+        payload: {
+          componentIndex: index,
+          componentData: $$text0(new Date().getTime())
+        }
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$textStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: "text" }
+      });
       break;
     case "自由布局":
-      dataSource = $$drag;
+      action({
+        type: appletAction.componentsAdd,
+        payload: { componentIndex: index, componentData: $$drag0 }
+      });
+      // 向drag 组件中注入UI列表
+      $$drag0.uiList.map((data, index) => {
+        action({
+          type: appletAction.componentsAdd,
+          payload: { componentIndex: data, componentData: $$drag0List[index] }
+        });
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$dragStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: $$drag0.type }
+      });
       break;
     case "魔方导航":
-      dataSource = $$navigation;
+      action({
+        type: appletAction.componentsAdd,
+        payload: { componentIndex: index, componentData: $$navigation0 }
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$navigationStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: $$navigation0.type }
+      });
       break;
     case "商品展示":
-      dataSource = $$show;
+      action({
+        type: appletAction.componentsAdd,
+        payload: { componentIndex: index, componentData: $$show0 }
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$showStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: "show" }
+      });
       break;
     case "视频":
-      dataSource = $$video;
+      action({
+        type: appletAction.componentsAdd,
+        payload: { componentIndex: index, componentData: $$video0 }
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$videoStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: "video" }
+      });
       break;
     case "表单":
-      dataSource = $$form;
+      action({
+        type: appletAction.componentsAdd,
+        payload: { componentIndex: index, componentData: $$form }
+      });
+      action({
+        type: appletAction.componentStyleAdd,
+        payload: {
+          componentStyleIndex: index,
+          componentStyleData: $$formStyle0
+        }
+      });
+      // 5. drawer 中展示相对应的 组件编辑器
+      action({
+        type: appletAction.drawerTypeSet,
+        payload: { drawerType: "form" }
+      });
       break;
   } // 创建 component 数据
-  action({
-    type: appletAction.componentsAdd,
-    payload: { componentIndex: index, componentData: dataSource }
-  });
-  action({
-    type: appletAction.componentStyleAdd,
-    payload: { componentStyleIndex: index }
-  });
   // 4. 展示 drawer
   action({ type: appletAction.drawerSet, payload: { drawer: true } });
-  // 5. drawer 中展示相对应的 组件编辑器
-  action({
-    type: appletAction.drawerTypeSet,
-    payload: { drawerType: dataSource.type }
-  });
   // 6. 设置 componentIndex 为当前Index
   action({
     type: appletAction.componentIndexSet,
@@ -324,13 +453,13 @@ export const dragAddComponent = (action, type) => {
   let dataSource; // 记录将要传递额数据
   switch (type) {
     case "button":
-      dataSource = $$button;
+      dataSource = $$button0;
       break;
     case "picture":
-      dataSource = $$picture;
+      dataSource = $$picture0;
       break;
     case "text":
-      dataSource = $$text(new Date().getTime());
+      dataSource = $$text0(new Date().getTime());
       break;
   } // 创建 page_ui 数据
   action({

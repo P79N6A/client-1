@@ -175,6 +175,7 @@ const AppletEdit = memo((props: AppletEditFace) => {
           {Object.keys(pages).map(data => {
             return (
               <Tree.TreeNode
+                disabled={data === "user"}
                 title={
                   <Typography.Paragraph
                     ellipsis={true}

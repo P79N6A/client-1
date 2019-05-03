@@ -81,8 +81,8 @@ interface AppletStateFace {
   theme: string | "#3A82F8";
   // 导航菜单
   tabBar: Array<{
-    pageIndex: string | undefined;
-    link: { type: string | undefined; data: string | undefined };
+    type: string | undefined;
+    data: string | undefined;
   }>;
   // 页面数据
   pages: {
@@ -94,7 +94,7 @@ interface AppletStateFace {
   };
   // 页面ui
   components: {
-    [id: string]: UIMapFace;
+    [id: string]: UIMapFace | any;
   };
   // ui样式
   componentStyle: {
@@ -139,7 +139,7 @@ interface AppletCanvasFace {
   title: string;
 }
 interface AppletMadeCanvasFace {
-  uiList: string[];
+  uiList: UIMapFace | any;
   theme: AppletStateFace["theme"];
   components: AppletStateFace["components"];
   componentStyle: AppletStateFace["componentStyle"];
@@ -184,6 +184,7 @@ interface TabBarUIFace {
   theme: AppletStateFace["theme"];
   tabBar: AppletStateFace["tabBar"];
   pages: AppletStateFace["pages"];
+  componentIndex: AppletStateFace["componentIndex"];
 }
 
 export {
