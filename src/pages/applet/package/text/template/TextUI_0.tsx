@@ -12,7 +12,7 @@ const $$text0 = (id: string | number): TextFace => {
     typeId: 0, // 用于区分使用哪套模板
     id, // 用于辨析 富文本的id
     html:
-      '<p style="text-align:center;">请在这里填充文本</p><p style="text-align:center;">这里是示例文本，这里是示例文本</p><p style="text-align:center;">这里是示例文本，这里是示例文本</p><p style="text-align:center;">这里是示例文本，这里是示例文本</p><p style="text-align:center;">这里是示例文本，这里是示例文本</p><p style="text-align:center;">这里是示例文本，这里是示例文本</p><p style="text-align:center;">这里是示例文本，这里是示例文本</p>',
+      '<p style="text-align:center;"><span style="font-size:20px">文本组件</span></p><p style="text-align:center;"><span style="font-size:16px">填充合适的文案可以显著树立公司品牌</span></p>',
     // 为拖动提供数据集，一般情况下不使用
     width: 150,
     height: 100,
@@ -22,11 +22,11 @@ const $$text0 = (id: string | number): TextFace => {
 };
 const $$textStyle0 = {
   marginTop: 0,
-  marginBottom: 0,
-  paddingTop: 10,
-  paddingBottom: 10,
+  marginBottom: 8,
+  paddingTop: 16,
+  paddingBottom: 16,
   height: 300,
-  bgColor: "",
+  bgColor: "#fff",
   bgImg: "",
   paddingLeft: 0,
   paddingRight: 0

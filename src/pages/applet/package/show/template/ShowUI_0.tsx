@@ -30,11 +30,11 @@ export const $$show0: ShowFace = {
 };
 export const $$showStyle0 = {
   marginTop: 0,
-  marginBottom: 0,
+  marginBottom: 8,
   paddingTop: 10,
   paddingBottom: 10,
-  height: 300,
-  bgColor: "",
+  height: 240,
+  bgColor: "#fff",
   bgImg: "",
   paddingLeft: 20,
   paddingRight: 20
@@ -46,7 +46,7 @@ export default memo((props: IProps) => {
   const { showItem } = data;
 
   return (
-    <Carousel>
+    <Carousel autoplay={true}>
       {showItem.map((data, index) => {
         return <img src={data.img} alt={"img"} key={index} />;
       })}

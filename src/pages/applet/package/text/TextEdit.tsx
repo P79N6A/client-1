@@ -50,12 +50,15 @@ const TextEdit = memo((props: UIEditFace) => {
       "separator",
       "link",
       "separator",
+      "letter-spacing",
       "media",
       "hr",
       "separator",
-      "separator"
+      "separator",
+      "strike-through"
     ]
   };
+
   return (
     <Tabs defaultActiveKey="1">
       <TabPane tab="属性" key="1">

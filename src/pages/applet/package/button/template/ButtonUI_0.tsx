@@ -22,11 +22,11 @@ export const $$button0: ButtonFace = {
 };
 export const $$buttonStyle0 = {
   marginTop: 0,
-  marginBottom: 0,
-  paddingTop: 10,
-  paddingBottom: 10,
+  marginBottom: 8,
+  paddingTop: 16,
+  paddingBottom: 16,
   height: 300,
-  bgColor: "",
+  bgColor: "#fff",
   bgImg: "",
   paddingLeft: 120,
   paddingRight: 120
@@ -35,11 +35,12 @@ export const $$buttonStyle0 = {
 export default memo((props: IProps) => {
   // 私有属性
   const { theme, data } = props;
-  const { width, height, radius, color, btnColor, btnImg } = data;
+  const { width, height, radius, color, btnColor, btnImg, fontSize } = data;
 
   const styles = {
     button: css`
       color: ${color ? color : theme};
+      font-size: ${fontSize}px;
       width: ${width}px;
       height: ${height}px;
       border-radius: ${radius}px;

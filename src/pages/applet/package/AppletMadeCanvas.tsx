@@ -1,6 +1,6 @@
 import React, { memo, Fragment } from "react";
 import { css } from "@emotion/core";
-import { Tooltip } from "antd";
+import { Icon, message, Popover, Tooltip } from "antd";
 import {
   pageUIListRemoveItem,
   componentMoveDown,
@@ -77,26 +77,43 @@ const AppletMadeCanvas = memo((props: AppletMadeCanvasFace) => {
             {components[data].type === "user" ? (
               <Component data={components[data]} theme={theme} />
             ) : (
-              <Tooltip
-                placement="right"
+              <Popover
+                visible={componentIndex === data}
+                overlayStyle={{ border: "none", paddingLeft: 0, zIndex: 100 }}
+                placement="rightTop"
                 trigger="click"
                 key={index}
-                title={
+                content={
                   <div css={styles.tooltip}>
-                    <div key={1} onClick={() => componentMoveUp(action, index)}>
-                      上移
+                    <div
+                      key={1}
+                      onClick={() => {
+                        if (index !== 0) {
+                          componentMoveUp(action, index);
+                        } else {
+                          message.warning("组件已至最顶端");
+                        }
+                      }}
+                    >
+                      <Icon type="arrow-up" />
                     </div>
                     <div
                       key={2}
-                      onClick={() => componentMoveDown(action, index)}
+                      onClick={() => {
+                        if (index !== uiList.length - 1) {
+                          componentMoveDown(action, index);
+                        } else {
+                          message.warning("组件已至最底端");
+                        }
+                      }}
                     >
-                      下移
+                      <Icon type="arrow-down" />
                     </div>
                     <div
-                      key={3}
+                      key={4}
                       onClick={() => pageUIListRemoveItem(action, index)}
                     >
-                      删除
+                      <Icon type="delete" />
                     </div>
                   </div>
                 }
@@ -114,7 +131,7 @@ const AppletMadeCanvas = memo((props: AppletMadeCanvasFace) => {
                     <Component data={components[data]} theme={theme} />
                   </CommonUI>
                 </div>
-              </Tooltip>
+              </Popover>
             )}
           </Fragment>
         );

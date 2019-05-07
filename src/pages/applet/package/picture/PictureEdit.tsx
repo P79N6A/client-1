@@ -1,4 +1,4 @@
-import { Card, Empty, Form, Icon, InputNumber, Tabs } from "antd";
+import { Card, Empty, Form, Icon, InputNumber, Slider, Tabs } from "antd";
 import React, { memo } from "react";
 import { connect } from "react-redux";
 import { action } from "../../../../models/action";
@@ -6,6 +6,7 @@ import CommonEditForm from "../common/CommonEditForm";
 import { UIEditStore } from "../../model/reselect";
 import { UIEditFace } from "../../types";
 import { componentSetData } from "../../model/logic";
+import ImgModel from "../../../../components/ImgModel";
 
 const PictureEdit = memo((props: UIEditFace) => {
   const { action, components, componentIndex } = props;
@@ -15,11 +16,11 @@ const PictureEdit = memo((props: UIEditFace) => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 6 }
+      sm: { span: 5 }
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 18 }
+      sm: { span: 19 }
     }
   };
 
@@ -32,19 +33,19 @@ const PictureEdit = memo((props: UIEditFace) => {
     <Tabs defaultActiveKey="1">
       <TabPane tab="属性" key="1">
         <Form {...formItemLayout}>
-          <Form.Item label={"图片宽度"}>
+          <Form.Item label={"图片"}>
             <Card
               bodyStyle={{ padding: 0 }}
               style={{ width: "100%" }}
-              cover={<img alt="example" src={img} height={120} />}
-              actions={[
-                <Icon type="setting" key={1} />,
-                <Icon type="edit" key={2} />,
-                <Icon type="ellipsis" key={3} />
-              ]}
+              cover={
+                <ImgModel>
+                  <img alt="example" src={img} height={138} />
+                </ImgModel>
+              }
             />
+            只能添加*jpg、*png大小不超过1MB
           </Form.Item>
-          <Form.Item label={"图片宽度"}>
+          <Form.Item label={"宽度"}>
             <InputNumber
               min={1}
               max={1000}
@@ -53,7 +54,7 @@ const PictureEdit = memo((props: UIEditFace) => {
               onChange={e => changeValue("width", e)}
             />
           </Form.Item>
-          <Form.Item label={"图片高度"}>
+          <Form.Item label={"高度"}>
             <InputNumber
               min={1}
               max={1000}
@@ -62,8 +63,8 @@ const PictureEdit = memo((props: UIEditFace) => {
               onChange={e => changeValue("height", e)}
             />
           </Form.Item>
-          <Form.Item label={"图片圆角"}>
-            <InputNumber
+          <Form.Item label={"圆角"}>
+            <Slider
               min={1}
               max={100}
               value={radius}

@@ -12,21 +12,21 @@ export const $$picture0: PictureFace = {
   img: "http://src.e7wei.com/0.2823198691104869.png",
   typeId: 0,
   radius: 0,
-  width: 380,
-  height: 300,
+  width: 120,
+  height: 120,
   top: 0,
   left: 0
 };
 export const $$pictureStyle0 = {
   marginTop: 0,
-  marginBottom: 0,
-  paddingTop: 10,
-  paddingBottom: 10,
+  marginBottom: 8,
+  paddingTop: 16,
+  paddingBottom: 16,
   height: 300,
-  bgColor: "",
+  bgColor: "#fff",
   bgImg: "",
-  paddingLeft: 0,
-  paddingRight: 0
+  paddingLeft: 130,
+  paddingRight: 130
 };
 
 export default memo((props: IProps) => {

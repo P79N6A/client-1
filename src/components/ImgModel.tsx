@@ -11,6 +11,9 @@ interface PropsFace {
 export default memo((props: PropsFace) => {
   const [visible, setVisible] = useState(false);
 
+  const showModal = () => {
+    setVisible(true);
+  };
   // 确认
   const handleOk = e => {
     setVisible(false);
@@ -23,10 +26,12 @@ export default memo((props: PropsFace) => {
   const TabPane = Tabs.TabPane;
   return (
     <Fragment>
-      <span>{props.children}</span>
+      <span onClick={showModal} style={{ textAlign: "center" }}>
+        {props.children}
+      </span>
       <Modal
         title="图片"
-        visible={true}
+        visible={visible}
         okText={"确定"}
         cancelText={"取消"}
         onOk={handleOk}

@@ -34,6 +34,7 @@ const AppletCanvas = memo((props: AppletCanvasFace) => {
       font-size: 16px;
     `,
     canvas: css`
+      background: #f1f1f1;
       height: 500px;
       overflow: auto;
       width: 100%;
@@ -76,7 +77,7 @@ const AppletCanvas = memo((props: AppletCanvasFace) => {
     <div css={styles.root}>
       <div css={styles.header}>
         <img
-          src={"http://oss-96.oss-cn-hangzhou.aliyuncs.com/applet-heade.png"}
+          src={"http://wokekj.oss-cn-shanghai.aliyuncs.com/applet-heade.png"}
           alt={"phone"}
           height={65}
           width={380}

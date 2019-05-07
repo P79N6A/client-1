@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import { css } from "@emotion/core";
+import { Icon, Tooltip } from "antd";
 
 /**
  * @description 接口
@@ -221,7 +222,7 @@ const DragRef = memo((props: DragRefFace) => {
       cursor: pointer;
     `,
     block: css`
-      outline: 1px black solid;
+      outline: 1px black dotted;
       position: absolute;
       z-index: 1;
     `,
@@ -267,6 +268,7 @@ const DragRef = memo((props: DragRefFace) => {
           {children}
         </div>
       </div>
+
       {ref.left && (
         <div
           css={styles.ref_horizontal}
@@ -309,8 +311,8 @@ const DragRef = memo((props: DragRefFace) => {
           onMouseDown={e => mouseDown("left_top", e)}
           aria-hidden="true"
           style={{
-            left: move.left + position.left - 10,
-            top: move.top + position.top - 10
+            left: move.left + position.left - 9,
+            top: move.top + position.top - 9
           }}
           css={styles.svg}
         >
@@ -336,7 +338,7 @@ const DragRef = memo((props: DragRefFace) => {
           onMouseDown={e => mouseDown("left_bottom", e)}
           aria-hidden="true"
           style={{
-            left: move.left + position.left - 10,
+            left: move.left + position.left - 9,
             top: move.top + position.top + position.height - 7
           }}
           css={styles.svg}
@@ -349,8 +351,8 @@ const DragRef = memo((props: DragRefFace) => {
           onMouseDown={e => mouseDown("right_top", e)}
           aria-hidden="true"
           style={{
-            left: move.left + position.left + position.width - 8,
-            top: move.top + position.top - 10
+            left: move.left + position.left + position.width - 7,
+            top: move.top + position.top - 9
           }}
           css={styles.svg}
         >
@@ -375,8 +377,8 @@ const DragRef = memo((props: DragRefFace) => {
           onMouseDown={e => mouseDown("right_bottom", e)}
           aria-hidden="true"
           style={{
-            left: move.left + position.left + position.width - 7,
-            top: move.top + position.top + position.height - 7
+            left: move.left + position.left + position.width - 8,
+            top: move.top + position.top + position.height - 8
           }}
           css={styles.svg}
         >
@@ -388,8 +390,8 @@ const DragRef = memo((props: DragRefFace) => {
           onMouseDown={e => mouseDown("top", e)}
           aria-hidden="true"
           style={{
-            left: move.left + position.left + position.width / 2 - 7,
-            top: move.top + position.top - 10
+            left: move.left + position.left + position.width / 2 - 8,
+            top: move.top + position.top - 9
           }}
           css={styles.svg}
         >

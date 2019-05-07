@@ -58,11 +58,11 @@ const $$form: FormFace = {
 };
 export const $$formStyle0 = {
   marginTop: 0,
-  marginBottom: 0,
+  marginBottom: 8,
   paddingTop: 10,
   paddingBottom: 10,
   height: 300,
-  bgColor: "",
+  bgColor: "#fff",
   bgImg: "",
   paddingLeft: 40,
   paddingRight: 40

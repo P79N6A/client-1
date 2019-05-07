@@ -18,6 +18,7 @@ interface IProps {
 const CommonUI = memo((props: IProps) => {
   const styles = css`
     position: relative;
+    cursor: pointer;
     width: 100%;
     height: ${props.drag ? props.height + "px" : "auto"};
     overflow: hidden;

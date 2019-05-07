@@ -6,9 +6,14 @@ import PictureUI from "../picture/PictureUI";
 import TextUI from "../text/TextUI";
 import { action } from "../../../../models/action";
 import { DragStore } from "../../model/reselect";
-import { componentDragSetData, dragSet } from "../../model/logic";
+import {
+  componentDragSetData,
+  dragRemoveComponent,
+  dragSet
+} from "../../model/logic";
 import { DragUIFace } from "../../types";
 import DragRef from "../../../../tools/DragTools";
+import { Dropdown, Icon, Menu, Tooltip } from "antd";
 
 const DragUI = memo((props: DragUIFace) => {
   const { theme, data, action, components, dragIndex } = props;
@@ -39,29 +44,44 @@ const DragUI = memo((props: DragUIFace) => {
     <Fragment>
       {data.uiList.map((data, index) => {
         const Component = uiList[components[data].type];
-        console.log(dragIndex, data);
         return (
           <Fragment key={index}>
             {dragIndex === data ? (
-              <DragRef
-                dataList={dataList}
-                position={components[data]}
-                editId={editId}
-                reSize={data =>
-                  componentDragSetData(action, {
-                    ...data
-                  })
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item
+                      key="3"
+                      onClick={() => dragRemoveComponent(action, index, data)}
+                    >
+                      删除
+                    </Menu.Item>
+                  </Menu>
                 }
+                trigger={["contextMenu"]}
               >
-                <Component
-                  data={components[data]}
-                  theme={theme}
-                  absolute={true}
-                />
-              </DragRef>
+                <span style={{ userSelect: "none" }}>
+                  <DragRef
+                    dataList={dataList}
+                    position={components[data]}
+                    editId={editId}
+                    reSize={data =>
+                      componentDragSetData(action, {
+                        ...data
+                      })
+                    }
+                  >
+                    <Component
+                      data={components[data]}
+                      theme={theme}
+                      absolute={true}
+                    />
+                  </DragRef>
+                </span>
+              </Dropdown>
             ) : (
               <div
-                onClick={() => dragSet(action, data)}
+                onMouseDown={() => dragSet(action, data)}
                 style={{
                   position: "absolute",
                   top: `${components[data].top}px`,

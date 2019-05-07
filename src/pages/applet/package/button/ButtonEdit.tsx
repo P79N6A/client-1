@@ -5,6 +5,7 @@ import {
   Icon,
   Input,
   InputNumber,
+  Slider,
   Tabs,
   Tooltip,
   Upload
@@ -39,11 +40,11 @@ const ButtonEdit = memo((props: UIEditFace) => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 6 }
+      sm: { span: 5 }
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 18 }
+      sm: { span: 19 }
     }
   };
   const styles = {
@@ -68,13 +69,13 @@ const ButtonEdit = memo((props: UIEditFace) => {
     <Tabs defaultActiveKey="1">
       <TabPane tab="属性" key="1">
         <Form {...formItemLayout}>
-          <Form.Item label="文案">
+          <Form.Item label="文本">
             <Input
               value={desc}
               onChange={e => changeValue("desc", e.target.value)}
             />
           </Form.Item>
-          <Form.Item label="字体颜色">
+          <Form.Item label="字体色">
             <Input
               value={color ? color : theme}
               onChange={e => changeValue("color", e.target.value)}
@@ -111,7 +112,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
               }
             />
           </Form.Item>
-          <Form.Item label={"字体大小"}>
+          <Form.Item label={"尺寸"}>
             <InputNumber
               min={1}
               max={1000}
@@ -120,7 +121,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
               onChange={e => changeValue("fontSize", e)}
             />
           </Form.Item>
-          <Form.Item label={"按钮宽度"}>
+          <Form.Item label={"宽度"}>
             <InputNumber
               min={1}
               max={1000}
@@ -129,7 +130,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
               onChange={e => changeValue("width", e)}
             />
           </Form.Item>
-          <Form.Item label={"按钮高度"}>
+          <Form.Item label={"高度"}>
             <InputNumber
               min={1}
               max={1000}
@@ -138,16 +139,15 @@ const ButtonEdit = memo((props: UIEditFace) => {
               onChange={e => changeValue("height", e)}
             />
           </Form.Item>
-          <Form.Item label={"按钮圆角"}>
-            <InputNumber
+          <Form.Item label={"圆角"}>
+            <Slider
               min={1}
-              max={100}
+              max={25}
               value={radius}
-              style={{ width: "100%" }}
               onChange={e => changeValue("radius", e)}
             />
           </Form.Item>
-          <Form.Item label="背景颜色">
+          <Form.Item label="背景颜">
             <Input
               value={btnColor}
               onChange={e => changeValue("btnColor", e.target.value)}
@@ -184,7 +184,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
               }
             />
           </Form.Item>
-          <Form.Item label="背景图片">
+          <Form.Item label="背景图">
             <Dragger>
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />

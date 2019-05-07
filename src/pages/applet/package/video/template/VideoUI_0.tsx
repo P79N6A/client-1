@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, Fragment } from "react";
 import { VideoFace } from "../../../types";
 
 interface IProps {
@@ -18,11 +18,11 @@ export const $$video0: VideoFace = {
 };
 export const $$videoStyle0 = {
   marginTop: 0,
-  marginBottom: 0,
+  marginBottom: 8,
   paddingTop: 10,
   paddingBottom: 10,
   height: 300,
-  bgColor: "",
+  bgColor: "#fff",
   bgImg: "",
   paddingLeft: 40,
   paddingRight: 40
@@ -30,6 +30,18 @@ export const $$videoStyle0 = {
 
 export default memo((props: IProps) => {
   const { data } = props;
-  const { src, autoPlay } = data;
-  return <video controls={true} src={src} autoPlay={autoPlay} />;
+  return (
+    <Fragment>
+      {data.src ? (
+        <div
+          style={{ width: "100%", height: "100%" }}
+          dangerouslySetInnerHTML={{
+            __html: data.src
+          }}
+        />
+      ) : (
+        <video controls={true} src={data.src} />
+      )}
+    </Fragment>
+  );
 });

@@ -43,15 +43,16 @@ const CommonEditForm = memo((props: UIStyleEditFace) => {
     paddingRight
   } = componentStyle[componentIndex];
   const Dragger = Upload.Dragger;
+
   // 表单样式排版
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 6 }
+      sm: { span: 5 }
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 18 }
+      sm: { span: 19 }
     }
   };
 
@@ -62,70 +63,89 @@ const CommonEditForm = memo((props: UIStyleEditFace) => {
   return (
     <Form {...formItemLayout}>
       <Form.Item label="内边距">
-        <Row>
+        <Row gutter={12}>
           <Col span={12}>
-            <InputNumber
-              formatter={value => `上 ${value}`}
-              min={1}
-              max={100}
-              value={paddingTop}
-              onChange={e => changeValue("paddingTop", e)}
-            />
+            <Input.Group compact={true}>
+              <Input style={{ width: "35%" }} defaultValue="上" />
+              <InputNumber
+                style={{ width: "65%" }}
+                min={1}
+                max={100}
+                value={paddingTop}
+                onChange={e => changeValue("paddingTop", e)}
+              />
+            </Input.Group>
           </Col>
           <Col span={12}>
-            <InputNumber
-              formatter={value => `下 ${value}`}
-              min={1}
-              max={30}
-              value={paddingBottom}
-              onChange={e => changeValue("paddingBottom", e)}
-            />
+            <Input.Group compact={true}>
+              <Input style={{ width: "35%" }} defaultValue="下" />
+              <InputNumber
+                style={{ width: "65%" }}
+                min={1}
+                max={100}
+                value={paddingBottom}
+                onChange={e => changeValue("paddingBottom", e)}
+              />
+            </Input.Group>
           </Col>
           <Col span={12}>
-            <InputNumber
-              formatter={value => `左 ${value}`}
-              min={1}
-              max={10000}
-              value={paddingLeft}
-              onChange={e => changeValue("paddingLeft", e)}
-            />
+            <Input.Group compact={true}>
+              <Input style={{ width: "35%" }} defaultValue="下" />
+              <InputNumber
+                style={{ width: "65%" }}
+                min={1}
+                max={10000}
+                value={paddingLeft}
+                onChange={e => changeValue("paddingLeft", e)}
+              />
+            </Input.Group>
           </Col>
           <Col span={12}>
-            <InputNumber
-              formatter={value => `右 ${value}`}
-              min={1}
-              max={10000}
-              value={paddingRight}
-              onChange={e => changeValue("paddingRight", e)}
-            />
+            <Input.Group compact={true}>
+              <Input style={{ width: "35%" }} defaultValue="下" />
+              <InputNumber
+                style={{ width: "65%" }}
+                min={1}
+                max={10000}
+                value={paddingRight}
+                onChange={e => changeValue("paddingRight", e)}
+              />
+            </Input.Group>
           </Col>
         </Row>
       </Form.Item>
       <Form.Item label="外边距">
-        <Row>
+        <Row gutter={12}>
           <Col span={12}>
-            <InputNumber
-              formatter={value => `上 ${value}`}
-              min={1}
-              max={30}
-              value={marginTop}
-              onChange={e => changeValue("marginTop", e)}
-            />
+            <Input.Group compact={true}>
+              <Input style={{ width: "35%" }} defaultValue="上" />
+              <InputNumber
+                style={{ width: "65%" }}
+                min={1}
+                max={30}
+                value={marginTop}
+                onChange={e => changeValue("marginTop", e)}
+              />
+            </Input.Group>
           </Col>
           <Col span={12}>
-            <InputNumber
-              formatter={value => `下 ${value}`}
-              min={1}
-              max={30}
-              value={marginBottom}
-              onChange={e => changeValue("marginBottom", e)}
-            />
+            <Input.Group compact={true}>
+              <Input style={{ width: "35%" }} defaultValue="下" />
+              <InputNumber
+                style={{ width: "65%" }}
+                min={1}
+                max={30}
+                value={marginBottom}
+                onChange={e => changeValue("marginBottom", e)}
+              />
+            </Input.Group>
           </Col>
         </Row>
       </Form.Item>
-      <Form.Item label="背景颜色">
+      <Form.Item label="背景色">
         <Input
           value={bgColor}
+          placeholder={"点击右侧色块选择颜色"}
           onChange={e => changeValue("bgColor", e.target.value)}
           suffix={
             <Tooltip
@@ -160,7 +180,7 @@ const CommonEditForm = memo((props: UIStyleEditFace) => {
           }
         />
       </Form.Item>
-      <Form.Item label="背景图片">
+      <Form.Item label="背景图">
         <Dragger>
           <p className="ant-upload-drag-icon">
             <Icon type="inbox" />

@@ -7,11 +7,11 @@ const $$drag0: DragFace = {
 };
 const $$dragStyle0 = {
   marginTop: 0,
-  marginBottom: 0,
+  marginBottom: 8,
   paddingTop: 0,
   paddingBottom: 0,
   height: 300,
-  bgColor: "",
+  bgColor: "#fff",
   bgImg: "",
   paddingLeft: 0,
   paddingRight: 0

@@ -478,6 +478,42 @@ export const dragAddComponent = (action, type) => {
 };
 
 /**
+ * component drag -> uiList 向drag UIList中删除组件
+ * 流程
+ * 1. 删除components 中UIList的字段
+ * 2. 删除对应的 components 与 component style 数据
+ * 3. 设置 dragIndex 为当前undefined
+ * @param action
+ * @param componentIndex
+ * @param dragUIListIndex
+ */
+export const dragRemoveComponent = (
+  action,
+  dragUIListIndex,
+  componentIndex
+) => {
+  // 1. 删除components 中UIList的字段
+  action({
+    type: appletAction.componentsSet,
+    payload: {
+      setType: "dragRemoveComponent",
+      dragUIListIndex
+    }
+  });
+  // 2. 删除对应的 components 与 component style 数据
+  action({ type: appletAction.componentsRemove, payload: componentIndex });
+  action({
+    type: appletAction.componentStyleRemove,
+    payload: componentIndex
+  });
+  // 3. 设置 dragIndex 为当前undefined
+  action({
+    type: appletAction.dragIndexSet,
+    payload: { dragIndex: undefined }
+  });
+};
+
+/**
  * component -> Data 修改component drag中的数据
  * @param action
  * @param componentData
@@ -508,6 +544,7 @@ export const drawerSetLogic = (action, drawer) => {
  * @param componentData
  */
 export const componentSetData = (action, componentData) => {
+
   action({
     type: appletAction.componentsSet,
     payload: { setType: "common", componentData }
