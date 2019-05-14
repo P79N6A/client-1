@@ -1,22 +1,46 @@
 import React, { Fragment, memo } from "react";
+import { Dropdown, Menu } from "antd";
 import { connect } from "react-redux";
 import { css } from "@emotion/core";
-import ButtonUI from "../button/ButtonUI";
-import PictureUI from "../picture/PictureUI";
-import TextUI from "../text/TextUI";
-import { action } from "../../../../models/action";
-import { DragStore } from "../../model/reselect";
-import {
-  componentDragSetData,
-  dragRemoveComponent,
-  dragSet
-} from "../../model/logic";
-import { DragUIFace } from "../../types";
+import { action, IActionFn } from "../../../../models/action";
 import DragRef from "../../../../tools/DragTools";
-import { Dropdown, Icon, Menu, Tooltip } from "antd";
+import { IAppletStore } from "../../model/store";
+import Text_0 from "../text/Text_0";
+import Picture_0 from "../picture/Picture_0";
+import Button_0 from "../button/Button_0";
 
-const DragUI = memo((props: DragUIFace) => {
-  const { theme, data, action, components, dragIndex } = props;
+interface IProps extends IActionFn {
+  data: {
+    type: string;
+    typeId: number;
+    uiList: any;
+  };
+  dragId: number | undefined;
+  theme: string;
+}
+
+const DragUI = memo((props: IProps) => {
+  const { theme, data, action, dragId } = props;
+
+  // 组件列表渲染
+  const uiList: { [id: string]: object } = {
+    text: Text_0,
+    picture: Picture_0,
+    button: Button_0
+  };
+
+  // 调整组件尺寸
+  const reSize = (size: any) => {
+    action({ type: "APPLET_COMPONENT_DRAG_RESIZE", payload: size });
+  };
+  // 修改dragId
+  const changeDragId = (id: number) => {
+    action({ type: "APPLET_DRAG_ID_SET", payload: id });
+  };
+  // 删除移动组件
+  const removeDragComponent = (id: number) => {
+    action({ type: "APPLET_DRAG_REMOVE", payload: id });
+  };
 
   const styles = css`
     user-select: none;
@@ -24,35 +48,19 @@ const DragUI = memo((props: DragUIFace) => {
     overflow: hidden;
   `;
 
-  // 组件列表
-  const uiList = {
-    text: TextUI,
-    picture: PictureUI,
-    button: ButtonUI
-  };
-  // 拖拽组件的数据列表
-  const dataList = [];
-  let editId = 0;
-  data.uiList.map((data, index) => {
-    dataList.push(components[data]);
-    if (dragIndex === data) {
-      editId = index;
-    }
-  });
-
   return (
     <Fragment>
-      {data.uiList.map((data, index) => {
-        const Component = uiList[components[data].type];
+      {data.uiList.map((data: any, index: number) => {
+        const Component: any = uiList[data.type];
         return (
           <Fragment key={index}>
-            {dragIndex === data ? (
+            {dragId === index ? (
               <Dropdown
                 overlay={
                   <Menu>
                     <Menu.Item
                       key="3"
-                      onClick={() => dragRemoveComponent(action, index, data)}
+                      onClick={() => removeDragComponent(index)}
                     >
                       删除
                     </Menu.Item>
@@ -62,35 +70,27 @@ const DragUI = memo((props: DragUIFace) => {
               >
                 <span style={{ userSelect: "none" }}>
                   <DragRef
-                    dataList={dataList}
-                    position={components[data]}
-                    editId={editId}
-                    reSize={data =>
-                      componentDragSetData(action, {
-                        ...data
-                      })
-                    }
+                    dataList={props.data.uiList}
+                    position={data}
+                    editId={dragId}
+                    reSize={data => reSize(data)}
                   >
-                    <Component
-                      data={components[data]}
-                      theme={theme}
-                      absolute={true}
-                    />
+                    <Component data={data} theme={theme} absolute={true} />
                   </DragRef>
                 </span>
               </Dropdown>
             ) : (
               <div
-                onMouseDown={() => dragSet(action, data)}
                 style={{
                   position: "absolute",
-                  top: `${components[data].top}px`,
-                  left: `${components[data].left}px`
+                  top: `${data.top}px`,
+                  left: `${data.left}px`
                 }}
+                onClick={() => changeDragId(index)}
               >
                 <Component
                   css={styles}
-                  data={components[data]}
+                  data={data}
                   theme={theme}
                   absolute={true}
                 />
@@ -104,6 +104,12 @@ const DragUI = memo((props: DragUIFace) => {
 });
 
 export default connect(
-  state => DragStore(state),
+  (state: { appletStore: IAppletStore }) => {
+    const { theme, dragId } = state.appletStore;
+    return {
+      dragId: dragId,
+      theme: theme
+    };
+  },
   { action }
 )(DragUI);

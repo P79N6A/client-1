@@ -1,15 +1,11 @@
-interface ActionFace {
+export interface IAction {
   type: string;
   payload: any;
 }
-
-/**
- * @description 修改reducer 数据源负载
- * 所有请求格式都统一如此，数据处理在页面中进行
- * @param type 操作类型名称
- * @param payload 负载(附带额数据)
- */
-export const action = ({ type, payload }: ActionFace): ActionFace => {
+export interface IActionFn {
+  action({ type, payload }: IAction): void;
+}
+export const action = ({ type, payload }: IAction): IAction => {
   return {
     payload,
     type

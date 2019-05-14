@@ -1,5 +1,6 @@
 import { css } from "@emotion/core";
 import {
+  Drawer,
   Empty,
   Form,
   Icon,
@@ -12,18 +13,20 @@ import {
 } from "antd";
 import "braft-editor/dist/index.css";
 import "braft-extensions/dist/color-picker.css";
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
-import { action } from "../../../../models/action";
-import CommonEditForm from "../common/CommonEditForm";
-import { UIEditStore } from "../../model/reselect";
-import { UIEditFace } from "../../types";
-import { componentSetData } from "../../model/logic";
+import { action, IActionFn } from "../../../../models/action";
+import StyleEdit from "../common/StyleEdit";
+import { IAppletStore } from "../../model/store";
 
-const ButtonEdit = memo((props: UIEditFace) => {
-  const { action, components, componentIndex, theme } = props;
+interface IProps extends IActionFn {
+  theme: string | undefined;
+  component: undefined | {} | any;
+}
 
+const ButtonEdit = memo((props: IProps) => {
+  const { action, component, theme } = props;
   const {
     color,
     desc,
@@ -31,9 +34,9 @@ const ButtonEdit = memo((props: UIEditFace) => {
     width,
     height,
     fontSize,
-    btnImg,
-    btnColor
-  } = components[componentIndex];
+    bgImg,
+    bgColor
+  } = component;
   const TabPane = Tabs.TabPane;
   const Dragger = Upload.Dragger;
   // 表单样式排版
@@ -58,11 +61,16 @@ const ButtonEdit = memo((props: UIEditFace) => {
           padding: 0 !important;
         }
       }
+    `,
+    title: css`
+      height: 32px;
+      line-height: 32px;
     `
   };
+
   // 数据修改同步至reducer 中
-  const changeValue = (name, e) => {
-    componentSetData(action, { [name]: e });
+  const changeValue = (name: string, e: any) => {
+    action({ type: "APPLET_COMPONENT_SET", payload: { [name]: e } });
   };
 
   return (
@@ -149,15 +157,15 @@ const ButtonEdit = memo((props: UIEditFace) => {
           </Form.Item>
           <Form.Item label="背景颜">
             <Input
-              value={btnColor}
-              onChange={e => changeValue("btnColor", e.target.value)}
+              value={bgColor}
+              onChange={e => changeValue("bgColor", e.target.value)}
               suffix={
                 <Tooltip
                   title={
                     <TwitterPicker
                       css={styles.theme}
                       width={"240px"}
-                      color={btnColor}
+                      color={bgColor}
                       colors={[
                         "#DE443A",
                         "#3A82F8",
@@ -168,7 +176,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
                         "#F5B43E",
                         "#7360F0"
                       ]}
-                      onChange={color => changeValue("btnColor", color.hex)}
+                      onChange={color => changeValue("bgColor", color.hex)}
                     />
                   }
                 >
@@ -176,7 +184,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
                     style={{
                       width: 15,
                       height: 15,
-                      background: btnColor,
+                      background: bgColor,
                       border: "1px black solid"
                     }}
                   />
@@ -196,7 +204,7 @@ const ButtonEdit = memo((props: UIEditFace) => {
         </Form>
       </TabPane>
       <TabPane tab="样式" key="2">
-        <CommonEditForm />
+        <StyleEdit />
       </TabPane>
       <TabPane tab="模板" key="3">
         <Empty style={{ marginTop: 32 }} />
@@ -206,6 +214,15 @@ const ButtonEdit = memo((props: UIEditFace) => {
 });
 
 export default connect(
-  state => UIEditStore(state),
+  (state: { appletStore: IAppletStore }) => {
+    const { theme, pageId, pages, componentId } = state.appletStore;
+    return {
+      component:
+        pageId !== undefined && componentId !== undefined
+          ? pages[pageId][componentId].component
+          : {},
+      theme: theme
+    };
+  },
   { action }
 )(ButtonEdit);

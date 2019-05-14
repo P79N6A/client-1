@@ -1,9 +1,8 @@
 import { Card, Form, Icon, InputNumber } from "antd";
 import React, { memo } from "react";
-import { PictureFace } from "../../../types";
 
 interface IProps {
-  data: PictureFace;
+  data: any;
   theme: string;
   action: any;
 }
@@ -14,16 +13,16 @@ const DragPictureEdit = memo((props: IProps) => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 6 }
+      sm: { span: 5 }
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 18 }
+      sm: { span: 19 }
     }
   };
 
   // 数据修改同步至reducer 中
-  const changeValue = (name, e) => {
+  const changeValue = (name: string, e: any) => {
     props.action({ [name]: e });
   };
 

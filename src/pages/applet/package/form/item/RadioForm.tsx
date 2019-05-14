@@ -3,14 +3,14 @@ import produce from "immer";
 import React, { memo } from "react";
 
 interface IProps {
-  data?: {
+  data: {
     type: string;
     value: Array<{ label: string; value: string | number }>;
     key: string;
     name: string;
   };
 
-  onChange?(changedFields): void;
+  onChange(changedFields: any): void;
 }
 
 /**
@@ -18,7 +18,7 @@ interface IProps {
  */
 export default memo((props: IProps) => {
   // 修改后的数值回调
-  const valueChange = (name, value, index?) => {
+  const valueChange = (name: any, value: any, index?: any) => {
     switch (name) {
       case "name":
         return props.onChange(
@@ -61,7 +61,7 @@ export default memo((props: IProps) => {
     );
   };
   // 删除选项
-  const remove = index => {
+  const remove = (index: any) => {
     return props.onChange(
       produce(props.data, draftState => {
         draftState.value.splice(index, 1);
@@ -125,13 +125,13 @@ export default memo((props: IProps) => {
                 />
               </Col>
               <Col span={4}>
-                <Icon type="minus-circle-o" onClick={() => remove(index)} />
+                <Icon type="minus-circle-o" onClick={() => remove(index)}/>
               </Col>
             </Row>
           );
         })}
         <Button block={true} htmlType={"button"} onClick={valueAdd}>
-          <Icon type="plus" /> 添加
+          <Icon type="plus"/> 添加
         </Button>
       </Form.Item>
     </Form>

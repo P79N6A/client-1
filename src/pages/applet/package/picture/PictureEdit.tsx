@@ -1,16 +1,18 @@
-import { Card, Empty, Form, Icon, InputNumber, Slider, Tabs } from "antd";
+import { Card, Empty, Form, InputNumber, Slider, Tabs } from "antd";
 import React, { memo } from "react";
 import { connect } from "react-redux";
-import { action } from "../../../../models/action";
-import CommonEditForm from "../common/CommonEditForm";
-import { UIEditStore } from "../../model/reselect";
-import { UIEditFace } from "../../types";
-import { componentSetData } from "../../model/logic";
+import { action, IActionFn } from "../../../../models/action";
+import { IAppletStore } from "../../model/store";
+import StyleEdit from "../common/StyleEdit";
 import ImgModel from "../../../../components/ImgModel";
 
-const PictureEdit = memo((props: UIEditFace) => {
-  const { action, components, componentIndex } = props;
-  const { radius, width, height, img } = components[componentIndex];
+interface IProps extends IActionFn {
+  theme: string | undefined;
+  component: undefined | {} | any;
+}
+const PictureEdit = memo((props: IProps) => {
+  const { action, component } = props;
+  const { radius, width, height, img } = component;
   const TabPane = Tabs.TabPane;
   // 表单样式排版
   const formItemLayout = {
@@ -25,8 +27,8 @@ const PictureEdit = memo((props: UIEditFace) => {
   };
 
   // 数据修改同步至reducer 中
-  const changeValue = (name, e) => {
-    componentSetData(action, { [name]: e });
+  const changeValue = (name: string, e: any) => {
+    action({ type: "APPLET_COMPONENT_SET", payload: { [name]: e } });
   };
 
   return (
@@ -75,7 +77,7 @@ const PictureEdit = memo((props: UIEditFace) => {
         </Form>
       </TabPane>
       <TabPane tab="样式" key="2">
-        <CommonEditForm />
+        <StyleEdit />
       </TabPane>
       <TabPane tab="模板" key="3">
         <Empty style={{ marginTop: 32 }} />
@@ -85,6 +87,15 @@ const PictureEdit = memo((props: UIEditFace) => {
 });
 
 export default connect(
-  state => UIEditStore(state),
+  (state: { appletStore: IAppletStore }) => {
+    const { theme, pageId, pages, componentId } = state.appletStore;
+    return {
+      component:
+        pageId !== undefined && componentId !== undefined
+          ? pages[pageId][componentId].component
+          : {},
+      theme: theme
+    };
+  },
   { action }
 )(PictureEdit);

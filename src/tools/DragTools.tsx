@@ -1,6 +1,5 @@
 import React, { memo, useState } from "react";
 import { css } from "@emotion/core";
-import { Icon, Tooltip } from "antd";
 
 /**
  * @description 接口
@@ -14,7 +13,7 @@ interface DragRefFace {
   position: { top: number; left: number; width: number; height: number };
   editId?: number | string;
   children: object;
-  reSize?(data): void;
+  reSize(data: any): void;
 }
 
 /**
@@ -45,7 +44,7 @@ const DragRef = memo((props: DragRefFace) => {
     center_top: false
   });
 
-  const mouseDown = (type, e) => {
+  const mouseDown = (type: any, e: any) => {
     setMarkMouse({
       type,
       use: true,
@@ -54,7 +53,7 @@ const DragRef = memo((props: DragRefFace) => {
     });
     setValue({ ...position });
   };
-  const mouseMove = e => {
+  const mouseMove = (e: any) => {
     if (markMouse.use) {
       // 参考线
       const refData = {
@@ -197,7 +196,7 @@ const DragRef = memo((props: DragRefFace) => {
       });
     }
   };
-  const mouseUp = e => {
+  const mouseUp = () => {
     setMove({ left: 0, top: 0, width: 0, height: 0 });
     setMarkMouse({ type: "", use: false, left: 0, top: 0 });
     setValue({ left: 0, top: 0, width: 0, height: 0 });
