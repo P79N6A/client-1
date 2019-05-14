@@ -1,10 +1,7 @@
-import produce from "immer";
-import { css } from "@emotion/core";
-import React, { memo, useState } from "react";
-import { connect } from "react-redux";
-
 import {
+  Button,
   Col,
+  Drawer,
   Form,
   Icon,
   Input,
@@ -13,12 +10,13 @@ import {
   Skeleton,
   Tabs,
   Upload,
-  List,
-  Button,
-  Drawer
+  List
 } from "antd";
-
+import React, { memo, useState } from "react";
+import { connect } from "react-redux";
 import { action, IActionFn } from "../../../../models/action";
+import { css } from "@emotion/core";
+import produce from "immer";
 import { IAppletStore } from "../../model/store";
 import StyleEdit from "../common/StyleEdit";
 
@@ -27,9 +25,9 @@ interface IProps extends IActionFn {
   component: undefined | {} | any;
 }
 
-const ShowEdit = memo((props: IProps) => {
+const GuideEdit = memo((props: IProps) => {
   const { action, component } = props;
-  const { showItem } = component;
+  const { guideItem } = component;
 
   const [itemChoose, setItemChoose] = useState("");
 
@@ -52,7 +50,7 @@ const ShowEdit = memo((props: IProps) => {
           action({
             type: "APPLET_COMPONENT_SET",
             payload: {
-              showItem: produce(showItem, (draftState: any) => {
+              guideItem: produce(guideItem, (draftState: any) => {
                 [draftState[index - 1], draftState[index]] = [
                   draftState[index],
                   draftState[index - 1]
@@ -63,13 +61,13 @@ const ShowEdit = memo((props: IProps) => {
         }
         break;
       case "down":
-        if (index + 1 === showItem.length) {
+        if (index + 1 === guideItem.length) {
           return message.warning("已至最底端");
         } else {
           action({
             type: "APPLET_COMPONENT_SET",
             payload: {
-              showItem: produce(showItem, (draftState: any) => {
+              guideItem: produce(guideItem, (draftState: any) => {
                 [draftState[index], draftState[index + 1]] = [
                   draftState[index + 1],
                   draftState[index]
@@ -83,7 +81,7 @@ const ShowEdit = memo((props: IProps) => {
         action({
           type: "APPLET_COMPONENT_SET",
           payload: {
-            showItem: produce(showItem, (draftState: any) => {
+            guideItem: produce(guideItem, (draftState: any) => {
               draftState.splice(index, 1);
             })
           }
@@ -94,7 +92,7 @@ const ShowEdit = memo((props: IProps) => {
         action({
           type: "APPLET_COMPONENT_SET",
           payload: {
-            showItem: produce(showItem, (draftState: any) => {
+            guideItem: produce(guideItem, (draftState: any) => {
               draftState.push({
                 title: "标题",
                 desc: "描述",
@@ -119,7 +117,7 @@ const ShowEdit = memo((props: IProps) => {
     action({
       type: "APPLET_COMPONENT_SET",
       payload: {
-        showItem: produce(showItem, (draftState: any) => {
+        guideItem: produce(guideItem, (draftState: any) => {
           draftState[itemChoose][name] = value;
         })
       }
@@ -144,20 +142,20 @@ const ShowEdit = memo((props: IProps) => {
         <List
           size="small"
           bordered={false}
-          dataSource={showItem}
+          dataSource={guideItem}
           renderItem={(item: any, index: any) => (
             <List.Item
               actions={[
-                <a onClick={() => itemSet("up", index)} key={1}>
+                <a onClick={() => itemSet("up", index)}>
                   <Icon type="arrow-up" />
                 </a>,
-                <a onClick={() => itemSet("down", index)} key={2}>
+                <a onClick={() => itemSet("down", index)}>
                   <Icon type="arrow-down" />
                 </a>,
-                <a onClick={() => setItemChoose(index)} key={3}>
+                <a onClick={() => setItemChoose(index)}>
                   <Icon type="edit" />
                 </a>,
-                <a onClick={() => itemSet("del", index)} key={4}>
+                <a onClick={() => itemSet("del", index)}>
                   <Icon type="delete" />
                 </a>
               ]}
@@ -196,7 +194,7 @@ const ShowEdit = memo((props: IProps) => {
           <Col span={12} onChange={() => changeValue("typeId", 0)}>
             <img
               src={
-                "https://qz.faisys.com/image/thumbnail/swiperA.gif?v=201801311749"
+                "https://qz.faisys.com/image/thumbnail/mfdh1.jpg?v=201807251144"
               }
               alt={"img"}
             />
@@ -204,7 +202,7 @@ const ShowEdit = memo((props: IProps) => {
           <Col span={12} onChange={() => changeValue("typeId", 1)}>
             <img
               src={
-                "https://qz.faisys.com/image/thumbnail/swiperB.gif?v=201801311749"
+                "https://qz.faisys.com/image/thumbnail/mfdh2.jpg?v=201807251144"
               }
               alt={"img"}
             />
@@ -212,7 +210,15 @@ const ShowEdit = memo((props: IProps) => {
           <Col span={12} onChange={() => changeValue("typeId", 2)}>
             <img
               src={
-                "https://qz.faisys.com/image/thumbnail/swiperC.jpg?v=201802091046"
+                "https://qz.faisys.com/image/thumbnail/mfdh3.jpg?v=201807251144"
+              }
+              alt={"img"}
+            />
+          </Col>
+          <Col span={12} onChange={() => changeValue("typeId", 3)}>
+            <img
+              src={
+                "https://qz.faisys.com/image/thumbnail/mfdh4.jpg?v=201807251144"
               }
               alt={"img"}
             />
@@ -241,14 +247,14 @@ const ShowEdit = memo((props: IProps) => {
           <Form.Item label={"标题"}>
             <Input
               placeholder={"请输入标题"}
-              value={itemChoose !== "" ? showItem[itemChoose].title : ""}
+              value={itemChoose !== "" ? guideItem[itemChoose].title : ""}
               onChange={e => itemValue("title", e.target.value)}
             />
           </Form.Item>
           <Form.Item label={"描述"}>
             <Input.TextArea
               placeholder={"请输入描述"}
-              value={itemChoose !== "" ? showItem[itemChoose].desc : ""}
+              value={itemChoose !== "" ? guideItem[itemChoose].desc : ""}
               onChange={e => itemValue("desc", e.target.value)}
             />
           </Form.Item>
@@ -270,4 +276,4 @@ export default connect(
     };
   },
   { action }
-)(ShowEdit);
+)(GuideEdit);

@@ -4,10 +4,9 @@ import "braft-editor/dist/index.css";
 import "braft-extensions/dist/color-picker.css";
 import React, { memo } from "react";
 import { TwitterPicker } from "react-color";
-import { ButtonFace } from "../../../types";
 
 interface IProps {
-  data: ButtonFace;
+  data: any;
   theme: string;
   action: any;
 }
@@ -21,11 +20,11 @@ const DragButtonEdit = memo((props: IProps) => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 6 }
+      sm: { span: 5 }
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 18 }
+      sm: { span: 19 }
     }
   };
   const styles = {
@@ -42,7 +41,7 @@ const DragButtonEdit = memo((props: IProps) => {
     `
   };
   // 数据修改同步至reducer 中
-  const changeValue = (name, e) => {
+  const changeValue = (name: string, e: any) => {
     action({ [name]: e });
   };
 

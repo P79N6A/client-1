@@ -3,24 +3,28 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { ApolloProvider } from "react-apollo";
 import { BrowserRouter } from "react-router-dom";
-import { store } from "./models/store";
-import { client } from "./api/config";
-import Layout from "./layouts/Layout";
+import { LocaleProvider } from "antd";
+import zh_CN from "antd/lib/locale-provider/zh_CN";
 
-/**
- * 将根组件渲染至页面 div 中
- * @param <ApolloProvider> 用于graphql请求
- * @param <Provider>  使Redux store数可用于全局
- * @param <BrowserRouter> 路由根组件
- * @param <Layout /> 根组件
- */
+import * as serviceWorker from "./serviceWorker";
+import { client } from "./api/config";
+import { store } from "./models/store";
+import App from "./layout/App";
+
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <Layout />
+        <LocaleProvider locale={zh_CN}>
+          <App />
+        </LocaleProvider>
       </BrowserRouter>
     </ApolloProvider>
   </Provider>,
   document.getElementById("root")
 );
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.register();

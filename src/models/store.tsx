@@ -3,8 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { appletStore } from "../pages/applet/model/store";
 
 const reducer = combineReducers({
-  // 小程序页
-  applet: appletStore
+  appletStore
 });
 
 export const store = createStore(reducer, composeWithDevTools());

@@ -1,14 +1,14 @@
 import BraftEditor from "braft-editor";
 import "braft-editor/dist/index.css";
+// @ts-ignore
 import ColorPicker from "braft-extensions/dist/color-picker";
 import "braft-extensions/dist/color-picker.css";
 import React, { memo, useEffect, useState } from "react";
-import { TextFace } from "../../../types";
 
 BraftEditor.use(ColorPicker());
 
 interface IProps {
-  data: TextFace;
+  data: any;
   theme: string;
   action: any;
 }
@@ -21,7 +21,7 @@ const DragTextEdit = memo((props: IProps) => {
     setState(BraftEditor.createEditorState(html));
   }, [id]);
 
-  const handleEditorChange = e => {
+  const handleEditorChange = (e: any) => {
     setState(e);
     // 用于外部数据同步
     props.action({ html: e.toHTML() });

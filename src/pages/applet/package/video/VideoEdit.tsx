@@ -1,33 +1,34 @@
 import { Form, Input, InputNumber, Switch, Tabs } from "antd";
 import React, { memo } from "react";
-import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
+import { action, IActionFn } from "../../../../models/action";
+import { IAppletStore } from "../../model/store";
+import StyleEdit from "../common/StyleEdit";
 
-import { UIEditStore } from "../../model/reselect";
-import { action } from "../../../../models/action";
-import { UIEditFace } from "../../types";
-import CommonEditForm from "../common/CommonEditForm";
-import { componentSetData } from "../../model/logic";
+interface IProps extends IActionFn {
+  theme: string | undefined;
+  component: undefined | {} | any;
+}
 
-const VideoEdit = memo((props: UIEditFace) => {
-  const { action, components, componentIndex } = props;
-  const { height, src, autoPlay } = components[componentIndex];
+const VideoEdit = memo((props: IProps) => {
+  const { action, component } = props;
+  const { height, src, autoPlay } = component;
   const TabPane = Tabs.TabPane;
 
   // 表单样式排版
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 6 }
+      sm: { span: 5 }
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 18 }
+      sm: { span: 19 }
     }
   };
   // 数据修改同步至reducer 中
-  const changeValue = (name, e) => {
-    componentSetData(action, { [name]: e });
+  const changeValue = (name: string, e: any) => {
+    action({ type: "APPLET_COMPONENT_SET", payload: { [name]: e } });
   };
 
   return (
@@ -72,13 +73,22 @@ const VideoEdit = memo((props: UIEditFace) => {
         </Form>
       </TabPane>
       <TabPane tab="模块样式" key="2">
-        <CommonEditForm />
+        <StyleEdit />
       </TabPane>
     </Tabs>
   );
 });
 
 export default connect(
-  state => UIEditStore(state),
+  (state: { appletStore: IAppletStore }) => {
+    const { theme, pageId, pages, componentId } = state.appletStore;
+    return {
+      component:
+        pageId !== undefined && componentId !== undefined
+          ? pages[pageId][componentId].component
+          : {},
+      theme: theme
+    };
+  },
   { action }
 )(VideoEdit);

@@ -3,14 +3,14 @@ import produce from "immer";
 import React, { memo } from "react";
 
 interface IProps {
-  data?: {
+  data: {
     type: string;
     value: Array<{ label: string; value: any }>;
     key: string;
     name: string;
   };
 
-  onChange?(changedFields): void;
+  onChange(changedFields: any): void;
 }
 
 /**
@@ -18,23 +18,23 @@ interface IProps {
  */
 export default memo((props: IProps) => {
   // 修改后的数值回调
-  const valueChange = (name, value) => {
+  const valueChange = (name: string, value: string) => {
     switch (name) {
       case "name":
         return props.onChange(
-          produce(props.data, draftState => {
+          produce(props.data, (draftState: any) => {
             draftState.name = value;
           })
         );
       case "value":
         return props.onChange(
-          produce(props.data, draftState => {
+          produce(props.data, (draftState: any) => {
             draftState.value[0].value = value;
           })
         );
       case "label":
         return props.onChange(
-          produce(props.data, draftState => {
+          produce(props.data, (draftState: any) => {
             draftState.value[0].label = value;
           })
         );
@@ -70,7 +70,7 @@ export default memo((props: IProps) => {
         <Switch
           checkedChildren="开"
           unCheckedChildren="关"
-          onChange={e => valueChange("value", e)}
+          onChange={(e: any) => valueChange("value", e)}
           checked={props.data.value[0].value}
         />
       </Form.Item>

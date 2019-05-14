@@ -15,11 +15,11 @@ export default memo((props: PropsFace) => {
     setVisible(true);
   };
   // 确认
-  const handleOk = e => {
+  const handleOk = () => {
     setVisible(false);
   };
   // 取消
-  const handleCancel = e => {
+  const handleCancel = () => {
     setVisible(false);
   };
 

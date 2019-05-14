@@ -1,9 +1,7 @@
 import {
   Button,
-  Collapse,
   Drawer,
   Empty,
-  Form,
   Icon,
   List,
   message,
@@ -14,23 +12,25 @@ import {
 import produce from "immer";
 import React, { memo, useState } from "react";
 import { connect } from "react-redux";
-
-import { UIEditStore } from "../../model/reselect";
-import { action } from "../../../../models/action";
-import { UIEditFace } from "../../types";
-import CommonEditForm from "../common/CommonEditForm";
-import { componentSetData, drawerSetLogic } from "../../model/logic";
 import { css } from "@emotion/core";
+
+import { action, IActionFn } from "../../../../models/action";
 import InputForm from "./item/InputForm";
 import SwitchForm from "./item/SwitchForm";
 import RadioForm from "./item/RadioForm";
+import { IAppletStore } from "../../model/store";
+import StyleEdit from "../common/StyleEdit";
 
 /**
  * swiper可编辑属性操作栏
  */
-const FormEdit = memo((props: UIEditFace) => {
-  const { action, components, componentIndex, theme } = props;
-  const { formItem } = components[componentIndex];
+interface IProps extends IActionFn {
+  theme: string | undefined;
+  component: undefined | {} | any;
+}
+const FormEdit = memo((props: IProps) => {
+  const { action, component } = props;
+  const { formItem } = component;
 
   const [itemChoose, setItemChoose] = useState("");
 
@@ -48,13 +48,16 @@ const FormEdit = memo((props: UIEditFace) => {
         if (index === 0) {
           return message.warning("已至最顶端");
         } else {
-          componentSetData(action, {
-            formItem: produce(formItem, draftState => {
-              [draftState[index - 1], draftState[index]] = [
-                draftState[index],
-                draftState[index - 1]
-              ];
-            })
+          action({
+            type: "APPLET_COMPONENT_SET",
+            payload: {
+              guideItem: produce(formItem, (draftState: any) => {
+                [draftState[index - 1], draftState[index]] = [
+                  draftState[index],
+                  draftState[index - 1]
+                ];
+              })
+            }
           });
         }
         break;
@@ -62,52 +65,45 @@ const FormEdit = memo((props: UIEditFace) => {
         if (index + 1 === formItem.length) {
           return message.warning("已至最底端");
         } else {
-          componentSetData(action, {
-            formItem: produce(formItem, draftState => {
-              [draftState[index], draftState[index + 1]] = [
-                draftState[index + 1],
-                draftState[index]
-              ];
-            })
+          action({
+            type: "APPLET_COMPONENT_SET",
+            payload: {
+              formItem: produce(formItem, (draftState: any) => {
+                [draftState[index], draftState[index + 1]] = [
+                  draftState[index + 1],
+                  draftState[index]
+                ];
+              })
+            }
           });
         }
         break;
       case "del":
-        componentSetData(action, {
-          formItem: produce(formItem, draftState => {
-            draftState.splice(index, 1);
-          })
+        action({
+          type: "APPLET_COMPONENT_SET",
+          payload: {
+            formItem: produce(formItem, (draftState: any) => {
+              draftState.splice(index, 1);
+            })
+          }
         });
+
         break;
       case "add":
-        const items = {
-          input: {
-            type: "input",
-            name: "输入框",
-            key: "FEWFWfqqwEqwef",
-            value: [{ label: "示例", value: "" }]
-          },
-          radio: {
-            type: "radio",
-            name: "单选",
-            key: "FEWFWfqqgwergwEqwef",
-            value: [
-              { label: "示例选项一", value: 0 },
-              { label: "示例选项一", value: 0 }
-            ]
-          },
-          switch: {
-            type: "switch",
-            name: "滑动开关",
-            key: "FEWFWfqqgwh345wEqwef",
-            value: [{ label: "示例", value: true }]
+        action({
+          type: "APPLET_COMPONENT_SET",
+          payload: {
+            formItem: produce(formItem, (draftState: any) => {
+              draftState.push({
+                title: "标题",
+                desc: "描述",
+                img:
+                  "https://gw.alipayobjects.com/zos/rmsportal/tXlLQhLvkEelMstLyHiN.svg"
+              });
+            })
           }
-        };
-        componentSetData(action, {
-          formItem: produce(formItem, draftState => {
-            draftState.push(items[index]);
-          })
         });
+
         break;
     }
   };
@@ -122,16 +118,19 @@ const FormEdit = memo((props: UIEditFace) => {
   );
 
   // 单个项目数值修改后的回调
-  const itemValueFeedBack = value => {
-    componentSetData(action, {
-      formItem: produce(formItem, draftState => {
-        draftState[itemChoose] = value;
-      })
+  const itemValueFeedBack = (value: string) => {
+    action({
+      type: "APPLET_COMPONENT_SET",
+      payload: {
+        formItem: produce(formItem, (draftState: any) => {
+          draftState[itemChoose] = value;
+        })
+      }
     });
   };
 
   // 展示相应组件表单
-  const renderFormItem = type => {
+  const renderFormItem = (type: any) => {
     switch (type) {
       case "input":
         return (
@@ -197,7 +196,7 @@ const FormEdit = memo((props: UIEditFace) => {
         </Popover>
       </TabPane>
       <TabPane tab="样式" key="2">
-        <CommonEditForm />
+        <StyleEdit />
       </TabPane>
       <TabPane tab="模块" key="3">
         <Empty style={{ marginTop: 32 }} />
@@ -217,6 +216,15 @@ const FormEdit = memo((props: UIEditFace) => {
 });
 
 export default connect(
-  state => UIEditStore(state),
+  (state: { appletStore: IAppletStore }) => {
+    const { theme, pageId, pages, componentId } = state.appletStore;
+    return {
+      component:
+        pageId !== undefined && componentId !== undefined
+          ? pages[pageId][componentId].component
+          : {},
+      theme: theme
+    };
+  },
   { action }
 )(FormEdit);

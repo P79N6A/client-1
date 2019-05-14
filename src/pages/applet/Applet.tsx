@@ -1,17 +1,17 @@
 import { css } from "@emotion/core";
 import { Layout } from "antd";
 import React, { Fragment, memo, useState } from "react";
-import AppletSider from "./layouts/AppletSider";
-import AppletHeader from "./layouts/AppletHeader";
-import AppletSelect from "./layouts/AppletSelect";
-import AppletCanvas from "./layouts/AppletCanvas";
-import AppletEdit from "./layouts/AppletEdit";
-import AppletMadeEdit from "./package/AppletMadeEdit";
+import AppletHeader from "./layout/AppletHeader";
+import AppletSider from "./layout/AppletSider";
+import AppletSelect from "./layout/AppletSelect";
+import AppletCanvas from "./layout/AppletCanvas";
+import AppletEdit from "./layout/AppletEdit";
 
 export default memo(() => {
-  // 一级侧边栏选项值
+  // 侧边栏选项值存储
   const [item, setItem] = useState("common");
-  // 修改一级侧边栏选项
+
+  // 修改侧边栏选项值
   const changeItem = (itemName: string) => {
     setItem(itemName);
   };
@@ -23,6 +23,7 @@ export default memo(() => {
         0px 17px 26px 2px rgba(0, 0, 0, 0.14),
         0px 6px 32px 5px rgba(0, 0, 0, 0.12);
       background: #273543;
+      min-height: 500px;
     `,
     // 导航栏
     header: css`
@@ -34,7 +35,7 @@ export default memo(() => {
     `,
     // 主体内容
     main: css`
-      padding: 4px 8px;
+      padding: 8px;
     `
   };
 
@@ -56,7 +57,7 @@ export default memo(() => {
           </Layout.Content>
           <Layout.Sider width={294}>
             <AppletEdit />
-            <AppletMadeEdit />
+            {/*<AppletMadeEdit />*/}
           </Layout.Sider>
         </Layout>
       </Layout>

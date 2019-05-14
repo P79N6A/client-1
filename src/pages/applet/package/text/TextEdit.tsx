@@ -1,34 +1,38 @@
 import { Empty, Tabs } from "antd";
 import BraftEditor from "braft-editor";
 import "braft-editor/dist/index.css";
+// @ts-ignore
 import ColorPicker from "braft-extensions/dist/color-picker";
 import "braft-extensions/dist/color-picker.css";
 import React, { memo, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { action } from "../../../../models/action";
-import CommonEditForm from "../common/CommonEditForm";
-import { UIEditStore } from "../../model/reselect";
-import { UIEditFace } from "../../types";
-import { componentSetData } from "../../model/logic";
+import { action, IActionFn } from "../../../../models/action";
+import { IAppletStore } from "../../model/store";
+import StyleEdit from "../common/StyleEdit";
 
 BraftEditor.use(ColorPicker());
 
-const TextEdit = memo((props: UIEditFace) => {
+interface IProps extends IActionFn {
+  theme: string | undefined;
+  component: undefined | {} | any;
+}
+const TextEdit = memo((props: IProps) => {
   const TabPane = Tabs.TabPane;
 
-  const { action, components, componentIndex } = props;
+  const { action, component } = props;
 
-  const { html, id } = components[componentIndex];
+  const { html, id } = component;
   const [state, setState] = useState(BraftEditor.createEditorState(html));
 
   useEffect(() => {
     setState(BraftEditor.createEditorState(html));
   }, [id]);
 
-  const handleEditorChange = e => {
+  const handleEditorChange = (e: any) => {
     setState(e);
+
     // 用于外部数据同步
-    componentSetData(action, { html: e.toHTML() });
+    action({ type: "APPLET_COMPONENT_SET", payload: { html: e.toHTML() } });
   };
 
   const editorConfig: { excludeControls: any } = {
@@ -69,7 +73,7 @@ const TextEdit = memo((props: UIEditFace) => {
         />
       </TabPane>
       <TabPane tab="样式" key="2">
-        <CommonEditForm />
+        <StyleEdit />
       </TabPane>
       <TabPane tab="模板" key="3">
         <Empty style={{ marginTop: 32 }} />
@@ -79,6 +83,15 @@ const TextEdit = memo((props: UIEditFace) => {
 });
 
 export default connect(
-  state => UIEditStore(state),
+  (state: { appletStore: IAppletStore }) => {
+    const { theme, pageId, pages, componentId } = state.appletStore;
+    return {
+      component:
+        pageId !== undefined && componentId !== undefined
+          ? pages[pageId][componentId].component
+          : {},
+      theme: theme
+    };
+  },
   { action }
 )(TextEdit);

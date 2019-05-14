@@ -5,10 +5,10 @@
  */
 const windowOpen = (url: string) => {
   const newWindow = window;
-  // 解决性能问题及安全问题
+  // 解决性能及安全问题
   newWindow.opener = null;
   // 打开新连接
-  newWindow.open("/help");
+  newWindow.open(url);
 };
 
 export { windowOpen };
