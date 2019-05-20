@@ -39,7 +39,8 @@ const App = memo((props: RouteComponentProps) => {
   const Home = lazy(() => import("../pages/Home"));
   const Applet = lazy(() => import("../pages/applet/Applet"));
   const Error404 = lazy(() => import("../pages/error/Error404"));
-
+  const Login = lazy(() => import("../pages/user/Login"));
+  const Register = lazy(() => import("../pages/user/Register"));
   return (
     <Layout
       css={props.location.pathname === "/applet" ? styles.applet : styles.root}
@@ -53,6 +54,8 @@ const App = memo((props: RouteComponentProps) => {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/applet" component={Applet} />
+            <Route exact path="/user/login" component={Login} />
+            <Route exact path="/user/register" component={Register} />
             <Route component={Error404} />
           </Switch>
         </Suspense>
