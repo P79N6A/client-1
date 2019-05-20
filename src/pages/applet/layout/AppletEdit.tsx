@@ -15,7 +15,6 @@ import {
   Typography
 } from "antd";
 import { IAppletStore } from "../model/store";
-import RenderEdit from "../package/RenderEdit";
 
 interface IProps extends IActionFn {
   pageId: string[];

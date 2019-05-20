@@ -28,7 +28,7 @@ const StyleEdit = memo((props: IProps) => {
     paddingTop,
     paddingBottom,
     bgColor,
-    bgImg,
+
     paddingLeft,
     paddingRight
   } = componentStyle;

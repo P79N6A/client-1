@@ -18,7 +18,9 @@ const DragTextEdit = memo((props: IProps) => {
   const [state, setState] = useState(BraftEditor.createEditorState(html));
 
   useEffect(() => {
+    // eslint-disable-next-line
     setState(BraftEditor.createEditorState(html));
+    // eslint-disable-next-line
   }, [id]);
 
   const handleEditorChange = (e: any) => {
