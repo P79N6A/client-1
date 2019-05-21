@@ -163,16 +163,16 @@ const FormEdit = memo((props: IProps) => {
           renderItem={(item: { name: string }, index: any) => (
             <List.Item
               actions={[
-                <a onClick={() => itemSet("up", index)} key={1}>
+                <a onClick={() => itemSet("up", index)} key={1} href={"/"}>
                   <Icon type="arrow-up" />
                 </a>,
-                <a onClick={() => itemSet("down", index)} key={2}>
+                <a onClick={() => itemSet("down", index)} key={2} href={"/"}>
                   <Icon type="arrow-down" />
                 </a>,
-                <a onClick={() => setItemChoose(index)} key={3}>
+                <a onClick={() => setItemChoose(index)} key={3} href={"/"}>
                   <Icon type="edit" />
                 </a>,
-                <a onClick={() => itemSet("del", index)} key={4}>
+                <a onClick={() => itemSet("del", index)} key={4} href={"/"}>
                   <Icon type="delete" />
                 </a>
               ]}
@@ -183,7 +183,7 @@ const FormEdit = memo((props: IProps) => {
                 loading={false}
                 active={true}
               >
-                <List.Item.Meta title={<a>{item.name}</a>} />
+                <List.Item.Meta title={<a href={"/"}>{item.name}</a>} />
               </Skeleton>
             </List.Item>
           )}

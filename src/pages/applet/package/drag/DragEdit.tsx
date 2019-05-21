@@ -1,7 +1,7 @@
-import { Button, Drawer, Empty, Form, Tabs } from "antd";
+import { Button,  Empty, Form, Tabs } from "antd";
 import { connect } from "react-redux";
 import React, { memo, Fragment } from "react";
-import { css } from "@emotion/core";
+
 import "braft-editor/dist/index.css";
 import "braft-extensions/dist/color-picker.css";
 import { action, IActionFn } from "../../../../models/action";
@@ -19,12 +19,7 @@ interface IProps extends IActionFn {
 const DragEdit = memo((props: IProps) => {
   const { action, component, dragId, theme } = props;
   const { uiList } = component;
-  const styles = {
-    title: css`
-      height: 32px;
-      line-height: 32px;
-    `
-  };
+
 
   // 修改数据同步
   const changeValue = (data: any) => {
@@ -44,10 +39,7 @@ const DragEdit = memo((props: IProps) => {
         break;
     }
   };
-  // 关闭抽屉
-  const closeDrawer = () => {
-    action({ type: "APPLET_DRAG_ID_SET", payload: undefined });
-  };
+
   // 表单样式排版
   const formItemLayout = {
     labelCol: {

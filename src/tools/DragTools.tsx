@@ -118,6 +118,7 @@ const DragRef = memo((props: DragRefFace) => {
             refData.bottom = true;
           }
         }
+        return "";
       });
       setRef({ ...refData });
       // 调整大小 + 移动

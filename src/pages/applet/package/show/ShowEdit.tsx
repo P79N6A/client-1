@@ -148,16 +148,16 @@ const ShowEdit = memo((props: IProps) => {
           renderItem={(item: any, index: any) => (
             <List.Item
               actions={[
-                <a onClick={() => itemSet("up", index)} key={1}>
+                <a href={"/"} onClick={() => itemSet("up", index)} key={1}>
                   <Icon type="arrow-up" />
                 </a>,
-                <a onClick={() => itemSet("down", index)} key={2}>
+                <a href={"/"} onClick={() => itemSet("down", index)} key={2}>
                   <Icon type="arrow-down" />
                 </a>,
-                <a onClick={() => setItemChoose(index)} key={3}>
+                <a href={"/"} onClick={() => setItemChoose(index)} key={3}>
                   <Icon type="edit" />
                 </a>,
-                <a onClick={() => itemSet("del", index)} key={4}>
+                <a href={"/"} onClick={() => itemSet("del", index)} key={4}>
                   <Icon type="delete" />
                 </a>
               ]}
@@ -172,7 +172,7 @@ const ShowEdit = memo((props: IProps) => {
                   avatar={
                     <img alt="img" src={item.img} width={20} height={20} />
                   }
-                  title={<a>{item.title}</a>}
+                  title={<a href={"/"}>{item.title}</a>}
                 />
               </Skeleton>
             </List.Item>

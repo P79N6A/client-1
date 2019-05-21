@@ -35,6 +35,8 @@ export default memo((props: IProps) => {
               } else {
                 draftState.value[indexs].value = 0;
               }
+
+              return "";
             });
           })
         );
@@ -84,6 +86,8 @@ export default memo((props: IProps) => {
       if (data.value) {
         label = data.label;
       }
+
+      return "";
     });
     return label;
   };
@@ -125,13 +129,13 @@ export default memo((props: IProps) => {
                 />
               </Col>
               <Col span={4}>
-                <Icon type="minus-circle-o" onClick={() => remove(index)}/>
+                <Icon type="minus-circle-o" onClick={() => remove(index)} />
               </Col>
             </Row>
           );
         })}
         <Button block={true} htmlType={"button"} onClick={valueAdd}>
-          <Icon type="plus"/> 添加
+          <Icon type="plus" /> 添加
         </Button>
       </Form.Item>
     </Form>

@@ -146,7 +146,7 @@ export default memo(() => {
             </Form.Item>
             <Form.Item>
               <Checkbox style={{ float: "left" }}>记住我</Checkbox>
-              <a style={{ float: "right" }} href="">
+              <a style={{ float: "right" }} href="/">
                 忘记密码
               </a>
               <Button
@@ -158,7 +158,7 @@ export default memo(() => {
                 登录
               </Button>
               <div style={{ marginTop: 20, float: "left" }}>
-                或者 <a href="">立即注册</a>
+                或者 <a href="/">立即注册</a>
               </div>
             </Form.Item>
           </Form>
@@ -182,7 +182,10 @@ export default memo(() => {
                   <Input
                     size={"large"}
                     prefix={
-                      <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                      <Icon
+                        type="lock"
+                        style={{ color: "rgba(0,0,0,.25)" }}
+                      />
                     }
                     type="email"
                     placeholder="验证码"
@@ -197,7 +200,7 @@ export default memo(() => {
             </Form.Item>
             <Form.Item>
               <Checkbox style={{ float: "left" }}>记住我</Checkbox>
-              <a style={{ float: "right" }} href="">
+              <a style={{ float: "right" }} href="/">
                 忘记密码
               </a>
               <Button
@@ -209,7 +212,7 @@ export default memo(() => {
                 登录
               </Button>
               <div style={{ marginTop: 20, float: "left" }}>
-                或者 <a href="">立即注册</a>
+                或者 <a href="/">立即注册</a>
               </div>
             </Form.Item>
           </Form>
@@ -219,13 +222,13 @@ export default memo(() => {
       </Content>
       <Footer css={styles.footer}>
         <div css={styles.footer_margin}>
-          <a title="help" target="_self" href="">
+          <a title="help" target="_self" href="/">
             帮助
           </a>
-          <a title="privacy" target="_self" href="">
+          <a title="privacy" target="_self" href="/">
             隐私
           </a>
-          <a title="terms" target="_self" href="">
+          <a title="terms" target="_self" href="/">
             条款
           </a>
         </div>

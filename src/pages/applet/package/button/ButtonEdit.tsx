@@ -1,6 +1,5 @@
 import { css } from "@emotion/core";
 import {
-  Drawer,
   Empty,
   Form,
   Icon,
@@ -13,7 +12,7 @@ import {
 } from "antd";
 import "braft-editor/dist/index.css";
 import "braft-extensions/dist/color-picker.css";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
 import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
 import { action, IActionFn } from "../../../../models/action";
@@ -27,16 +26,7 @@ interface IProps extends IActionFn {
 
 const ButtonEdit = memo((props: IProps) => {
   const { action, component, theme } = props;
-  const {
-    color,
-    desc,
-    radius,
-    width,
-    height,
-    fontSize,
-    bgImg,
-    bgColor
-  } = component;
+  const { color, desc, radius, width, height, fontSize, bgColor } = component;
   const TabPane = Tabs.TabPane;
   const Dragger = Upload.Dragger;
   // 表单样式排版

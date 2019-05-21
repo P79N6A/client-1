@@ -1,15 +1,5 @@
-import React, { memo, useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Icon,
-  Input,
-  Layout,
-  Row,
-  Tabs
-} from "antd";
+import React, { memo } from "react";
+import { Button, Col, Form, Icon, Input, Layout, Row } from "antd";
 import { css } from "@emotion/core";
 
 export default memo(() => {
@@ -164,20 +154,20 @@ export default memo(() => {
               注册
             </Button>
             <div style={{ marginTop: 20, float: "left" }}>
-              或者 <a href="">使用已有账号登陆</a>
+              或者 <a href="/">使用已有账号登陆</a>
             </div>
           </Form.Item>
         </Form>
       </Content>
       <Footer css={styles.footer}>
         <div css={styles.footer_margin}>
-          <a title="help" target="_self" href="">
+          <a title="help" target="_self" href="/">
             帮助
           </a>
-          <a title="privacy" target="_self" href="">
+          <a title="privacy" target="_self" href="/">
             隐私
           </a>
-          <a title="terms" target="_self" href="">
+          <a title="terms" target="_self" href="/">
             条款
           </a>
         </div>

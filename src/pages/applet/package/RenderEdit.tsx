@@ -1,4 +1,4 @@
-import React, { memo, Fragment, useState, useEffect } from "react";
+import React, { memo, Fragment } from "react";
 import { connect } from "react-redux";
 import { IAppletStore } from "../model/store";
 import ButtonEdit from "./button/ButtonEdit";
