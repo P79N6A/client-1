@@ -1,0 +1,7 @@
+# 用户注册
+mutation Register($phone: String!, $password: String!, $verification: String!) {
+  register(phone: $phone, verification: $verification, password: $password) {
+    error
+    msg
+  }
+}

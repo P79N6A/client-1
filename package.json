@@ -17,6 +17,7 @@
     "braft-extensions": "^0.0.18",
     "graphql": "^14.3.0",
     "graphql-tag": "^2.10.1",
+    "graphql.macro": "^1.4.2",
     "immer": "^3.1.2",
     "polished": "^3.3.1",
     "react": "^16.8.6",
