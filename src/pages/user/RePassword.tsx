@@ -1,55 +1,9 @@
-import React, { memo, useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Icon,
-  Input,
-  Layout,
-  Row,
-  Tabs
-} from "antd";
+import React, { memo } from "react";
+import { Button, Col, Form, Icon, Input, Layout, Row } from "antd";
 import { css } from "@emotion/core";
-import { FormComponentProps } from "antd/lib/form";
-import { Link } from "react-router-dom";
 
-interface IProps extends FormComponentProps {}
-
-/**
- * 功能
- * 1. 提交用户登录信息给后台，登录成功跳转至 "/admin"
- */
-const Login = memo((props: IProps) => {
-  const { getFieldDecorator } = props.form;
-  // 记录登陆方式，根据登陆方式
-  const [login, setLogin] = useState("1");
-  const changeLogin = (type: string) => {
-    setLogin(type);
-  };
-
-  // 账号登录
-  const accountSubmit = (e: any) => {
-    e.preventDefault();
-    props.form.validateFields((err: any, values: any) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
-
-  // 手机号登录
-  const phoneSubmit = (e: any) => {
-    e.preventDefault();
-    props.form.validateFields((err: any, values: any) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
-  };
-
+export default memo(() => {
   const { Footer, Header, Content } = Layout;
-
   const styles = {
     layout: css`
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
@@ -107,7 +61,7 @@ const Login = memo((props: IProps) => {
     `,
     footer_margin: css`
       margin-bottom: 8px;
-      & > span {
+      & > a {
         text-align: center;
         margin: 20px;
         text-decoration: none;
@@ -124,10 +78,11 @@ const Login = memo((props: IProps) => {
       font-size: 14px;
     `
   };
-
   return (
     <Layout css={styles.layout}>
-      <Header />
+      <Header>
+        <Icon type="user" css={styles.icon} />
+      </Header>
       <Content css={styles.content}>
         <div css={styles.content_logo}>
           <a href="/">
@@ -145,154 +100,73 @@ const Login = memo((props: IProps) => {
           Ant Design 是西湖区最具影响力的 Web 设计规范
         </div>
 
-        <Tabs
-          defaultActiveKey="1"
-          css={styles.content_tab}
-          onChange={changeLogin}
-        >
-          <Tabs.TabPane tab="账号登录" key="1" />
-          <Tabs.TabPane tab="手机登录" key="2" />
-        </Tabs>
-        {login === "1" ? (
-          <Form style={{ width: "400px" }} onSubmit={accountSubmit}>
-            <Form.Item>
-              {getFieldDecorator("phone", {
-                rules: [
-                  { required: true, message: "手机号不能为空" },
-                  {
-                    pattern: /^(13[0-9]|14[5|7|9]|15[0|1|2|3|5|6|7|8|9]|16[6]|17[0|1|2|3|5|6|7|8]|18[0-9]|19[8|9])\d{8}$/,
-                    message: "手机号格式错误"
-                  }
-                ]
-              })(
-                <Input
-                  size={"large"}
-                  prefix={
-                    <Icon type="tablet" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="手机号"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("password", {
-                rules: [
-                  { required: true, message: "密码不能为空" },
-                  { max: 25, message: "密码最多25位" },
-                  { min: 6, message: "密码最少6位" }
-                ]
-              })(
+        <h3 style={{ float: "left" }}>密码重置</h3>
+        <Form style={{ width: "400px" }}>
+          <Form.Item>
+            <Input
+              size={"large"}
+              prefix={
+                <Icon type="tablet" style={{ color: "rgba(0,0,0,.25)" }} />
+              }
+              placeholder="手机号"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Row gutter={16}>
+              <Col span={17}>
                 <Input
                   size={"large"}
                   prefix={
                     <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
                   }
-                  type="password"
-                  placeholder="密码"
+                  type="email"
+                  placeholder="验证码"
                 />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("rememberMe", {
-                valuePropName: "checked",
-                initialValue: true
-              })(<Checkbox style={{ float: "left" }}>记住我</Checkbox>)}
-              <Link style={{ float: "right" }} to="/user/re-password">
-                忘记密码
-              </Link>
-              <Button
-                block={true}
-                type="primary"
-                htmlType="submit"
-                size={"large"}
-              >
-                登录
-              </Button>
-              <div style={{ marginTop: 20, float: "left" }}>
-                或者 <Link to="/user/register">立即注册</Link>
-              </div>
-            </Form.Item>
-          </Form>
-        ) : (
-          ""
-        )}
-        {login === "2" ? (
-          <Form style={{ width: "400px" }} onSubmit={phoneSubmit}>
-            <Form.Item>
-              {getFieldDecorator("phone", {
-                rules: [
-                  { required: true, message: "手机号不能为空" },
-                  {
-                    pattern: /^(13[0-9]|14[5|7|9]|15[0|1|2|3|5|6|7|8|9]|16[6]|17[0|1|2|3|5|6|7|8]|18[0-9]|19[8|9])\d{8}$/,
-                    message: "手机号格式错误"
-                  }
-                ]
-              })(
-                <Input
-                  size={"large"}
-                  prefix={
-                    <Icon type="tablet" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="手机号"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              <Row gutter={16}>
-                <Col span={17}>
-                  {getFieldDecorator("vcode", {
-                    rules: [{ required: true, message: "验证码不能为空" }]
-                  })(
-                    <Input
-                      size={"large"}
-                      maxLength={6}
-                      prefix={
-                        <Icon
-                          type="email"
-                          style={{ color: "rgba(0,0,0,.25)" }}
-                        />
-                      }
-                      placeholder="验证码"
-                    />
-                  )}
-                </Col>
-                <Col span={7}>
-                  <Button size={"large"} block={true}>
-                    获取验证码
-                  </Button>
-                </Col>
-              </Row>
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("rememberMe", {
-                valuePropName: "checked",
-                initialValue: true
-              })(<Checkbox style={{ float: "left" }}>记住我</Checkbox>)}
-              <Link style={{ float: "right" }} to="/user/re-password">
-                忘记密码
-              </Link>
-              <Button
-                block={true}
-                type="primary"
-                htmlType="submit"
-                size={"large"}
-              >
-                登录
-              </Button>
-              <div style={{ marginTop: 20, float: "left" }}>
-                或者 <Link to="/user/register">立即注册</Link>
-              </div>
-            </Form.Item>
-          </Form>
-        ) : (
-          ""
-        )}
+              </Col>
+              <Col span={7}>
+                <Button size={"large"} block={true}>
+                  获取验证码
+                </Button>
+              </Col>
+            </Row>
+          </Form.Item>
+          <Form.Item>
+            <Input
+              size={"large"}
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="新密码，至少6位密码，区分大小写"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input
+              size={"large"}
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="确认密码"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              block={true}
+              type="primary"
+              htmlType="submit"
+              size={"large"}
+            >
+              重置密码
+            </Button>
+          </Form.Item>
+        </Form>
       </Content>
       <Footer css={styles.footer}>
         <div css={styles.footer_margin}>
-          <span>帮助</span>
-          <span>隐私</span>
-          <span>条款</span>
+          <a title="help" target="_self" href="/">
+            帮助
+          </a>
+          <a title="privacy" target="_self" href="/">
+            隐私
+          </a>
+          <a title="terms" target="_self" href="/">
+            条款
+          </a>
         </div>
         <div css={styles.footer_font}>
           Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
@@ -301,5 +175,3 @@ const Login = memo((props: IProps) => {
     </Layout>
   );
 });
-
-export default Form.create()(Login);

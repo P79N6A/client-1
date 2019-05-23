@@ -1,9 +1,30 @@
 import React, { memo } from "react";
-import { Button, Col, Form, Icon, Input, Layout, Row } from "antd";
 import { css } from "@emotion/core";
+import { connect } from "react-redux";
+import { FormComponentProps } from "antd/lib/form";
+import { Button, Col, Form, Icon, Input, Layout, Row } from "antd";
+import { registerApi } from "../../api/user/register_api";
 
-export default memo(() => {
+import { action, IActionFn } from "../../models/action";
+
+interface IProps extends FormComponentProps, IActionFn {}
+
+const Register = memo((props: IProps) => {
+  const { getFieldDecorator } = props.form;
+
+  const register = (e: any) => {
+    e.preventDefault();
+    props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        registerApi({ registerData: { ...values }, reduxAction: props.action })
+          .then()
+          .catch();
+      }
+    });
+  };
+
   const { Footer, Header, Content } = Layout;
+
   const styles = {
     layout: css`
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
@@ -99,29 +120,36 @@ export default memo(() => {
         <div css={styles.content_font}>
           Ant Design 是西湖区最具影响力的 Web 设计规范
         </div>
-
         <h3 style={{ float: "left" }}>注册</h3>
-        <Form style={{ width: "400px" }}>
+        <Form style={{ width: "400px" }} onSubmit={register}>
           <Form.Item>
-            <Input
-              size={"large"}
-              prefix={
-                <Icon type="tablet" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
-              placeholder="手机号"
-            />
+            {getFieldDecorator("phone", {
+              rules: [{ required: true, message: "手机号不能为空" }]
+            })(
+              <Input
+                size={"large"}
+                prefix={
+                  <Icon type="tablet" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder="手机号"
+              />
+            )}
           </Form.Item>
           <Form.Item>
             <Row gutter={16}>
               <Col span={17}>
-                <Input
-                  size={"large"}
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  type="email"
-                  placeholder="验证码"
-                />
+                {getFieldDecorator("verification", {
+                  rules: [{ required: true, message: "验证码不能为空" }]
+                })(
+                  <Input
+                    size={"large"}
+                    maxLength={4}
+                    prefix={
+                      <Icon type="email" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    placeholder="验证码"
+                  />
+                )}
               </Col>
               <Col span={7}>
                 <Button size={"large"} block={true}>
@@ -131,18 +159,30 @@ export default memo(() => {
             </Row>
           </Form.Item>
           <Form.Item>
-            <Input
-              size={"large"}
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="至少6位密码，区分大小写"
-            />
+            {getFieldDecorator("password", {
+              rules: [{ required: true, message: "密码不能为空" }]
+            })(
+              <Input
+                size={"large"}
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder="至少6位密码，区分大小写"
+              />
+            )}
           </Form.Item>
           <Form.Item>
-            <Input
-              size={"large"}
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="确认密码"
-            />
+            {getFieldDecorator("re-password", {
+              rules: [{ required: true, message: "密码不能为空" }]
+            })(
+              <Input
+                size={"large"}
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder="确认密码"
+              />
+            )}
           </Form.Item>
           <Form.Item>
             <Button
@@ -178,3 +218,8 @@ export default memo(() => {
     </Layout>
   );
 });
+
+export default connect(
+  null,
+  { action }
+)(Form.create()(Register));
