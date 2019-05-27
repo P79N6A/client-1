@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { css } from "@emotion/core";
 import { connect } from "react-redux";
 import { FormComponentProps } from "antd/lib/form";
@@ -6,12 +6,14 @@ import { Button, Col, Form, Icon, Input, Layout, Row } from "antd";
 import { registerApi } from "../../api/user/register_api";
 
 import { action, IActionFn } from "../../models/action";
+import { smsApi } from "../../api/user/sms_api";
 
 interface IProps extends FormComponentProps, IActionFn {}
 
 const Register = memo((props: IProps) => {
-  const { getFieldDecorator } = props.form;
+  const { getFieldDecorator, getFieldsError } = props.form;
 
+  // 向后段提交注册信息
   const register = (e: any) => {
     e.preventDefault();
     props.form.validateFields((err: any, values: any) => {
@@ -21,6 +23,21 @@ const Register = memo((props: IProps) => {
           .catch();
       }
     });
+  };
+  // 检查注册信息是否填写完成无措，如果无措，则提交按钮显示
+  const hasErrors = (fieldsError: any) => {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
+  };
+  // 获取手机验证码
+  const getVerify = (e: any): void => {
+    smsApi("15050580821")
+      .then()
+      .catch();
+    // props.form.validateFields((err: any, values: any) => {
+    //   if (!err) {
+    //
+    //   }
+    // });
   };
 
   const { Footer, Header, Content } = Layout;
@@ -40,7 +57,6 @@ const Register = memo((props: IProps) => {
       font-size: 18px;
     `,
     content: css`
-      text-align: center;
       margin: auto auto;
     `,
     content_logo: css`
@@ -99,11 +115,10 @@ const Register = memo((props: IProps) => {
       font-size: 14px;
     `
   };
+
   return (
     <Layout css={styles.layout}>
-      <Header>
-        <Icon type="user" css={styles.icon} />
-      </Header>
+      <Header />
       <Content css={styles.content}>
         <div css={styles.content_logo}>
           <a href="/">
@@ -124,35 +139,34 @@ const Register = memo((props: IProps) => {
         <Form style={{ width: "400px" }} onSubmit={register}>
           <Form.Item>
             {getFieldDecorator("phone", {
-              rules: [{ required: true, message: "手机号不能为空" }]
-            })(
-              <Input
-                size={"large"}
-                prefix={
-                  <Icon type="tablet" style={{ color: "rgba(0,0,0,.25)" }} />
+              rules: [
+                { required: true, message: "手机号不能为空" },
+                {
+                  pattern: /^(13[0-9]|14[5|7|9]|15[0|1|2|3|5|6|7|8|9]|16[6]|17[0|1|2|3|5|6|7|8]|18[0-9]|19[8|9])\d{8}$/,
+                  message: "号码格式错误"
                 }
-                placeholder="手机号"
-              />
-            )}
+              ]
+            })(<Input size={"large"} placeholder="手机号" />)}
           </Form.Item>
           <Form.Item>
             <Row gutter={16}>
               <Col span={17}>
-                {getFieldDecorator("verification", {
-                  rules: [{ required: true, message: "验证码不能为空" }]
-                })(
-                  <Input
-                    size={"large"}
-                    maxLength={4}
-                    prefix={
-                      <Icon type="email" style={{ color: "rgba(0,0,0,.25)" }} />
+                {getFieldDecorator("verify", {
+                  rules: [
+                    { required: true, message: "验证码不能为空" },
+                    {
+                      pattern: /^[0-9]{4}$/,
+                      message: "验证码格式错误"
                     }
-                    placeholder="验证码"
-                  />
-                )}
+                  ]
+                })(<Input size={"large"} maxLength={4} placeholder="验证码" />)}
               </Col>
               <Col span={7}>
-                <Button size={"large"} block={true}>
+                <Button
+                  size={"large"}
+                  block={true}
+                  onClick={() => getVerify(getFieldDecorator)}
+                >
                   获取验证码
                 </Button>
               </Col>
@@ -160,27 +174,43 @@ const Register = memo((props: IProps) => {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator("password", {
-              rules: [{ required: true, message: "密码不能为空" }]
-            })(
-              <Input
-                size={"large"}
-                prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+              rules: [
+                { required: true, message: "密码不能为空" },
+                {
+                  pattern: /^[^]{6,16}$/,
+                  message: "至少6位密码"
+                },
+                {
+                  pattern: /^[a-zA-Z\d!@#$%^&*./|`()_+=]{0,16}$/,
+                  message: "密码中存在非法字符"
                 }
+              ]
+            })(
+              <Input.Password
+                size={"large"}
+                maxLength={16}
                 placeholder="至少6位密码，区分大小写"
               />
             )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator("re-password", {
-              rules: [{ required: true, message: "密码不能为空" }]
-            })(
-              <Input
-                size={"large"}
-                prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+              rules: [
+                { required: true, message: "密码不能为空" },
+                {
+                  pattern: /^[^]{6,16}$/,
+                  message: "至少6位密码"
+                },
+                {
+                  pattern: /^[a-zA-Z\d!@#$%^&*./|`()_+=]{0,16}$/,
+                  message: "密码中存在非法字符"
                 }
-                placeholder="确认密码"
+              ]
+            })(
+              <Input.Password
+                size={"large"}
+                maxLength={16}
+                placeholder="至少6位密码，区分大小写"
               />
             )}
           </Form.Item>
@@ -190,6 +220,7 @@ const Register = memo((props: IProps) => {
               type="primary"
               htmlType="submit"
               size={"large"}
+              disabled={hasErrors(getFieldsError())}
             >
               注册
             </Button>
