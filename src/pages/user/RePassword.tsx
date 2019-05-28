@@ -1,15 +1,76 @@
-import React, { memo } from "react";
-import { Button, Col, Form, Icon, Input, Layout, Row } from "antd";
+import React, { memo, useState } from "react";
+import {
+  Button,
+  Col,
+  Form,
+  Icon,
+  Input,
+  Layout,
+  message,
+  Row,
+  Statistic
+} from "antd";
 import { css } from "@emotion/core";
+import { FormComponentProps } from "antd/lib/form";
+import { smsLoginApi } from "../../api/sms-login/smsLogin";
+import { pwdResetApi } from "../../api/pwd-reset/pwdReset";
 
-export default memo(() => {
-  const { Footer, Header, Content } = Layout;
+interface IProps extends FormComponentProps {}
+
+/**
+ * 功能
+ */
+const RePassword = memo((props: IProps) => {
+  const { getFieldDecorator, getFieldValue, getFieldsError } = props.form;
+
+  // 控制手机验证码发送时间
+  const [verify, setVerify] = useState(false);
+  // 60倒计时结束时回调
+  const onFinish = () => {
+    setVerify(false);
+  };
+  // 获取手机验证码
+  const getVerify = (): void => {
+    if (getFieldValue("phone")) {
+      smsLoginApi(getFieldValue("phone"))
+        .then(({ error, msg }) => {
+          error ? message.warning(msg) : message.success(msg);
+        })
+        .catch(({ error, msg }) => message.warning(msg));
+      setVerify(true);
+    } else {
+      message.warning("手机号不能为空");
+    }
+  };
+  // 重置
+  const reset = (e: any) => {
+    e.preventDefault();
+    props.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        pwdResetApi({
+          pwdResetData: {
+            ...values
+          }
+        })
+          .then(({ error, msg }) => {
+            error ? message.warning(msg) : message.success(msg);
+          })
+          .catch(({ error, msg }) => message.warning(msg));
+      }
+    });
+  };
+  // 控制提交按钮，如果表单存在错误信息，提交按钮不可用
+  const hasErrors = (fieldsError: any) => {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
+  };
+  // 样式
   const styles = {
     layout: css`
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
       background-repeat: no-repeat;
       background-position: center 110px;
       background-size: 100%;
+      padding-top: 60px;
     `,
     icon: css`
       line-height: 64px;
@@ -19,10 +80,10 @@ export default memo(() => {
       font-size: 18px;
     `,
     content: css`
-      text-align: center;
       margin: auto auto;
     `,
     content_logo: css`
+      text-align: center;
       height: 44px;
       line-height: 44px;
       & > a > img {
@@ -40,6 +101,7 @@ export default memo(() => {
       }
     `,
     content_font: css`
+      text-align: center;
       margin-top: 12px;
       margin-bottom: 40px;
       color: rgba(0, 0, 0, 0.45);
@@ -61,7 +123,7 @@ export default memo(() => {
     `,
     footer_margin: css`
       margin-bottom: 8px;
-      & > a {
+      & > span {
         text-align: center;
         margin: 20px;
         text-decoration: none;
@@ -78,12 +140,10 @@ export default memo(() => {
       font-size: 14px;
     `
   };
+
   return (
     <Layout css={styles.layout}>
-      <Header>
-        <Icon type="user" css={styles.icon} />
-      </Header>
-      <Content css={styles.content}>
+      <Layout.Content css={styles.content}>
         <div css={styles.content_logo}>
           <a href="/">
             <img
@@ -99,50 +159,93 @@ export default memo(() => {
         <div css={styles.content_font}>
           Ant Design 是西湖区最具影响力的 Web 设计规范
         </div>
-
         <h3 style={{ float: "left" }}>密码重置</h3>
-        <Form style={{ width: "400px" }}>
+        <Form style={{ width: "400px" }} onSubmit={reset}>
           <Form.Item>
-            <Input
-              size={"large"}
-              prefix={
-                <Icon type="tablet" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
-              placeholder="手机号"
-            />
+            {getFieldDecorator("phone", {
+              rules: [
+                { required: true, message: "手机号不能为空" },
+                {
+                  pattern: /^(13[0-9]|14[5-9]|15[0-9]|16[6]|17[0-8]|18[0-9]|19[8|9])\d{8}$/,
+                  message: "手机号格式错误"
+                }
+              ]
+            })(<Input size={"large"} placeholder="手机号" />)}
           </Form.Item>
           <Form.Item>
             <Row gutter={16}>
               <Col span={17}>
-                <Input
-                  size={"large"}
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  type="email"
-                  placeholder="验证码"
-                />
+                {getFieldDecorator("verify", {
+                  rules: [{ required: true, message: "验证码不能为空" }]
+                })(<Input size={"large"} maxLength={4} placeholder="验证码" />)}
               </Col>
               <Col span={7}>
-                <Button size={"large"} block={true}>
-                  获取验证码
+                <Button
+                  size={"large"}
+                  block={true}
+                  onClick={getVerify}
+                  disabled={verify}
+                >
+                  {!verify ? (
+                    "获取验证码"
+                  ) : (
+                    <Statistic.Countdown
+                      value={Date.now() + 1000 * 60}
+                      format=" s 秒后重试"
+                      valueStyle={{
+                        fontSize: 14
+                      }}
+                      onFinish={onFinish}
+                    />
+                  )}
                 </Button>
               </Col>
             </Row>
           </Form.Item>
           <Form.Item>
-            <Input
-              size={"large"}
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="新密码，至少6位密码，区分大小写"
-            />
+            {getFieldDecorator("password", {
+              rules: [
+                {
+                  required: true,
+                  message: "密码不能为空"
+                },
+                {
+                  pattern: /^[^]{6,16}$/,
+                  message: "至少6位密码"
+                },
+                {
+                  pattern: /^[a-zA-Z\d!@#$%^&*./|`()_+=]{0,16}$/,
+                  message: "密码中存在非法字符"
+                }
+              ]
+            })(
+              <Input.Password
+                size={"large"}
+                maxLength={16}
+                placeholder="至少6位密码，区分大小写"
+              />
+            )}
           </Form.Item>
           <Form.Item>
-            <Input
-              size={"large"}
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="确认密码"
-            />
+            {getFieldDecorator("re-password", {
+              rules: [
+                {
+                  required: true,
+                  message: "确认密码不能为空"
+                },
+                {
+                  message: "与密码不一致",
+                  validator: (rule, value, cb) =>
+                    value === getFieldValue("password") ? cb() : cb(true)
+                }
+              ]
+            })(
+              <Input.Password
+                size={"large"}
+                maxLength={16}
+                placeholder="确认密码"
+              />
+            )}
           </Form.Item>
           <Form.Item>
             <Button
@@ -150,28 +253,25 @@ export default memo(() => {
               type="primary"
               htmlType="submit"
               size={"large"}
+              disabled={hasErrors(getFieldsError())}
             >
-              重置密码
+              立即重置
             </Button>
           </Form.Item>
         </Form>
-      </Content>
-      <Footer css={styles.footer}>
+      </Layout.Content>
+      <Layout.Footer css={styles.footer}>
         <div css={styles.footer_margin}>
-          <a title="help" target="_self" href="/">
-            帮助
-          </a>
-          <a title="privacy" target="_self" href="/">
-            隐私
-          </a>
-          <a title="terms" target="_self" href="/">
-            条款
-          </a>
+          <span>帮助</span>
+          <span>隐私</span>
+          <span>条款</span>
         </div>
         <div css={styles.footer_font}>
           Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
         </div>
-      </Footer>
+      </Layout.Footer>
     </Layout>
   );
 });
+
+export default Form.create()(RePassword);

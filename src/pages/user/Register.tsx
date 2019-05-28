@@ -1,53 +1,87 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useState } from "react";
 import { css } from "@emotion/core";
 import { connect } from "react-redux";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { FormComponentProps } from "antd/lib/form";
-import { Button, Col, Form, Icon, Input, Layout, Row } from "antd";
-import { registerApi } from "../../api/user/register_api";
-
+import {
+  Button,
+  Col,
+  Form,
+  Icon,
+  Input,
+  Layout,
+  message,
+  Row,
+  Statistic
+} from "antd";
 import { action, IActionFn } from "../../models/action";
-import { smsApi } from "../../api/user/sms_api";
+import { registerApi } from "../../api/register/register";
+import { smsRegisterApi } from "../../api/sms-register/smsRegister";
 
-interface IProps extends FormComponentProps, IActionFn {}
+interface IProps extends FormComponentProps, IActionFn, RouteComponentProps {}
 
+/**
+ * 用户注册
+ * 功能
+ * 1. 效验手机号是否以注册
+ * 2. 发送手机注册验证码
+ * 3. 检测确认密码与密码是否一致
+ * 4. 检测无误后，提交按钮可点击
+ * 5. 数据提交，给出反馈并跳转至用户管理页
+ * 6. 发送验证码后，验证码按钮显示60s 倒计时
+ */
 const Register = memo((props: IProps) => {
-  const { getFieldDecorator, getFieldsError } = props.form;
+  const { getFieldDecorator, getFieldsError, getFieldValue } = props.form;
 
-  // 向后段提交注册信息
+  // 控制手机验证码发送时间
+  const [verify, setVerify] = useState(false);
+  // 60倒计时结束时回调
+  const onFinish = () => {
+    setVerify(false);
+  };
+  // 获取手机验证码
+  const getVerify = (): void => {
+    if (getFieldValue("phone")) {
+      smsRegisterApi(getFieldValue("phone"))
+        .then(({ error, msg }) => {
+          error ? message.warning(msg) : message.success(msg);
+        })
+        .catch(({ error, msg }) => message.warning(msg));
+      setVerify(true);
+    } else {
+      message.warning("手机号不能为空");
+    }
+  };
+  // 提交注册信息
   const register = (e: any) => {
     e.preventDefault();
     props.form.validateFields((err: any, values: any) => {
       if (!err) {
-        registerApi({ registerData: { ...values }, reduxAction: props.action })
-          .then()
-          .catch();
+        registerApi({
+          registerData: {
+            ...values
+          },
+          reduxAction: props.action
+        })
+          .then(({ error, msg }) => {
+            error ? message.warning(msg) : props.history.push("/admin");
+          })
+          .catch(({ error, msg }) => message.warning(msg));
       }
     });
   };
-  // 检查注册信息是否填写完成无措，如果无措，则提交按钮显示
+  // 控制提交按钮，如果表单存在错误信息，提交按钮不可用
   const hasErrors = (fieldsError: any) => {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
   };
-  // 获取手机验证码
-  const getVerify = (e: any): void => {
-    smsApi("15050580821")
-      .then()
-      .catch();
-    // props.form.validateFields((err: any, values: any) => {
-    //   if (!err) {
-    //
-    //   }
-    // });
-  };
-
-  const { Footer, Header, Content } = Layout;
-
+  // 样式
   const styles = {
     layout: css`
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
       background-repeat: no-repeat;
       background-position: center 110px;
       background-size: 100%;
+      padding-top: 64px;
     `,
     icon: css`
       line-height: 64px;
@@ -60,6 +94,7 @@ const Register = memo((props: IProps) => {
       margin: auto auto;
     `,
     content_logo: css`
+      text-align: center;
       height: 44px;
       line-height: 44px;
       & > a > img {
@@ -77,6 +112,7 @@ const Register = memo((props: IProps) => {
       }
     `,
     content_font: css`
+      text-align: center;
       margin-top: 12px;
       margin-bottom: 40px;
       color: rgba(0, 0, 0, 0.45);
@@ -118,8 +154,7 @@ const Register = memo((props: IProps) => {
 
   return (
     <Layout css={styles.layout}>
-      <Header />
-      <Content css={styles.content}>
+      <Layout.Content css={styles.content}>
         <div css={styles.content_logo}>
           <a href="/">
             <img
@@ -140,9 +175,12 @@ const Register = memo((props: IProps) => {
           <Form.Item>
             {getFieldDecorator("phone", {
               rules: [
-                { required: true, message: "手机号不能为空" },
                 {
-                  pattern: /^(13[0-9]|14[5|7|9]|15[0|1|2|3|5|6|7|8|9]|16[6]|17[0|1|2|3|5|6|7|8]|18[0-9]|19[8|9])\d{8}$/,
+                  required: true,
+                  message: "手机号不能为空"
+                },
+                {
+                  pattern: /^(13[0-9]|14[5-9]|15[0-9]|16[6]|17[0-8]|18[0-9]|19[8|9])\d{8}$/,
                   message: "号码格式错误"
                 }
               ]
@@ -153,7 +191,10 @@ const Register = memo((props: IProps) => {
               <Col span={17}>
                 {getFieldDecorator("verify", {
                   rules: [
-                    { required: true, message: "验证码不能为空" },
+                    {
+                      required: true,
+                      message: "验证码不能为空"
+                    },
                     {
                       pattern: /^[0-9]{4}$/,
                       message: "验证码格式错误"
@@ -165,9 +206,21 @@ const Register = memo((props: IProps) => {
                 <Button
                   size={"large"}
                   block={true}
-                  onClick={() => getVerify(getFieldDecorator)}
+                  onClick={getVerify}
+                  disabled={verify}
                 >
-                  获取验证码
+                  {!verify ? (
+                    "获取验证码"
+                  ) : (
+                    <Statistic.Countdown
+                      value={Date.now() + 1000 * 60}
+                      format=" s 秒后重试"
+                      valueStyle={{
+                        fontSize: 14
+                      }}
+                      onFinish={onFinish}
+                    />
+                  )}
                 </Button>
               </Col>
             </Row>
@@ -175,7 +228,10 @@ const Register = memo((props: IProps) => {
           <Form.Item>
             {getFieldDecorator("password", {
               rules: [
-                { required: true, message: "密码不能为空" },
+                {
+                  required: true,
+                  message: "密码不能为空"
+                },
                 {
                   pattern: /^[^]{6,16}$/,
                   message: "至少6位密码"
@@ -196,21 +252,21 @@ const Register = memo((props: IProps) => {
           <Form.Item>
             {getFieldDecorator("re-password", {
               rules: [
-                { required: true, message: "密码不能为空" },
                 {
-                  pattern: /^[^]{6,16}$/,
-                  message: "至少6位密码"
+                  required: true,
+                  message: "确认密码不能为空"
                 },
                 {
-                  pattern: /^[a-zA-Z\d!@#$%^&*./|`()_+=]{0,16}$/,
-                  message: "密码中存在非法字符"
+                  message: "与密码不一致",
+                  validator: (rule, value, cb) =>
+                    value === getFieldValue("password") ? cb() : cb(true)
                 }
               ]
             })(
               <Input.Password
                 size={"large"}
                 maxLength={16}
-                placeholder="至少6位密码，区分大小写"
+                placeholder="确认密码"
               />
             )}
           </Form.Item>
@@ -224,13 +280,18 @@ const Register = memo((props: IProps) => {
             >
               注册
             </Button>
-            <div style={{ marginTop: 20, float: "left" }}>
-              或者 <a href="/">使用已有账号登陆</a>
+            <div
+              style={{
+                marginTop: 20,
+                float: "left"
+              }}
+            >
+              或者 <Link to="/user/login">使用已有账号登陆</Link>
             </div>
           </Form.Item>
         </Form>
-      </Content>
-      <Footer css={styles.footer}>
+      </Layout.Content>
+      <Layout.Footer css={styles.footer}>
         <div css={styles.footer_margin}>
           <a title="help" target="_self" href="/">
             帮助
@@ -245,7 +306,7 @@ const Register = memo((props: IProps) => {
         <div css={styles.footer_font}>
           Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
         </div>
-      </Footer>
+      </Layout.Footer>
     </Layout>
   );
 });
@@ -253,4 +314,4 @@ const Register = memo((props: IProps) => {
 export default connect(
   null,
   { action }
-)(Form.create()(Register));
+)(Form.create()(withRouter(Register)));
