@@ -1,7 +1,0 @@
-# 发送短信
-mutation Sms($phone: String!) {
-  smsVerify(phone: $phone) {
-    error
-    msg
-  }
-}

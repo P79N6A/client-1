@@ -1,0 +1,7 @@
+# 发送短信
+mutation SmsRegister($phone: String!) {
+  smsRegister(phone: $phone) {
+    error
+    msg
+  }
+}

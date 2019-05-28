@@ -1,0 +1,7 @@
+# 发送短信
+mutation SmsLogin($phone: String!) {
+  smsLogin(phone: $phone) {
+    error
+    msg
+  }
+}
