@@ -1,0 +1,12 @@
+# 创建商铺
+mutation createShop(
+  $user_id: String
+  $desc: String
+  $title: String
+  $cover: String
+) {
+  createShop(user_id: $user_id, desc: $desc, title: $title, cover: $cover) {
+    error
+    msg
+  }
+}

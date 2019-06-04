@@ -3,14 +3,14 @@ import { css } from "@emotion/core";
 import { Layout } from "antd";
 import AdminSider from "./layout/AdminSider";
 import Commodity from "./components/Commodity";
-import Shop from "./components/Shop";
+import Shop from "./components/shop/Shop";
 import Order from "./components/Order";
 import Customer from "./components/Customer";
 import Assets from "./components/Assets";
 
 export default memo(() => {
   // 侧边栏选项值存储
-  const [item, setItem] = useState("commodity");
+  const [item, setItem] = useState("shop");
 
   // 修改侧边栏选项值
   const changeItem = (itemName: string) => {
@@ -48,6 +48,7 @@ export default memo(() => {
       padding: 8px;
     `
   };
+
   return (
     <Fragment>
       <Layout.Sider width={80} css={styles.side}>

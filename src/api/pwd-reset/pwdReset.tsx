@@ -19,10 +19,10 @@ export async function pwdResetApi({
       variables: { ...pwdResetData },
       mutation: PwdReset
     })
-    .then(result => {
+    .then((result: { data: { pwdReset: any; }; }) => {
       return result.data.pwdReset;
     })
-    .catch(e => {
+    .catch(() => {
       return { error: true, msg: "网络链接异常，请重试" };
     });
 }

@@ -6,9 +6,11 @@ import { IAction } from "./action";
  */
 export interface IUserStore {
   rememberMe: string | undefined;
+  userId: string | number;
 }
 const state: IUserStore = {
-  rememberMe: undefined
+  rememberMe: undefined,
+  userId: "1"
 };
 
 /**

@@ -36,18 +36,18 @@ import { action, IActionFn } from "../models/action";
 interface IProps extends RouteComponentProps, IActionFn {}
 
 const App = memo((props: IProps) => {
-  // rememberMe 认证
-  useEffect(() => {
-    rememberMeApi({
-      reduxAction: props.action,
-      pathName: props.location.pathname
-    })
-      .then()
-      .catch(reject => {
-        props.history.push(reject);
-      });
-    // eslint-disable-next-line
-  }, [props.location.pathname]);
+  // // rememberMe 认证
+  // useEffect(() => {
+  //   rememberMeApi({
+  //     reduxAction: props.action,
+  //     pathName: props.location.pathname
+  //   })
+  //     .then()
+  //     .catch(reject => {
+  //       props.history.push(reject);
+  //     });
+  //   // eslint-disable-next-line
+  // }, [props.location.pathname]);
 
   // 样式
   const styles = {
