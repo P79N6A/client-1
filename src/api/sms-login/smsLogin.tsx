@@ -14,10 +14,10 @@ export async function smsLoginApi(
       variables: { phone: phone },
       mutation: SmsLogin
     })
-    .then(result => {
+    .then((result: { data: { smsLogin: any; }; }) => {
       return result.data.smsLogin;
     })
-    .catch(e => {
+    .catch(() => {
       return { error: true, msg: "网络链接异常，请重试" };
     });
 }

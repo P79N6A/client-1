@@ -1,0 +1,7 @@
+# 文件上传
+mutation SingleUpload($files: Upload!) {
+  singleUpload(files: $files) {
+    error
+    msg
+  }
+}

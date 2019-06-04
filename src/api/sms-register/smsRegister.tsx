@@ -14,10 +14,10 @@ export async function smsRegisterApi(
       variables: { phone: phone },
       mutation: Sms
     })
-    .then(result => {
+    .then((result: { data: { smsRegister: any; }; }) => {
       return result.data.smsRegister;
     })
-    .catch(e => {
+    .catch(() => {
       return { error: true, msg: "网络链接异常，请重试" };
     });
 }

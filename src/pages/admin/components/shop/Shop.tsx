@@ -1,11 +1,17 @@
 import React, { memo, useState } from "react";
 import { Icon, Layout, Menu } from "antd";
 import { css } from "@emotion/core";
+import { ShopAdmin } from "./ShopAdmin";
 
 export default memo(() => {
   // 控制当前需要显示的帮助内容Key 类型
-  const [contentType, setContentType] = useState("applet");
+  const [contentType, setContentType] = useState("1");
   const { Content, Footer, Sider } = Layout;
+
+  // content 内容列表
+  const contentItem: { [id: string]: object } = {
+    1: <ShopAdmin />
+  };
 
   const styles = {
     content: css`
@@ -41,11 +47,6 @@ export default memo(() => {
     `
   };
 
-  // 根据指定类型展示相应帮助内容
-  // const content: { [name: string]: object } = {
-  //   applet: <AppletMadeHelp />
-  // };
-
   return (
     <Layout style={{ height: "100%" }}>
       <Content css={styles.content}>
@@ -58,10 +59,12 @@ export default memo(() => {
               onClick={({ key }) => setContentType(key)}
             >
               <Menu.Item key="1">商铺管理</Menu.Item>
-              <Menu.Item key="2">商铺检测</Menu.Item>
+              <Menu.Item key="2" disabled={true}>
+                商铺检测
+              </Menu.Item>
             </Menu>
           </Sider>
-          <Content css={styles.desc}>daf</Content>
+          <Content css={styles.desc}>{contentItem[contentType]}</Content>
         </Layout>
       </Content>
       <Footer css={styles.footer}>

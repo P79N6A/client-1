@@ -27,10 +27,10 @@ export async function loginApi({
       variables: { ...mockData, ...loginData },
       mutation: Login
     })
-    .then(result => {
+    .then((result: { data: { login: any; }; }) => {
       return result.data.login;
     })
-    .catch(e => {
+    .catch(() => {
       return { error: true, msg: "网络链接异常，请重试" };
     });
 }

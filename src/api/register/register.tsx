@@ -23,10 +23,10 @@ export async function registerApi({
       variables: { ...registerData },
       mutation: Register
     })
-    .then(result => {
+    .then((result: { data: { register: any; }; }) => {
       return result.data.register;
     })
-    .catch(e => {
+    .catch(() => {
       return { error: true, msg: "网络链接异常，请重试" };
     });
 }
