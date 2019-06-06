@@ -1,7 +1,0 @@
-# 用户注册
-mutation PwdReset($phone: String!, $password: String!, $verify: String!) {
-  pwdReset(phone: $phone, verify: $verify, password: $password) {
-    error
-    msg
-  }
-}
