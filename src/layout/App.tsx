@@ -1,4 +1,4 @@
-import React, { memo, Suspense, useEffect } from "react";
+import React, { memo, Suspense } from "react";
 import { css } from "@emotion/core";
 import { Layout, Spin } from "antd";
 import { size } from "polished";
@@ -9,22 +9,8 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
-import PageErrorBoundary from "../components/NetErrorBoundary";
-import {
-  Admin,
-  Applet,
-  AppletAdmin,
-  Error403,
-  Error404,
-  Help,
-  Home,
-  Login,
-  Register,
-  RePassword
-} from "../routes/routes";
-import { rememberMeApi } from "../api/user/rememberMe_api";
-
-import { action, IActionFn } from "../models/action";
+import { action, IActionFn } from "../store/action";
+import Register from "../pages/trader/Register";
 
 /**
  * 功能
@@ -36,19 +22,6 @@ import { action, IActionFn } from "../models/action";
 interface IProps extends RouteComponentProps, IActionFn {}
 
 const App = memo((props: IProps) => {
-  // // rememberMe 认证
-  // useEffect(() => {
-  //   rememberMeApi({
-  //     reduxAction: props.action,
-  //     pathName: props.location.pathname
-  //   })
-  //     .then()
-  //     .catch(reject => {
-  //       props.history.push(reject);
-  //     });
-  //   // eslint-disable-next-line
-  // }, [props.location.pathname]);
-
   // 样式
   const styles = {
     // 页面根样式
@@ -67,22 +40,11 @@ const App = memo((props: IProps) => {
 
   return (
     <Layout css={styles.root}>
-      <PageErrorBoundary>
-        <Suspense fallback={loading}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/admin" component={Admin} />
-            <Route exact path="/applet/admin" component={AppletAdmin} />
-            <Route exact path="/applet" component={Applet} />
-            <Route exact path="/user/login" component={Login} />
-            <Route exact path="/user/register" component={Register} />
-            <Route exact path="/help" component={Help} />
-            <Route exact path="/403" component={Error403} />
-            <Route exact path="/user/re-password" component={RePassword} />
-            <Route component={Error404} />
-          </Switch>
-        </Suspense>
-      </PageErrorBoundary>
+      <Suspense fallback={loading}>
+        <Switch>
+          <Route exact path="/trader/register" component={Register} />
+        </Switch>
+      </Suspense>
     </Layout>
   );
 });
