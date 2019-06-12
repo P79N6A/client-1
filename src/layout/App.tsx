@@ -1,16 +1,13 @@
-import React, { memo, Suspense } from "react";
+import React, { memo, Suspense, lazy } from "react";
 import { css } from "@emotion/core";
 import { Layout, Spin } from "antd";
 import { size } from "polished";
-import { connect } from "react-redux";
 import {
   Route,
   RouteComponentProps,
   Switch,
   withRouter
 } from "react-router-dom";
-import { action, IActionFn } from "../store/action";
-import Register from "../pages/trader/Register";
 
 /**
  * 功能
@@ -19,7 +16,7 @@ import Register from "../pages/trader/Register";
  * 3. 监测页面加载，添加网络错误边界组件进行监听 ✅
  * 4. 权限认证
  */
-interface IProps extends RouteComponentProps, IActionFn {}
+interface IProps extends RouteComponentProps {}
 
 const App = memo((props: IProps) => {
   // 样式
@@ -38,18 +35,23 @@ const App = memo((props: IProps) => {
   // 页面加载样式组件
   const loading = <Spin css={styles.loading} delay={300} tip={"拼命加载中"} />;
 
+  // 页面切割
+  const Register = lazy(() => import("../pages/trader/Register"));
+  const Login = lazy(() => import("../pages/trader/Login"));
+  const RePassword = lazy(() => import("../pages/trader/RePassword"));
+  const Admin = lazy(() => import("../pages/admin/Admin"));
   return (
     <Layout css={styles.root}>
       <Suspense fallback={loading}>
         <Switch>
           <Route exact path="/trader/register" component={Register} />
+          <Route path="/trader/login" component={Login} />
+          <Route path="/trader/re-password" component={RePassword} />
+          <Route path="/admin" component={Admin} />
         </Switch>
       </Suspense>
     </Layout>
   );
 });
 
-export default connect(
-  null,
-  { action }
-)(withRouter(App));
+export default withRouter(App);
