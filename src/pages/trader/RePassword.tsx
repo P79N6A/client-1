@@ -1,6 +1,5 @@
 import React, { memo, useState } from "react";
 import { css } from "@emotion/core";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import {
   Button,
   Col,
@@ -12,26 +11,16 @@ import {
   Row,
   Statistic
 } from "antd";
-import IconFont from "../../component/IconFont";
 import { FormComponentProps } from "antd/lib/form";
+import IconFont from "../../component/IconFont";
 
-// @ts-ignore
-import { useDispatch } from "react-redux";
-
-interface IProps extends FormComponentProps, RouteComponentProps {}
+interface IProps extends FormComponentProps {}
 
 /**
- * @description 商户注册
  * 功能
- * 1. 效验手机号是否以注册
- * 2. 发送手机注册验证码
- * 3. 检测确认密码与密码是否一致
- * 4. 检测无误后，提交按钮可点击
- * 5. 数据提交，给出反馈并跳转至用户管理页
- * 6. 发送验证码后，验证码按钮显示60s 倒计时
  */
-const Register = memo((props: IProps) => {
-  const { getFieldDecorator, getFieldsError, getFieldValue } = props.form;
+const RePassword = memo((props: IProps) => {
+  const { getFieldDecorator, getFieldValue, getFieldsError } = props.form;
 
   // 控制手机验证码发送时间
   const [verify, setVerify] = useState(false);
@@ -42,7 +31,7 @@ const Register = memo((props: IProps) => {
   // 获取手机验证码
   const getVerify = (): void => {
     if (getFieldValue("phone")) {
-      // smsRegisterApi(getFieldValue("phone"))
+      // smsLoginApi(getFieldValue("phone"))
       //   .then(({ error, msg }) => {
       //     error ? message.warning(msg) : message.success(msg);
       //   })
@@ -52,19 +41,18 @@ const Register = memo((props: IProps) => {
       message.warning("手机号不能为空");
     }
   };
-  // 提交注册信息
-  const register = (e: any) => {
+  // 重置
+  const reset = (e: any) => {
     e.preventDefault();
     props.form.validateFields((err: any, values: any) => {
       if (!err) {
-        // registerApi({
-        //   registerData: {
+        // pwdResetApi({
+        //   pwdResetData: {
         //     ...values
-        //   },
-        //   reduxAction: props.action
+        //   }
         // })
         //   .then(({ error, msg }) => {
-        //     error ? message.warning(msg) : props.history.push("/admin");
+        //     error ? message.warning(msg) : message.success(msg);
         //   })
         //   .catch(({ error, msg }) => message.warning(msg));
       }
@@ -148,18 +136,15 @@ const Register = memo((props: IProps) => {
           </a>
         </div>
         <div css={styles.content_font}>蜗壳云商是国内一流的商户saas提供商</div>
-        <h3 style={{ float: "left" }}>注册</h3>
-        <Form style={{ width: "400px" }}>
+        <h3 style={{ float: "left" }}>密码重置</h3>
+        <Form style={{ width: "400px" }} onSubmit={reset}>
           <Form.Item>
             {getFieldDecorator("phone", {
               rules: [
-                {
-                  required: true,
-                  message: "手机号不能为空"
-                },
+                { required: true, message: "手机号不能为空" },
                 {
                   pattern: /^(13[0-9]|14[5-9]|15[0-9]|16[6]|17[0-8]|18[0-9]|19[8|9])\d{8}$/,
-                  message: "号码格式错误"
+                  message: "手机号格式错误"
                 }
               ]
             })(<Input size={"large"} placeholder="手机号" />)}
@@ -168,23 +153,14 @@ const Register = memo((props: IProps) => {
             <Row gutter={16}>
               <Col span={17}>
                 {getFieldDecorator("verify", {
-                  rules: [
-                    {
-                      required: true,
-                      message: "验证码不能为空"
-                    },
-                    {
-                      pattern: /^[0-9]{4}$/,
-                      message: "验证码格式错误"
-                    }
-                  ]
+                  rules: [{ required: true, message: "验证码不能为空" }]
                 })(<Input size={"large"} maxLength={4} placeholder="验证码" />)}
               </Col>
               <Col span={7}>
                 <Button
                   size={"large"}
                   block={true}
-                  // onClick={getVerify}
+                  onClick={getVerify}
                   disabled={verify}
                 >
                   {!verify ? (
@@ -256,16 +232,8 @@ const Register = memo((props: IProps) => {
               size={"large"}
               disabled={hasErrors(getFieldsError())}
             >
-              注册
+              立即重置
             </Button>
-            <div
-              style={{
-                marginTop: 20,
-                float: "left"
-              }}
-            >
-              或者 <Link to="/trader/login">使用已有账号登陆</Link>
-            </div>
           </Form.Item>
         </Form>
       </Layout.Content>
@@ -290,4 +258,4 @@ const Register = memo((props: IProps) => {
   );
 });
 
-export default Form.create()(withRouter(Register));
+export default Form.create()(RePassword);
