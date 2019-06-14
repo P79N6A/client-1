@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { css } from "@emotion/core";
 import { Button, Col, Layout, Menu, Row } from "antd";
 import { Link } from "react-router-dom";
-import Logo from "../../component/Logo";
+import Logo from "../components/Logo";
 
 export default memo(() => {
   // antd 数据结构

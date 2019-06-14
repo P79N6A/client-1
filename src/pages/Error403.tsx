@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { css } from "@emotion/core";
 import { Button, Col, Layout, Menu, Row } from "antd";
 import { Link } from "react-router-dom";
-import Logo from "../../component/Logo";
+import Logo from "../components/Logo";
 
 export default memo(() => {
   // antd 数据结构
@@ -68,7 +68,7 @@ export default memo(() => {
             <Col lg={11} md={11} sm={0} xs={0} offset={1}>
               <div css={styles.title}>403</div>
               <div css={styles.desc}>抱歉，你无权访问此页面！</div>
-              <Link to={"/user/login"}>
+              <Link to={"/login"}>
                 <Button type={"primary"}>立即登录</Button>
               </Link>
             </Col>
@@ -81,7 +81,7 @@ export default memo(() => {
             >
               <div css={styles.title}>403</div>
               <div css={styles.desc}>抱歉，你无权访问此页面！</div>
-              <Link to={"/user/login"}>
+              <Link to={"/login"}>
                 <Button type={"primary"}>立即登录</Button>
               </Link>
             </Col>
