@@ -1,22 +1,65 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { ApolloProvider } from "react-apollo";
+import { Layout, Spin } from "antd";
+import { Route, Switch } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import * as serviceWorker from "./serviceWorker";
-import { client } from "./api/config";
-import { store } from "./store/store";
-import App from "./layout/App";
+import { Provider } from "react-redux";
+import { css } from "@emotion/core";
+import { size } from "polished";
 
+import { store } from "./models/store";
+import * as serviceWorker from "./serviceWorker";
+
+// 页面拆分
+const Home = lazy(() => import("./pages/Home"));
+const Register = lazy(() => import("./pages/Register"));
+const Login = lazy(() => import("./pages/Login"));
+const RePassword = lazy(() => import("./pages/RePassword"));
+const Error403 = lazy(() => import("./pages/Error403"));
+const Error404 = lazy(() => import("./pages/Error404"));
+
+// 根组件
+const App: React.FC = () => {
+  const styles = {
+    // 页面根样式
+    layout: css`
+      ${size("100vh", "100vw")};
+      overflow: hidden;
+    `,
+    // 加载状态样式
+    loading: css`
+      margin: 40vh auto;
+    `
+  };
+
+  // 页面加载样式组件
+  const loading = <Spin css={styles.loading} delay={300} tip={"拼命加载中"} />;
+
+  return (
+    <Layout css={styles.layout}>
+      <Suspense fallback={loading}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/re-password" component={RePassword} />
+          <Route path="/403" component={Error403} />
+          <Route component={Error404} />
+        </Switch>
+      </Suspense>
+    </Layout>
+  );
+};
+
+// 组件渲染
 ReactDOM.render(
   <Provider store={store}>
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ApolloProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );
 
+// 脱机服务 参考链接：https://bit.ly/CRA-PWA
 serviceWorker.register();

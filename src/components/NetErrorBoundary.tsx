@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import ErrorNetWork from "../pages/error/ErrorNetWork";
+import ErrorNetWork from "../pages/ErrorNetWork";
 
 interface IProps extends RouteComponentProps {
   children: object;

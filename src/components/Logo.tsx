@@ -1,9 +1,8 @@
-import { css } from "@emotion/core";
 import React, { memo } from "react";
-import { Icon } from "antd";
+import { css } from "@emotion/core";
+import IconFont from "./IconFont";
 
-const Logo = memo(() => {
-  // 样式
+const Logo: React.FC = memo(() => {
   const styles = {
     logo: css`
       height: 32px;
@@ -16,7 +15,7 @@ const Logo = memo(() => {
 
   return (
     <div css={styles.logo}>
-      <Icon type="amazon" />
+      <IconFont type="font-logo" />
     </div>
   );
 });

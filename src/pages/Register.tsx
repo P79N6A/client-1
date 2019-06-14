@@ -1,22 +1,9 @@
 import React, { memo, useState } from "react";
 import { css } from "@emotion/core";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import {
-  Button,
-  Col,
-  Form,
-  Icon,
-  Input,
-  Layout,
-  message,
-  Row,
-  Statistic
-} from "antd";
-import IconFont from "../../component/IconFont";
+import { Button, Col, Form, Icon, Input, Layout, Row, Statistic } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-
-// @ts-ignore
-import { useDispatch } from "react-redux";
+import IconFont from "../components/IconFont";
 
 interface IProps extends FormComponentProps, RouteComponentProps {}
 
@@ -39,37 +26,37 @@ const Register = memo((props: IProps) => {
   const onFinish = () => {
     setVerify(false);
   };
-  // 获取手机验证码
-  const getVerify = (): void => {
-    if (getFieldValue("phone")) {
-      // smsRegisterApi(getFieldValue("phone"))
-      //   .then(({ error, msg }) => {
-      //     error ? message.warning(msg) : message.success(msg);
-      //   })
-      //   .catch(({ error, msg }) => message.warning(msg));
-      setVerify(true);
-    } else {
-      message.warning("手机号不能为空");
-    }
-  };
-  // 提交注册信息
-  const register = (e: any) => {
-    e.preventDefault();
-    props.form.validateFields((err: any, values: any) => {
-      if (!err) {
-        // registerApi({
-        //   registerData: {
-        //     ...values
-        //   },
-        //   reduxAction: props.action
-        // })
-        //   .then(({ error, msg }) => {
-        //     error ? message.warning(msg) : props.history.push("/admin");
-        //   })
-        //   .catch(({ error, msg }) => message.warning(msg));
-      }
-    });
-  };
+  // // 获取手机验证码
+  // const getVerify = (): void => {
+  //   if (getFieldValue("phone")) {
+  //     // smsRegisterApi(getFieldValue("phone"))
+  //     //   .then(({ error, msg }) => {
+  //     //     error ? message.warning(msg) : message.success(msg);
+  //     //   })
+  //     //   .catch(({ error, msg }) => message.warning(msg));
+  //     setVerify(true);
+  //   } else {
+  //     message.warning("手机号不能为空");
+  //   }
+  // };
+  // // 提交注册信息
+  // const register = (e: any) => {
+  //   e.preventDefault();
+  //   props.form.validateFields((err: any, values: any) => {
+  //     if (!err) {
+  //       // registerApi({
+  //       //   registerData: {
+  //       //     ...values
+  //       //   },
+  //       //   reduxAction: props.action
+  //       // })
+  //       //   .then(({ error, msg }) => {
+  //       //     error ? message.warning(msg) : props.history.push("/admin");
+  //       //   })
+  //       //   .catch(({ error, msg }) => message.warning(msg));
+  //     }
+  //   });
+  // };
   // 控制提交按钮，如果表单存在错误信息，提交按钮不可用
   const hasErrors = (fieldsError: any) => {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -264,7 +251,7 @@ const Register = memo((props: IProps) => {
                 float: "left"
               }}
             >
-              或者 <Link to="/trader/login">使用已有账号登陆</Link>
+              或者 <Link to="/login">使用已有账号登陆</Link>
             </div>
           </Form.Item>
         </Form>

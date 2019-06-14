@@ -15,7 +15,7 @@ import {
   Statistic
 } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import IconFont from "../../component/IconFont";
+import IconFont from "../components/IconFont";
 
 interface IProps extends FormComponentProps {}
 
@@ -242,7 +242,7 @@ const Login = memo((props: IProps) => {
               valuePropName: "checked",
               initialValue: true
             })(<Checkbox style={{ float: "left" }}>记住我</Checkbox>)}
-            <Link style={{ float: "right" }} to="/trader/re-password">
+            <Link style={{ float: "right" }} to="/re-password">
               忘记密码
             </Link>
             <Button
@@ -254,7 +254,7 @@ const Login = memo((props: IProps) => {
               登录
             </Button>
             <div style={{ marginTop: 20, float: "left" }}>
-              或者 <Link to="/trader/register">立即注册</Link>
+              或者 <Link to="/register">立即注册</Link>
             </div>
           </Form.Item>
         </Form>
