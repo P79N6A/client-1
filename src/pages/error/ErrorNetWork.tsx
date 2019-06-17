@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { css } from "@emotion/core";
 import { Col, Layout, Menu, Row } from "antd";
-import Logo from "../components/Logo";
+import Logo from "../../components/Logo";
 
 export default memo(() => {
   const { Header, Content } = Layout;
