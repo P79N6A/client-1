@@ -15,7 +15,7 @@ import {
   Statistic
 } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import IconFont from "../components/IconFont";
+import IconFont from "../../components/IconFont";
 
 interface IProps extends FormComponentProps {}
 

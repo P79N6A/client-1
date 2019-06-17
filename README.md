@@ -8,9 +8,17 @@
 
 ## 🚧 TODO
 
+- admin 页面针对屏幕显示进行优化（sider 部分在小屏下进行缩放）
 - index.html 文件需要完善 针对浏览器的 seo 优化
 
 ## 📡 ChangeLog
+
+### 2019 年 06 月 17 日
+
+- 🏗 page 文件结构调整，将相近页面归类
+- 🌟 admin 页面基础布局
+- 🌟 admin shop 页面基础布局
+- 🌟 admin add shop 模态框样式添加
 
 ### 2019 年 06 月 14 日
 

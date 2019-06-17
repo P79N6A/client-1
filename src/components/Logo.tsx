@@ -15,7 +15,7 @@ const Logo: React.FC = memo(() => {
 
   return (
     <div css={styles.logo}>
-      <IconFont type="font-logo" />
+      <IconFont type="icon-logo" style={{ fontSize: 45 }} />
     </div>
   );
 });

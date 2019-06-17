@@ -3,7 +3,7 @@ import { css } from "@emotion/core";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { Button, Col, Form, Icon, Input, Layout, Row, Statistic } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import IconFont from "../components/IconFont";
+import IconFont from "../../components/IconFont";
 
 interface IProps extends FormComponentProps, RouteComponentProps {}
 
