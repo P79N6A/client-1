@@ -8,10 +8,18 @@
 
 ## 🚧 TODO
 
+- 添加 applet 界面
+- help 界面重置
 - admin 页面针对屏幕显示进行优化（sider 部分在小屏下进行缩放）
 - index.html 文件需要完善 针对浏览器的 seo 优化
 
 ## 📡 ChangeLog
+
+### 2019 年 06 月 18 日
+
+- 🌟 admin 界面部分文件重命名
+- 🌟 添加 help 界面
+- 🌟 admin 包含页面全部布局完成
 
 ### 2019 年 06 月 17 日
 

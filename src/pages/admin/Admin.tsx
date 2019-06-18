@@ -2,7 +2,11 @@ import React, { Fragment, memo, useState } from "react";
 import { css } from "@emotion/core";
 import { Icon, Layout, Menu, AutoComplete, Input } from "antd";
 import IconFont from "../../components/IconFont";
-import AdminShop from "./shop/AdminShop";
+import AdminShop from "./shop/Shop";
+import Commodity from "./commodity/Commodity";
+import Order from "./order/Order";
+import Customer from "./customer/Customer";
+import Assets from "./assets/Assets";
 
 /**
  * @description 客户中台界面
@@ -10,18 +14,18 @@ import AdminShop from "./shop/AdminShop";
  */
 export default memo(() => {
   // 侧边栏选项值存储
-  const [item, setItem] = useState("shop");
+  const [item, setItem] = useState("dash");
   const changeItem = (itemName: string) => {
     setItem(itemName);
   }; // 修改侧边栏选项值
 
   // 根据选择项展示相应页面
   const itemPage: { [key: string]: object } = {
-    shop: <AdminShop />
-    // commodity: <Commodity />,
-    // order: <Order />,
-    // customer: <Customer />,
-    // assets: <Assets />
+    shop: <AdminShop />,
+    commodity: <Commodity />,
+    order: <Order />,
+    customer: <Customer />,
+    assets: <Assets />
   };
 
   const styles = {
@@ -153,10 +157,6 @@ export default memo(() => {
           <Menu.Item css={styles.menuItem} key={"assets"}>
             <Icon type="dollar" css={styles.icon} />
             <div>资产</div>
-          </Menu.Item>
-          <Menu.Item css={styles.menuItem} key={"marketing"}>
-            <Icon type="fire" css={styles.icon} />
-            <div>营销</div>
           </Menu.Item>
         </Menu>
       </Layout.Sider>

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Button, Icon, Skeleton, List, Card } from "antd";
-import AddShop from "./AddShop";
+import AddShop from "./ShopAdd";
 import IconFont from "../../../components/IconFont";
 
 export default memo(() => {
