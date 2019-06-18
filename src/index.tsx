@@ -18,6 +18,10 @@ const RePassword = lazy(() => import("./pages/user/RePassword"));
 const Error403 = lazy(() => import("./pages/error/Error403"));
 const Error404 = lazy(() => import("./pages/error/Error404"));
 const Admin = lazy(() => import("./pages/admin/Admin"));
+const Help = lazy(() => import("./pages/help/Help"));
+const Vip = lazy(() => import("./pages/account/Vip"));
+const Account = lazy(() => import("./pages/account/Account"));
+
 // 根组件
 const App: React.FC = () => {
   const styles = {
@@ -40,11 +44,14 @@ const App: React.FC = () => {
       <Suspense fallback={loading}>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/vip" component={Vip} />
+          <Route exact path="/account" component={Account} />
           <Route path="/register" component={Register} />
           <Route path="/Admin" component={Admin} />
           <Route path="/login" component={Login} />
           <Route path="/re-password" component={RePassword} />
           <Route path="/403" component={Error403} />
+          <Route path="/help" component={Help} />
           <Route component={Error404} />
         </Switch>
       </Suspense>

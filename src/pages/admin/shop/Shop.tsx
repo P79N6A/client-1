@@ -35,9 +35,6 @@ export default memo(() => {
           onClick={({ key }) => setContentType(key)}
         >
           <Menu.Item key="1">店铺管理</Menu.Item>
-          <Menu.Item key="2" disabled={true}>
-            店铺检测
-          </Menu.Item>
         </Menu>
       </Layout.Sider>
       <Layout.Content css={styles.desc}>
