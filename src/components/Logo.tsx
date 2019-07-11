@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { css } from "@emotion/core";
 import IconFont from "./IconFont";
 
-const Logo: React.FC = memo(() => {
+export default memo(() => {
   const styles = {
     logo: css`
       height: 32px;
@@ -19,5 +19,3 @@ const Logo: React.FC = memo(() => {
     </div>
   );
 });
-
-export default Logo;

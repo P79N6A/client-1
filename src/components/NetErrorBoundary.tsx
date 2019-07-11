@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import ErrorNetWork from "../pages/error/ErrorNetWork";
+import { Button, Result } from "antd";
 
 interface IProps extends RouteComponentProps {
   children: object;
@@ -27,7 +27,14 @@ class NetErrorBoundary extends Component<IProps, {}> {
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <ErrorNetWork />;
+      return (
+        <Result
+          status="404"
+          title="404"
+          subTitle="'对不起，此页面不存在"
+          extra={<Button type="primary">回到首页</Button>}
+        />
+      );
     }
 
     return this.props.children;
