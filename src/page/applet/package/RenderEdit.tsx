@@ -4,7 +4,7 @@ import { IAppletStore } from "../model/store";
 import ButtonEdit from "./button/ButtonEdit";
 import { Drawer } from "antd";
 import { css } from "@emotion/core";
-import { action, IActionFn } from "../../../store/action";
+import { action, IActionFn } from "../../../model/action";
 import DragEdit from "./drag/DragEdit";
 import TextEdit from "./text/TextEdit";
 import PictureEdit from "./picture/PictureEdit";

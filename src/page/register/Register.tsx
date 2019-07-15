@@ -13,13 +13,15 @@ export default memo(() => {
   // 样式
   const styles = {
     layout: css`
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
       background-repeat: no-repeat;
       background-position: center 110px;
       background-size: 100%;
       padding-top: 64px;
     `,
-
     layout_content: css`
       margin: auto auto;
     `,

@@ -6,7 +6,7 @@ import ColorPicker from "braft-extensions/dist/color-picker";
 import "braft-extensions/dist/color-picker.css";
 import React, { memo, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import { IAppletStore } from "../../model/store";
 import StyleEdit from "../common/StyleEdit";
 

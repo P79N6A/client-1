@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { ajax } from "./config";
+import { apollo } from "../config";
 
 export const ossUpload = async (file: any) => {
   // graphql 请求数据生成
@@ -12,7 +12,7 @@ export const ossUpload = async (file: any) => {
   `;
 
   // 数据请求
-  return await ajax
+  return await apollo
     .mutate({
       variables: {
         files: file

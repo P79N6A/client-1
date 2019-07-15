@@ -4,7 +4,7 @@ import React, { memo, Fragment } from "react";
 
 import "braft-editor/dist/index.css";
 import "braft-extensions/dist/color-picker.css";
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import DragButtonEdit from "./edit/DragButtonEdit";
 import DragPictureEdit from "./edit/DragPictureEdit";
 import DragTextEdit from "./edit/DragTextEdit";

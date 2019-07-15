@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { ajax } from "./config";
+import { apollo } from "../config";
 
 interface Props {
   store_id: string;
@@ -9,7 +9,7 @@ export const storeRemove = async ({ store_id }: Props) => {
   // graphql 请求数据生成
   const graphql = gql`
     mutation remove($store_id: String!) {
-        removeStore(data: { store_id: $store_id }) {
+      removeStore(data: { store_id: $store_id }) {
         state
         msg
       }
@@ -17,7 +17,7 @@ export const storeRemove = async ({ store_id }: Props) => {
   `;
 
   // 数据请求
-  return await ajax
+  return await apollo
     .mutate({
       variables: { store_id: store_id },
       mutation: graphql

@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { css } from "@emotion/core";
 import { Empty } from "antd";
 import { connect } from "react-redux";
-import { action, IActionFn } from "../../../store/action";
+import { action, IActionFn } from "../../../model/action";
 import { IAppletStore } from "../model/store";
 import RenderComponent from "../package/RenderComponent";
 

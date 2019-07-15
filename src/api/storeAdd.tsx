@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { ajax } from "./config";
+import { apollo } from "../config";
 
 interface Props {
   user_id: string;
@@ -27,7 +27,7 @@ export const storeAdd = async ({ user_id, logo, desc, name }: Props) => {
   `;
 
   // 数据请求
-  return await ajax
+  return await apollo
     .mutate({
       variables: { user_id: user_id, logo: logo, name: name, desc: desc },
       mutation: graphql

@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { ajax } from "./config";
+import { apollo } from "../config";
 
 export const registerSms = async (phone: string) => {
   // graphql 请求数据生成
@@ -13,7 +13,7 @@ export const registerSms = async (phone: string) => {
   `;
 
   // 数据请求
-  return await ajax
+  return await apollo
     .mutate({
       variables: { phone: phone },
       mutation: graphql

@@ -1,7 +1,7 @@
 import { Form, Input, InputNumber, Switch, Tabs } from "antd";
 import React, { memo } from "react";
 import { connect } from "react-redux";
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import { IAppletStore } from "../../model/store";
 import StyleEdit from "../common/StyleEdit";
 

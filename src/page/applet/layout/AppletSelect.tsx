@@ -2,7 +2,7 @@ import React, { Fragment, memo } from "react";
 import { connect } from "react-redux";
 import { css } from "@emotion/core";
 import { Icon, Modal, Card, message } from "antd";
-import { action, IActionFn } from "../../../store/action";
+import { action, IActionFn } from "../../../model/action";
 import IconFont from "../../../components/IconFont";
 import { $$Button0 } from "../package/button/Button_0";
 import { $$text0 } from "../package/text/Text_0";

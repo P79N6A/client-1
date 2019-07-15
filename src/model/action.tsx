@@ -5,6 +5,7 @@ export interface IAction {
 export interface IActionFn {
   action({ type, payload }: IAction): void;
 }
+
 export const action = ({ type, payload }: IAction): IAction => {
   return {
     payload,

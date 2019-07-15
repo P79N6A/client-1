@@ -8,8 +8,10 @@
 
 ## 🚧 TODO
 
+- Home 界面去除不必要的扩展包  
+  enquire-js  
+  react-html5video
 - 商品编辑
-- 添加 applet 界面
 - help 界面重置
 - admin 页面针对屏幕显示进行优化（sider 部分在小屏下进行缩放）
 - index.html 文件需要完善 针对浏览器的 seo 优化

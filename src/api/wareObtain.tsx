@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { ajax } from "./config";
+import { apollo } from "../config";
 
 interface Props {
   ware_id: string;
@@ -17,7 +17,7 @@ export const obtainWare = async ({ ware_id }: Props) => {
   `;
 
   // 数据请求
-  return await ajax
+  return await apollo
     .mutate({
       variables: {
         ware_id: ware_id
