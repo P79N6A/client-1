@@ -15,7 +15,7 @@ import "braft-extensions/dist/color-picker.css";
 import React, { memo } from "react";
 import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import StyleEdit from "../common/StyleEdit";
 import { IAppletStore } from "../../model/store";
 

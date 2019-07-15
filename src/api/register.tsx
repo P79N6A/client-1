@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { ajax } from "./config";
+import { apollo } from "../config";
 
 interface Props {
   phone: string;
@@ -13,20 +13,38 @@ export const register = async ({ phone, verify, password }: Props) => {
       register(data: { phone: $phone, password: $password, verify: $verify }) {
         state
         msg
+        data {
+          jwt
+          id
+        }
       }
     }
   `;
 
   // 数据请求
-  return await ajax
+  return await apollo
     .mutate({
       variables: { phone: phone, password: password, verify: verify },
       mutation: graphql
     })
-    .then((result: { data: { register: { state: string; msg: string } } }) => {
-      return result.data.register;
-    })
+    .then(
+      (result: {
+        data: {
+          register: {
+            state: string;
+            msg: string;
+            data: { jwt: string; id: number };
+          };
+        };
+      }) => {
+        return result.data.register;
+      }
+    )
     .catch(() => {
-      return { state: "error", msg: "网络链接异常，请重试" };
+      return {
+        state: "error",
+        msg: "网络链接异常，请重试",
+        data: { jwt: "", id: "" }
+      };
     });
 };

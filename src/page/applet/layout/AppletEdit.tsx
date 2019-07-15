@@ -2,7 +2,7 @@ import { css } from "@emotion/core";
 import React, { Fragment, memo, useEffect, useState } from "react";
 import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
-import { action, IActionFn } from "../../../store/action";
+import { action, IActionFn } from "../../../model/action";
 import {
   AutoComplete,
   Button,

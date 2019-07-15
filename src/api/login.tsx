@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { ajax } from "./config";
+import { apollo } from "../config";
 
 interface Props {
   phone: string;
@@ -32,7 +32,7 @@ export const login = async ({ phone, verify, password, rememberMe }: Props) => {
   `;
 
   // 数据请求
-  return await ajax
+  return await apollo
     .mutate({
       variables: {
         phone: phone,

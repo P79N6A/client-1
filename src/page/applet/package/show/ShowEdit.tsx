@@ -18,7 +18,7 @@ import {
   Drawer
 } from "antd";
 
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import { IAppletStore } from "../../model/store";
 import StyleEdit from "../common/StyleEdit";
 

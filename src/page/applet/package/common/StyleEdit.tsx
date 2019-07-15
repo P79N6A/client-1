@@ -12,7 +12,7 @@ import {
 import React, { memo } from "react";
 import { TwitterPicker } from "react-color";
 import { connect } from "react-redux";
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import { IAppletStore } from "../../model/store";
 
 interface IProps extends IActionFn {

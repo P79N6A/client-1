@@ -2,7 +2,7 @@ import React, { memo, Fragment } from "react";
 import { css } from "@emotion/core";
 import { connect } from "react-redux";
 import { Icon, message, Popover } from "antd";
-import { action, IActionFn } from "../../../store/action";
+import { action, IActionFn } from "../../../model/action";
 import { IAppletStore } from "../model/store";
 import BlockStyle from "./common/BlockStyle";
 import Text_0 from "./text/Text_0";

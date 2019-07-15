@@ -14,7 +14,7 @@ import React, { memo, useState } from "react";
 import { connect } from "react-redux";
 import { css } from "@emotion/core";
 
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import InputForm from "./item/InputForm";
 import SwitchForm from "./item/SwitchForm";
 import RadioForm from "./item/RadioForm";

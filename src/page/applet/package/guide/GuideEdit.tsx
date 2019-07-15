@@ -14,7 +14,7 @@ import {
 } from "antd";
 import React, { memo, useState } from "react";
 import { connect } from "react-redux";
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import { css } from "@emotion/core";
 import produce from "immer";
 import { IAppletStore } from "../../model/store";

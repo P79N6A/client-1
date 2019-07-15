@@ -1,9 +1,11 @@
 import React, { memo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { Button, Col, Form, Input, message, Row, Statistic } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import { registerSms } from "../../api/registerSms";
 import { register } from "../../api/register";
+import useLocalStorage from "react-use/lib/useLocalStorage";
 
 interface IProps extends FormComponentProps, RouteComponentProps {}
 
@@ -13,6 +15,9 @@ interface IProps extends FormComponentProps, RouteComponentProps {}
  */
 const Register = memo((props: IProps) => {
   const { getFieldDecorator, getFieldsError, getFieldValue } = props.form;
+  const [id, setId] = useLocalStorage("woke-id"); //获取 localstorage中的user_id
+  const [jwt, setJwt] = useLocalStorage("woke-jwt"); //获取 localstorage中的jwt
+  const dispatch = useDispatch();
 
   // 控制手机验证码发送时间
   const [verify, setVerify] = useState(false);
@@ -41,8 +46,10 @@ const Register = memo((props: IProps) => {
     props.form.validateFields(async (err: any, values: any) => {
       if (!err) {
         const isRegister = await register({ ...values });
-
         if (isRegister.state === "success") {
+          dispatch({ type: "user/register", payload: { ...isRegister.data } });
+          setId(isRegister.data.id);
+          setJwt(isRegister.data.jwt);
           props.history.push("/");
         }
         if (isRegister.state === "error") {

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`渲染Logo组件快照 1`] = `
+<div
+  css={
+    Object {
+      "map": undefined,
+      "name": "65rrbh",
+      "next": undefined,
+      "styles": "
+      height: 32px;
+      width: 80px;
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 28px;
+    ",
+    }
+  }
+>
+  <i
+    className="anticon"
+    style={
+      Object {
+        "fontSize": 45,
+      }
+    }
+  >
+    <svg
+      aria-hidden={true}
+      className=""
+      fill="currentColor"
+      focusable="false"
+      height="1em"
+      width="1em"
+    >
+      <use
+        xlinkHref="#icon-logo"
+      />
+    </svg>
+  </i>
+</div>
+`;

@@ -1,69 +1,55 @@
-import React, { Fragment, memo } from "react";
-import { css } from "@emotion/core";
-import { Button, Menu, Layout } from "antd";
+import React, { memo, useEffect, useState } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
+import useWindowSize from "react-use/lib/useWindowSize";
+import useTitle from "react-use/lib/useTitle";
+import Header from "./layout/Header";
+import Banner from "./layout/Banner";
+import Part1 from "./layout/Part1";
+import Part2 from "./layout/Part2";
+import Part3 from "./layout/Part3";
+import Part4 from "./layout/Part4";
+import Footer from "./layout/Footer";
+import "./layout/static/style";
+import useLocalStorage from "react-use/lib/useLocalStorage";
+import { auth } from "../../api/auth";
+import { useDispatch } from "react-redux";
 
-const Home = memo((props: RouteComponentProps) => {
-  // antd 组件解构
-  const { Header } = Layout;
+const Home = memo((props: RouteComponentProps): any => {
+  useTitle("蜗壳云商"); // 修改页面标题
+  const dispatch = useDispatch();
+  const [isMobile, setIsMobile] = useState(false); // 判断是否为手机端
+  const { width } = useWindowSize(); // 监控屏幕大小，响应式界面
+  const [id, setId] = useLocalStorage("woke-id"); //获取 localstorage中的user_id
+  const [jwt, setJwt] = useLocalStorage("woke-jwt"); //获取 localstorage中的jwt
 
-  // 样式
-  const styles = {
-    // 导航栏
-    header: css`
-      padding: 0;
-      background: #fff;
-      overflow: hidden;
-      height: 64px;
-      border: none;
-    `,
-    // 左菜单
-    menuLeft: css`
-      float: left;
-      border: none;
-      font-size: 15px;
-      & > li {
-        font-size: 15px;
-        border: none;
-        line-height: 64px;
-      }
-    `,
-    // 右菜单
-    menuRight: css`
-      float: right;
-      border: none;
-      font-size: 15px;
-      & > li {
-        font-size: 15px;
-        border: none;
-        line-height: 64px;
-      }
-    `,
-    // 图标
-    icon: css`
-      margin-right: 8px;
-    `,
-    divider: css`
-      margin-top: -12px;
-    `
-  };
+  // 检测是否为手机端，并将存储状态调整
+  useEffect(() => {
+    setIsMobile(width < 768);
+  }, [width]);
 
-  // 路由跳转
-  const redirect = (route: string) => {
-    props.history.push(route);
-  };
+  // 自动登录
+  useEffect(() => {
+    // 如果存在id ，jwt 则验证登录
+    if (id && jwt) {
+      auth({ id, jwt })
+        .then(resp => {
+          if (resp.state === "success") {
+            dispatch({ type: "user/auth", payload: true });
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
 
-  return (
-    <Fragment>
-      <Header css={styles.header}>
-        <Menu mode="horizontal" css={styles.menuRight}>
-          <Menu.Item onClick={() => redirect("/user/login")}>
-            <Button type={"primary"}>登录 / 注册</Button>
-          </Menu.Item>
-        </Menu>
-      </Header>
-    </Fragment>
-  );
+  return [
+    <Header key="header" />,
+    <Banner key="banner" isMobile={isMobile} />,
+    <Part1 key="part1" isMobile={isMobile} />,
+    <Part2 key="part2" isMobile={isMobile} />,
+    <Part3 key="part3" isMobile={isMobile} />,
+    <Part4 key="part4" />,
+    <Footer key="footer" />
+  ];
 });
 
 export default withRouter(Home);

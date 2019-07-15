@@ -1,5 +1,5 @@
 import produce from "immer";
-import { IAction } from "../../../store/action";
+import { IAction } from "../../../model/action";
 
 /**
  * appletStore 默认数据源

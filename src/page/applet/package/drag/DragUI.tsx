@@ -2,7 +2,7 @@ import React, { Fragment, memo } from "react";
 import { Dropdown, Menu } from "antd";
 import { connect } from "react-redux";
 import { css } from "@emotion/core";
-import { action, IActionFn } from "../../../../store/action";
+import { action, IActionFn } from "../../../../model/action";
 import DragRef from "../../../../tools/DragTools";
 import { IAppletStore } from "../../model/store";
 import Text_0 from "../text/Text_0";

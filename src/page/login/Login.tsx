@@ -15,6 +15,9 @@ export default memo(() => {
   // 样式
   const styles = {
     layout: css`
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
       background-repeat: no-repeat;
       background-position: center 110px;
